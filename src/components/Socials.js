@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import colors from 'config/colors';
-import SocialItem from './SocialItem';
+import icons from 'src/images/socials';
 
 const Wrapper = styled('div')`
     display: flex;
@@ -11,13 +11,21 @@ const Wrapper = styled('div')`
     justify-content: center;
 `;
 
+const Item = styled('div')`
+    width: 48px;
+    height: 48px;
+`;
+
 const Socials = () => {
     const socials = ['instagram', 'facebook', 'pinterest', 'twitter'];
 
+    console.log(icons);
     return (
         <Wrapper>
-            {socials.map((social) => (
-                <SocialItem item={social} />
+            {socials.map((type) => (
+                <Item>
+                    <img src={icons[type]} />
+                </Item>
             ))}
         </Wrapper>
     );
