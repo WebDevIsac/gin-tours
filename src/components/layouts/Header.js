@@ -31,15 +31,16 @@ const Item = styled(Link)`
 `;
 
 const Header = (props) => {
-    const items = ['Boka', 'Kontakt', 'Om oss'];
-
     return (
         <Navbar>
-            <Logotype>GIN TOURS</Logotype>
+            <Logotype>
+                <Link to="/">GIN TOURS</Link>
+            </Logotype>
             <Menu>
-                {items.map((item) => (
-                    <Item to={`/${item.toLowerCase()}`}>{item}</Item>
-                ))}
+                <Item to="/">Hem</Item>
+                <Item to="/resor">Resor</Item>
+                <Item to="/kontakt">Kontakt</Item>
+                <Item to="/om-oss">Om oss</Item>
             </Menu>
         </Navbar>
     );
