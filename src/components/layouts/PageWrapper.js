@@ -7,7 +7,7 @@ const PageLayout = styled('div')`
     flex-direction: column;
     align-items: center;
     max-width: 2400px;
-    margin: 0 auto;
+    margin: 16px auto;
 `;
 
 const PageWrapper = ({ children }) => {
