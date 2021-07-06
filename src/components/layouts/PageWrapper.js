@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
-const Wrapper = styled('div')`
+const PageLayout = styled('div')`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    max-width: 2400px;
+    margin: 16px auto;
 `;
 
 const PageWrapper = ({ children }) => {
-    return <Wrapper>{children}</Wrapper>;
+    return <PageLayout>{children}</PageLayout>;
 };
 
 PageWrapper.propTypes = {};

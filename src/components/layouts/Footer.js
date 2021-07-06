@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import colors from 'config/colors';
 import Socials from 'components/Socials';
 
-const Wrapper = styled('div')`
+const FooterWrapper = styled('div')`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -20,10 +20,10 @@ const Footer = () => {
     const socials = ['instagram', 'facebook', 'pinterest', 'twitter'];
 
     return (
-        <Wrapper>
+        <FooterWrapper>
             <span>Copyright &copy; 2021 Gin Tours</span>
             <Socials />
-        </Wrapper>
+        </FooterWrapper>
     );
 };
 

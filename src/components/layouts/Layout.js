@@ -6,11 +6,7 @@ import { baseStyle, resetStyle } from 'config/style';
 
 import Header from './Header';
 import Footer from './Footer';
-
-const PageWrapper = styled('div')`
-    display: flex;
-    flex-direction: column;
-`;
+import PageWrapper from './PageWrapper';
 
 const Layout = ({ children }) => {
     return (

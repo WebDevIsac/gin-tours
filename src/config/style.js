@@ -32,6 +32,7 @@ export const baseStyle = `
 `;
 
 export const resetStyle = `
+    *,
     *::before,
     *::after {
         box-sizing: border-box; /* 1 */
