@@ -4,25 +4,53 @@ import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import Card from 'components/Card';
 
-const CardsFlex = styled('div')`
+const CardsRow = styled('div')`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto, 1fr);
+    grid-gap: 16px;
     width: 100%;
+    height: 100%;
+    padding: 16px 64px;
 `;
 
-const Travels = (props) => {
+const Travels = () => {
     const travels = [
-        'Hernö',
-        'Stockholms Bränneri',
-        'Lydens Gin',
-        'Hellströms Gin',
+        {
+            title: 'Hernö',
+            place: 'Härnösand',
+            image: 'herno',
+        },
+        {
+            title: 'Stockholms Bränneri',
+            place: 'Stockholm',
+            image: 'stockholm',
+        },
+        {
+            title: 'Lydens Gin',
+            place: 'Ljungby',
+            image: 'lyden',
+        },
+        {
+            title: 'Hellströms Gin',
+            place: 'Gotland',
+            image: 'hellstrom',
+        },
     ];
+
     return (
         <>
             <h1>Resor</h1>
-            <CardsFlex>
-                {travels.map((t, index) => (
-                    <Card name={t} index={index} />
+            <CardsRow>
+                {travels.map(({ title, place, image }, index) => (
+                    <Card
+                        name={title}
+                        place={place}
+                        image={image}
+                        index={index}
+                    />
                 ))}
-            </CardsFlex>
+            </CardsRow>
         </>
     );
 };
