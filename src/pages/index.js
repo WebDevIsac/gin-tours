@@ -9,6 +9,7 @@ const Wrapper = styled('div')`
 
 const Image = styled('img')`
     object-fit: contain;
+    width: 100%;
 `;
 
 const StartPage = () => {
