@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import Card from 'components/Card';
+import { graphql } from 'gatsby';
 
 const CardsRow = styled('div')`
     display: grid;
@@ -14,46 +15,44 @@ const CardsRow = styled('div')`
     padding: 16px 64px;
 `;
 
-const Travels = () => {
-    const travels = [
-        {
-            title: 'Hernö',
-            place: 'Härnösand',
-            image: 'herno',
-        },
-        {
-            title: 'Stockholms Bränneri',
-            place: 'Stockholm',
-            image: 'stockholm',
-        },
-        {
-            title: 'Lydens Gin',
-            place: 'Ljungby',
-            image: 'lyden',
-        },
-        {
-            title: 'Hellströms Gin',
-            place: 'Gotland',
-            image: 'hellstrom',
-        },
-    ];
+const Travels = ({ data }) => {
+    const travels = data.allTravelsJson.edges;
 
     return (
         <>
             <h1>Resor</h1>
             <CardsRow>
-                {travels.map(({ title, place, image }, index) => (
-                    <Card
-                        name={title}
-                        place={place}
-                        image={image}
-                        index={index}
-                    />
-                ))}
+                {travels.map(
+                    ({ node: { title, place, image, slug } }, index) => (
+                        <Card
+                            key={index}
+                            name={title}
+                            place={place}
+                            image={image}
+                            index={index}
+                            slug={slug}
+                        />
+                    )
+                )}
             </CardsRow>
         </>
     );
 };
+
+export const query = graphql`
+    query {
+        allTravelsJson {
+            edges {
+                node {
+                    title
+                    place
+                    image
+                    slug
+                }
+            }
+        }
+    }
+`;
 
 Travels.propTypes = {};
 

@@ -20,6 +20,8 @@
     "gatsby": "^3.6.2",
     "gatsby-plugin-emotion": "^6.7.1",
     "gatsby-plugin-root-import": "^2.0.6",
+    "gatsby-source-filesystem": "^3.9.0",
+    "gatsby-transformer-json": "^3.9.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
