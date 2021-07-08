@@ -16,5 +16,12 @@ module.exports = {
                 components: path.join(__dirname, 'src/components'),
             },
         },
+        `gatsby-transformer-json`,
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                path: `./src/data/`,
+            },
+        },
     ],
 };
