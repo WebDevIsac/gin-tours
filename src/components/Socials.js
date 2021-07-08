@@ -19,11 +19,10 @@ const Item = styled('div')`
 const Socials = () => {
     const socials = ['instagram', 'facebook', 'pinterest', 'twitter'];
 
-    console.log(icons);
     return (
         <Wrapper>
             {socials.map((type) => (
-                <Item>
+                <Item key={type}>
                     <img src={icons[type]} />
                 </Item>
             ))}
