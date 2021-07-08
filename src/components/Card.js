@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import images from 'src/images/destilleries';
+import { Link } from 'gatsby';
 
 const colors = ['burlywood', 'thistle', 'lightblue', 'salmon'];
 
-const CardRow = styled('div')`
+const CardWrapper = styled('div')`
     position: relative;
     width: 100%;
     border: 1px solid black;
@@ -31,7 +32,6 @@ const Column = styled('div')`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: ${({ index }) => colors[index]};
 `;
 
 const Image = styled('img')`
@@ -55,18 +55,20 @@ const Box = styled('div')`
     }
 `;
 
-const Card = ({ name, place, image, index }) => {
+const Card = ({ name, place, image, index, slug }) => {
     return (
-        <CardRow index={index}>
-            <Column>
-                <Image src={images[image]} />
-                <Box>
-                    <span>Plats: {place}</span>
-                    <h3>Titel: {name}</h3>
-                    <p>Bildtext</p>
-                </Box>
-            </Column>
-        </CardRow>
+        <Link to={slug}>
+            <CardWrapper index={index}>
+                <Column>
+                    <Image src={images[image]} />
+                    <Box>
+                        <span>Plats: {place}</span>
+                        <h3>Titel: {name}</h3>
+                        <p>Bildtext</p>
+                    </Box>
+                </Column>
+            </CardWrapper>
+        </Link>
     );
 };
 
