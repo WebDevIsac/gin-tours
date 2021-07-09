@@ -9,6 +9,7 @@ export const baseStyle = `
         min-height: 100%;
         padding: 0;
         margin: 0;
+        position: relative;
         font-size: 16px;
         line-height: 1em;
         font-weight: 400;
