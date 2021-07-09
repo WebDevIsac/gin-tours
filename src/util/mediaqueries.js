@@ -37,7 +37,7 @@ const below = breakpointMap.reduce((obj, bp) => {
     console.log(obj);
     return {
         ...obj,
-        [bp.label]: `@media (max-width: ${getMaxVAlue(bp.label)})`,
+        [bp.label]: `@media (max-width: ${getMaxValue(bp.label)})`,
     };
 }, {});
 
