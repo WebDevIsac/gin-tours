@@ -8,6 +8,7 @@ const CookieBox = styled('div')`
     bottom: 16px;
     left: 16px;
     padding: 16px;
+    margin-right: 16px;
     color: black;
     background-color: white;
     border: 1px solid darkgrey;
