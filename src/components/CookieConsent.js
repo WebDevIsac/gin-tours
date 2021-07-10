@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import styled from '@emotion/styled';
@@ -27,9 +27,15 @@ const Button = styled('button')`
 `;
 
 const CookieConsent = () => {
-    const [renderConsent, setRenderConsent] = useState(
-        !Cookies.get('cookie_consent')
-    );
+    const [renderConsent, setRenderConsent] = useState(false);
+
+    useEffect(() => {
+        const consentCookie = Cookies.get('cookie_consent');
+
+        if (consentCookie !== 'true') {
+            setRenderConsent(true);
+        }
+    }, []);
 
     const handleCookieConsent = (isAccepted) => {
         console.log(isAccepted);
@@ -38,15 +44,9 @@ const CookieConsent = () => {
 
             setRenderConsent(false);
         } else {
-            Cookies.remove('cookie_consent');
-
             setRenderConsent(false);
         }
-
-        console.log(renderConsent);
     };
-
-    console.log(renderConsent);
 
     return renderConsent ? (
         <CookieBox>
