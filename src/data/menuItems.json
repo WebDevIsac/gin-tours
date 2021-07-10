@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Hem",
+        "slug": "/"
+    },
+    {
+        "title": "Resor",
+        "slug": "/resor"
+    },
+    {
+        "title": "Kontakt",
+        "slug": "/kontakt"
+    },
+    {
+        "title": "Om oss",
+        "slug": "/om-oss"
+    }
+]

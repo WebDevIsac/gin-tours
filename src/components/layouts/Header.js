@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import colors from 'config/colors';
@@ -30,19 +31,36 @@ const Item = styled(Link)`
     line-height: 1em;
 `;
 
-const Header = (props) => {
+const Header = () => {
+    const query = graphql`
+        query {
+            allMenuItemsJson {
+                edges {
+                    node {
+                        title
+                        slug
+                    }
+                }
+            }
+        }
+    `;
+
     return (
-        <Navbar>
-            <Logotype>
-                <Link to="/">GIN TOURS</Link>
-            </Logotype>
-            <Menu>
-                <Item to="/">Hem</Item>
-                <Item to="/resor">Resor</Item>
-                <Item to="/kontakt">Kontakt</Item>
-                <Item to="/om-oss">Om oss</Item>
-            </Menu>
-        </Navbar>
+        <StaticQuery
+            query={query}
+            render={data => (
+                <Navbar>
+                    <Logotype>
+                        <Link to="/">GIN TOURS</Link>
+                    </Logotype>
+                    <Menu>
+                        {data.allMenuItemsJson.edges.map(({ node: { title, slug } }) => (
+                            <Item to={slug}>{title}</Item>
+                        ))}
+                    </Menu>
+                </Navbar>
+            )}
+        />
     );
 };
 
