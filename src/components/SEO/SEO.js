@@ -44,7 +44,7 @@ const SEO = ({ title, description, image }) => {
 
             <Facebook
                 pageUrl={seo.url}
-                type={article ? 'article' : null}
+                type={null}
                 title={seo.title}
                 description={seo.description}
                 image={seo.image}
