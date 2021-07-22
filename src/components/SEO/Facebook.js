@@ -14,21 +14,21 @@ const Facebook = ({ pageUrl, type, title, description, image, appID }) => (
 );
 
 Facebook.propTypes = {
-    pageUrl: PropTypes.string,
-    type: PropTypes.string,
-    title: PropTypes.string,
+    appID: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
-    appID: PropTypes.string,
+    pageUrl: PropTypes.string,
+    title: PropTypes.string,
+    type: PropTypes.string,
 };
 
 Facebook.defaultProps = {
-    pageUrl: null,
-    type: null,
-    title: null,
+    appID: null,
     description: null,
     image: null,
-    appID: null,
+    pageUrl: null,
+    title: null,
+    type: null,
 };
 
 export default Facebook;

@@ -14,18 +14,18 @@ const Twitter = ({ cardType, username, title, description, image }) => (
 
 Twitter.propTypes = {
     cardType: PropTypes.string,
-    username: PropTypes.string,
-    title: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
+    title: PropTypes.string,
+    username: PropTypes.string,
 };
 
 Twitter.defaultProps = {
     cardType: 'summary_large_image',
-    username: null,
-    title: null,
     description: null,
     image: null,
+    title: null,
+    username: null,
 };
 
 export default Twitter;

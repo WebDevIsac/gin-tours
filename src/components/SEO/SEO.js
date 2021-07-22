@@ -22,7 +22,7 @@ const query = graphql`
     }
 `;
 
-const SEO = ({ title, description }) => {
+const SEO = ({ title, description, image }) => {
     const { pathname } = useLocation();
 
     const { site } = useStaticQuery(query);
@@ -44,7 +44,7 @@ const SEO = ({ title, description }) => {
 
             <Facebook
                 pageUrl={seo.url}
-                type={article ? 'article' : null}
+                type={null}
                 title={seo.title}
                 description={seo.description}
                 image={seo.image}
@@ -57,12 +57,14 @@ const SEO = ({ title, description }) => {
 
 SEO.propTypes = {
     description: PropTypes.string,
+    image: PropTypes.string,
     title: PropTypes.string,
 };
 
 SEO.defaultProps = {
-    description: '',
-    title: '',
+    description: null,
+    image: null,
+    title: null,
 };
 
 export default SEO;
