@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import colors from 'config/colors';
-import icons from 'src/images/socials';
+import Svg from 'components/Svg';
 
 const Wrapper = styled('div')`
     display: flex;
@@ -11,22 +11,45 @@ const Wrapper = styled('div')`
     justify-content: center;
 `;
 
-const Item = styled('div')`
-    width: 48px;
-    height: 48px;
+const LinkTag = styled('a')`
+    width: 32px;
+    height: 32px;
+
+    &:not(:last-of-type) {
+        margin-right: 12px;
+    }
+`;
+
+const query = graphql`
+    query {
+        allSocialsJson {
+            edges {
+                node {
+                    name
+                    url
+                    svgPath
+                }
+            }
+        }
+    }
 `;
 
 const Socials = () => {
     const socials = ['instagram', 'facebook', 'pinterest', 'twitter'];
 
     return (
-        <Wrapper>
-            {socials.map((type) => (
-                <Item key={type}>
-                    <img src={icons[type]} />
-                </Item>
-            ))}
-        </Wrapper>
+        <StaticQuery
+            query={query}
+            render={data => (
+                <Wrapper>
+                    {data.allSocialsJson.edges.map(({ node: { title, url, svgPath } }) => (
+                        <LinkTag key={title} href={url} target="_blank" rel="noopener">
+                            <Svg path={svgPath} />
+                        </LinkTag>
+                    ))}
+                </Wrapper>
+            )}
+        />
     );
 };
 
