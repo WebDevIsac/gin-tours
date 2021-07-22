@@ -11,8 +11,12 @@ const query = graphql`
         site {
             siteMetadata {
                 defaultTitle: title
+                titleTemplate
                 defaultDescription: description
                 siteUrl: url
+                defaultImage: image
+                twitterUsername
+                facebookAppID
             }
         }
     }
@@ -23,16 +27,18 @@ const SEO = ({ title, description }) => {
 
     const { site } = useStaticQuery(query);
 
-    const { defaultTitle, defaultDescription, siteUrl } = site.siteMetadata;
+    const { defaultTitle, titleTemplate, defaultDescription, siteUrl, defaultImage, twitterUsername, facebookAppID } =
+        site.siteMetadata;
 
     const seo = {
         title: title || defaultTitle,
         description: description || defaultDescription,
+        image: `${siteUrl}${image || defaultImage}`,
         url: `${siteUrl}${pathname || '/'}`,
     };
 
     return (
-        <Helmet title={seo.title}>
+        <Helmet title={seo.title} titleTemplate={titleTemplate}>
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
 
