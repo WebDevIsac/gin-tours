@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above, below } from 'src/util/mediaqueries';

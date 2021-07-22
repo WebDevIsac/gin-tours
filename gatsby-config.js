@@ -3,7 +3,13 @@ const path = require('path');
 module.exports = {
     siteMetadata: {
         title: 'Gin Tours',
+        titleTemplate: '%s · Gin Tours',
         description: 'Book your tailored gin tour now',
+        url: 'https://gintours.se',
+        image: '/',
+        owner: 'Gin Tours',
+        twitterUsername: '@gin_tours',
+        facebookAppID: '',
     },
     plugins: [
         'gatsby-plugin-emotion',

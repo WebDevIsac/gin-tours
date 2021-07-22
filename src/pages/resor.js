@@ -29,18 +29,9 @@ const Travels = ({ data }) => {
         <>
             <h1>Resor</h1>
             <CardsRow>
-                {travels.map(
-                    ({ node: { title, place, image, slug } }, index) => (
-                        <Card
-                            key={index}
-                            name={title}
-                            place={place}
-                            image={image}
-                            index={index}
-                            slug={slug}
-                        />
-                    )
-                )}
+                {travels.map(({ node: { title, place, image, slug } }, index) => (
+                    <Card key={index} name={title} place={place} image={image} index={index} slug={slug} />
+                ))}
             </CardsRow>
         </>
     );
@@ -61,7 +52,20 @@ export const query = graphql`
     }
 `;
 
-Travels.propTypes = {};
+Travels.propTypes = {
+    data: PropTypes.shape({
+        allTravelsJson: PropTypes.shape({
+            edges: PropTypes.arrayOf({
+                node: PropTypes.shape({
+                    title: PropTypes.string,
+                    place: PropTypes.string,
+                    image: PropTypes.string,
+                    slug: PropTypes.string,
+                }),
+            }),
+        }),
+    }).isRequired,
+};
 
 Travels.Layout = Layout;
 
