@@ -6,7 +6,7 @@ module.exports = {
         titleTemplate: '%s · Gin Tours',
         description: 'Book your tailored gin tour now',
         url: 'https://gintours.se',
-        // image: '/images/test.jpg',
+        image: '/',
         owner: 'Gin Tours',
         twitterUsername: '@gin_tours',
         facebookAppID: '',
