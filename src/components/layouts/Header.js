@@ -15,9 +15,9 @@ const Navbar = styled('div')`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 32px;
-    border-bottom: 1px solid ${colors.black};
-    background-color: white;
+    padding: 24px 32px;
+    color: ${colors.white};
+    background-color: ${colors.greige};
 `;
 
 const Logotype = styled('div')`
@@ -43,7 +43,7 @@ const Line = styled('span')`
     display: inline-block;
     width: 100%;
     height: 2px;
-    background-color: black;
+    background-color: ${colors.black};
 `;
 
 const Menu = styled('div')`
@@ -59,7 +59,7 @@ const Menu = styled('div')`
         left: 0;
         right: 0;
         transform: translateY(-100%);
-        background-color: white;
+        background-color: ${colors.white};
 
         &.is-open {
             transform: translateY(0);

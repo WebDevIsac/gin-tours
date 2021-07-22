@@ -10,7 +10,7 @@ const FooterWrapper = styled('div')`
     justify-content: space-around;
     align-items: center;
     padding: 32px;
-    background-color: darkslategrey;
+    background-color: ${colors.greige};
     color: ${colors.white};
     font-size: 18px;
     line-height: 1em;
