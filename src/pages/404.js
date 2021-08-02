@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { Link } from 'gatsby';
+import React from 'react';
 
 const NotFoundPage = () => {
-    return <h1>404</h1>;
+    return <h1>Detta är 404 sidan</h1>;
 };
 
 export default NotFoundPage;

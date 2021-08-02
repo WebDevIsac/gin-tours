@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react';
 import { baseStyle, resetStyle } from 'config/style';
 import CookieConsent from 'components/CookieConsent';
+import CookieUnderAge from 'components/CookieUnderAge';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -26,6 +27,7 @@ const Layout = ({ children }) => {
             <PageWrapper>{children}</PageWrapper>
             <Footer />
             <CookieConsent />
+            <CookieUnderAge />
         </Page>
     );
 };

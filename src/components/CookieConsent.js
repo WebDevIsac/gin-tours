@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import styled from '@emotion/styled';
+import colors from 'config/colors';
 
 const CookieBox = styled('div')`
     position: fixed;
     bottom: 16px;
     left: 16px;
-    padding: 16px;
+    padding: 24px 48px 24px 24px;
+    max-width: 520px;
     margin-right: 16px;
-    color: black;
-    background-color: white;
-    border: 1px solid darkgrey;
-    border-radius: 25px;
+    color: ${colors.white};
+    background-color: ${colors.blue};
 `;
 
 const Button = styled('button')`
-    padding: 12px;
-    color: white;
-    background-color: grey;
-    border-radius: 10px;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 24px;
+`;
+
+const Paragraph = styled('p')`
+    margin: 0;
+    font-size: 18px;
+    line-height: 1em;
 
     &:first-of-type {
-        margin-right: 8px;
+        margin-bottom: 16px;
     }
 `;
 
@@ -37,33 +42,21 @@ const CookieConsent = () => {
         }
     }, []);
 
-    const handleCookieConsent = (isAccepted) => {
-        console.log(isAccepted);
-        if (isAccepted) {
-            Cookies.set('cookie_consent', 'true', { expires: 30 });
+    const handleClick = () => {
+        Cookies.set('cookie_consent', 'true', { expires: 30 });
 
-            setRenderConsent(false);
-        } else {
-            setRenderConsent(false);
-        }
+        setRenderConsent(false);
     };
 
     return renderConsent ? (
         <CookieBox>
-            <p>
-                Vi använder cookies för att förenkla och ge dig en bättre
-                upplevelse på vår webbplats.
-            </p>
-            <p>
-                Genom att acceptera bekräftar du att du samtycker till vår
-                användning av kakor.
-            </p>
-            <Button type="button" onClick={() => handleCookieConsent(true)}>
-                Acceptera
+            <Button type="button" onClick={handleClick}>
+                ✕
             </Button>
-            <Button type="button" onClick={() => handleCookieConsent(false)}>
-                Neka
-            </Button>
+            <Paragraph>
+                Vi använder cookies för att förenkla och ge dig en bättre upplevelse på vår webbplats.
+            </Paragraph>
+            <Paragraph>Genom att använda vår site accepterar du detta</Paragraph>
         </CookieBox>
     ) : null;
 };

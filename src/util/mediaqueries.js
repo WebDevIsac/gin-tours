@@ -11,15 +11,12 @@ const breakpointMap = breakpoints.reduce((arr, size, index) => {
     ];
 }, []);
 
-const getMaxValue = (label) => {
+const getMaxValue = label => {
     if (label === null) {
         return;
     }
 
-    const breakpointValue =
-        typeof label === 'object'
-            ? label.size
-            : breakpointMap.find((bp) => bp.label === label).size;
+    const breakpointValue = typeof label === 'object' ? label.size : breakpointMap.find(bp => bp.label === label).size;
     const postfix = breakpointValue.match(/[a-zA-Z]+/) || '';
     const value = parseInt(breakpointValue, 10);
 
@@ -40,6 +37,6 @@ const below = breakpointMap.reduce((obj, bp) => {
     };
 }, {});
 
-const media = { hover: '@media (hover: hover), (-ms-high-contrast: none)' };
+const hover = '@media (hover: hover), (-ms-high-contrast: none)';
 
-export { above, below, media };
+export { above, below, hover };
