@@ -20,6 +20,7 @@ module.exports = {
                 pages: path.join(__dirname, 'src/pages'),
                 config: path.join(__dirname, 'src/config'),
                 components: path.join(__dirname, 'src/components'),
+                util: path.join(__dirname, 'src/util'),
             },
         },
         `gatsby-transformer-json`,
