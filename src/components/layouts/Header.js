@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
-import { above, below } from 'src/util/mediaqueries';
+import { above, below, hover } from 'src/util/mediaqueries';
 import colors from 'config/colors';
 
 const Navbar = styled('div')`
@@ -15,6 +15,7 @@ const Navbar = styled('div')`
     align-items: center;
     justify-content: space-between;
     padding: 24px 32px;
+    height: 84px;
     color: ${colors.white};
     background-color: ${colors.greige};
 `;
@@ -70,6 +71,14 @@ const Item = styled(Link)`
     padding: 8px 12px;
     font-size: 18px;
     line-height: 1em;
+    transition: all 200ms ease;
+    border-bottom: 1px solid transparent;
+
+    ${hover} {
+        &:hover {
+            border-bottom-color: ${colors.white};
+        }
+    }
 `;
 
 const query = graphql`

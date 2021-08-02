@@ -7,13 +7,15 @@ const PageLayout = styled('main')`
     flex-direction: column;
     align-items: center;
     max-width: 2400px;
-    margin: 0 auto;
+    margin: 84px auto 0;
 `;
 
 const PageWrapper = ({ children }) => {
     return <PageLayout>{children}</PageLayout>;
 };
 
-PageWrapper.propTypes = {};
+PageWrapper.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default PageWrapper;
