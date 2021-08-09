@@ -56,7 +56,7 @@ const CookieConsent = () => {
             <Paragraph>
                 Vi använder cookies för att förenkla och ge dig en bättre upplevelse på vår webbplats.
             </Paragraph>
-            <Paragraph>Genom att använda vår site accepterar du detta</Paragraph>
+            <Paragraph>Genom att använda vår site accepterar du detta.</Paragraph>
         </CookieBox>
     ) : null;
 };
