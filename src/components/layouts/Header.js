@@ -3,6 +3,7 @@ import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'src/util/mediaqueries';
 import colors from 'config/colors';
+import logo from 'src/images/logo.png';
 
 const Navbar = styled('div')`
     position: fixed;
@@ -133,7 +134,9 @@ const Header = () => {
             render={data => (
                 <Navbar className={isOpen ? 'is-open' : ''}>
                     <Logotype>
-                        <Link to="/">GIN TOURS</Link>
+                        <Link to="/">
+                            <img width="200px" src={logo} />
+                        </Link>
                     </Logotype>
                     <Hamburger onClick={handleMenuState}>
                         <Line />
