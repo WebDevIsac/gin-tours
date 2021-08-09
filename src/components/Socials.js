@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import SVG from 'components/SVG';
+import SocialIcon from 'components/icons/SocialIcon';
 
 const Wrapper = styled('div')`
     display: flex;
@@ -42,7 +42,7 @@ const Socials = () => {
                 <Wrapper>
                     {data.allSocialsJson.edges.map(({ node: { title, url, svgPath } }) => (
                         <LinkTag key={title} href={url} target="_blank" rel="noopener">
-                            <SVG path={svgPath} />
+                            <SocialIcon path={svgPath} />
                         </LinkTag>
                     ))}
                 </Wrapper>
