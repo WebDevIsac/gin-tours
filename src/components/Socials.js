@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import Svg from 'components/Svg';
+import SocialIcon from 'components/icons/SocialIcon';
 
 const Wrapper = styled('div')`
     display: flex;
@@ -35,8 +35,6 @@ const query = graphql`
 `;
 
 const Socials = () => {
-    const socials = ['instagram', 'facebook', 'pinterest', 'twitter'];
-
     return (
         <StaticQuery
             query={query}
@@ -44,7 +42,7 @@ const Socials = () => {
                 <Wrapper>
                     {data.allSocialsJson.edges.map(({ node: { title, url, svgPath } }) => (
                         <LinkTag key={title} href={url} target="_blank" rel="noopener">
-                            <Svg path={svgPath} />
+                            <SocialIcon path={svgPath} />
                         </LinkTag>
                     ))}
                 </Wrapper>

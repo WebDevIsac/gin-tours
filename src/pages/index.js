@@ -27,8 +27,7 @@ const Paragraph = styled('p')`
 const StartPage = () => {
     return (
         <>
-            {/* eslint-disable-next-line react/jsx-pascal-case */}
-            <SEO />
+            <SEO title="Start" />
             <Wrapper>
                 <Image src="https://s3-eu-west-1.amazonaws.com/v2.beefeatergin.com/stage/Article/8187/hero/1/hero_1920x858.jpeg" />
                 <TextWrapper>

@@ -3,10 +3,11 @@ import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'src/util/mediaqueries';
 import colors from 'config/colors';
+import logo from 'src/images/logo.png';
 
 const Navbar = styled('div')`
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     right: 0;
@@ -43,7 +44,7 @@ const Line = styled('span')`
     display: inline-block;
     width: 100%;
     height: 2px;
-    background-color: ${colors.black};
+    background-color: ${colors.white};
 `;
 
 const Menu = styled('div')`
@@ -54,15 +55,18 @@ const Menu = styled('div')`
     ${below.md} {
         flex-direction: column;
         position: absolute;
-        z-index: 2;
-        top: 0;
-        left: 0;
+        z-index: 1;
+        top: 84px;
+        left: 64px;
         right: 0;
-        transform: translateY(-100%);
+        height: calc(100vh - 84px);
+        transition: transform 300ms ease;
+        transform: translateX(100%);
+        color: ${colors.black};
         background-color: ${colors.white};
 
-        &.is-open {
-            transform: translateY(0);
+        .is-open > & {
+            transform: translateX(0);
         }
     }
 `;
@@ -77,6 +81,23 @@ const Item = styled(Link)`
     ${hover} {
         &:hover {
             border-bottom-color: ${colors.white};
+        }
+    }
+`;
+
+const BackgroundWrapper = styled('div')`
+    display: none;
+
+    ${below.md} {
+        position: absolute;
+        top: 84px;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.8);
+
+        .is-open > & {
+            display: block;
         }
     }
 `;
@@ -111,22 +132,25 @@ const Header = () => {
         <StaticQuery
             query={query}
             render={data => (
-                <Navbar>
+                <Navbar className={isOpen ? 'is-open' : ''}>
                     <Logotype>
-                        <Link to="/">GIN TOURS</Link>
+                        <Link to="/">
+                            <img width="200px" src={logo} />
+                        </Link>
                     </Logotype>
                     <Hamburger onClick={handleMenuState}>
                         <Line />
                         <Line />
                         <Line />
                     </Hamburger>
-                    <Menu className={isOpen ? 'is-open' : ''}>
+                    <Menu>
                         {data.allMenuItemsJson.edges.map(({ node: { title, slug } }) => (
                             <Item to={slug} key={title} onClick={() => handleMenuState(true)}>
                                 {title}
                             </Item>
                         ))}
                     </Menu>
+                    <BackgroundWrapper onClick={() => handleMenuState(true)} />
                 </Navbar>
             )}
         />

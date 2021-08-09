@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import { above } from 'src/util/mediaqueries';
+import SEO from 'components/SEO/SEO';
 import Layout from 'components/layouts/Layout';
 import Card from 'components/Card';
 
@@ -24,10 +25,12 @@ const CardsRow = styled('div')`
 
 const Travels = ({ data }) => {
     const travels = data.allTravelsJson.edges;
+    const title = 'Resor';
 
     return (
         <>
-            <h1>Resor</h1>
+            <SEO title={title} />
+            <h1>{title}</h1>
             <CardsRow>
                 {travels.map(({ node: { title, place, image, slug } }, index) => (
                     <Card key={index} name={title} place={place} image={image} index={index} slug={slug} />
