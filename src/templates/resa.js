@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import images from 'src/images/destilleries';
+import BookingForm from 'components/BookingForm';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -22,6 +23,7 @@ const Travel = ({ data }) => {
             <Wrapper>
                 <h1>{title}</h1>
                 <Image src={images[image]} />
+                <BookingForm />
             </Wrapper>
         </>
     );
