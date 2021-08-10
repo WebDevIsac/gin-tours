@@ -3,16 +3,26 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
+import SEO from 'components/SEO/SEO';
 import images from 'src/images/destilleries';
+
+const Wrapper = styled('div')`
+    width: 100%;
+    height: 100%;
+`;
 
 const Image = styled('img')``;
 
 const Travel = ({ data }) => {
     const { title, image } = data.travelsJson;
+
     return (
         <>
-            <h1>{title}</h1>
-            <Image src={images[image]} />
+            <SEO title={title} />
+            <Wrapper>
+                <h1>{title}</h1>
+                <Image src={images[image]} />
+            </Wrapper>
         </>
     );
 };
@@ -26,7 +36,14 @@ export const query = graphql`
     }
 `;
 
-Travel.propTypes = {};
+Travel.propTypes = {
+    data: PropTypes.shape({
+        travelsJson: PropTypes.shape({
+            image: PropTypes.string,
+            title: PropTypes.string,
+        }),
+    }).isRequired,
+};
 
 Travel.Layout = Layout;
 
