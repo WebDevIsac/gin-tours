@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import images from 'src/images/destilleries';
+import images from 'images/destilleries';
 import BookingForm from 'components/BookingForm';
 
 const Wrapper = styled('div')`

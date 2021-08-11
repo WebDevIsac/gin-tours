@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import { above } from 'src/util/mediaqueries';
+import { above } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
 import Layout from 'components/layouts/Layout';
 import Card from 'components/Card';
