@@ -4,7 +4,7 @@ module.exports = {
     siteMetadata: {
         title: 'Gin Tours',
         titleTemplate: '%s · Gin Tours',
-        description: 'Book your tailored gin tour now',
+        description: 'Boka din skräddarsydda ginresa idag',
         url: 'https://gintours.se',
         image: '/',
         owner: 'Gin Tours',
@@ -18,9 +18,11 @@ module.exports = {
             options: {
                 src: path.join(__dirname, 'src'),
                 pages: path.join(__dirname, 'src/pages'),
-                config: path.join(__dirname, 'src/config'),
+                templates: path.join(__dirname, 'src/templates'),
                 components: path.join(__dirname, 'src/components'),
+                config: path.join(__dirname, 'src/config'),
                 util: path.join(__dirname, 'src/util'),
+                images: path.join(__dirname, 'src/images'),
             },
         },
         `gatsby-transformer-json`,
