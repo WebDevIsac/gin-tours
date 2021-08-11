@@ -1,10 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import images from 'src/images/destilleries';
+import images from 'images/destilleries';
 import { Link } from 'gatsby';
-
-const colors = ['burlywood', 'thistle', 'lightblue', 'salmon'];
 
 const CardWrapper = styled('div')`
     position: relative;
@@ -72,6 +69,12 @@ const Card = ({ name, place, image, index, slug }) => {
     );
 };
 
-Card.propTypes = {};
+Card.propTypes = {
+    image: PropTypes.string.isRequired,
+    index: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    place: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+};
 
 export default Card;

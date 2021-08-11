@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
-import { above, below, hover } from 'src/util/mediaqueries';
+import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
-import logo from 'src/images/logo.png';
+import logo from 'images/logo.png';
 
 const Navbar = styled('div')`
     position: fixed;
