@@ -1,7 +1,9 @@
+import './fonts.css';
+
 export const baseStyle = `
     html {
+        font-family: 'EBGaramond';
         height: 100%;
-        font-family: 'Akkurat';
         color: #000;
     }
 

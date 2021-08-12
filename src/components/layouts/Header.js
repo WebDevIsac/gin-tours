@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
@@ -35,7 +35,7 @@ const Hamburger = styled('div')`
     position: relative;
     z-index: 3;
 
-    ${above.md} {
+    ${above.lg} {
         display: none;
     }
 `;
@@ -52,18 +52,19 @@ const Menu = styled('div')`
     flex-direction: row;
     align-items: center;
 
-    ${below.md} {
+    ${below.lg} {
         flex-direction: column;
         position: absolute;
         z-index: 1;
-        top: 84px;
-        left: 64px;
         right: 0;
+        top: 84px;
+        width: 80vw;
+        max-width: 360px;
         height: calc(100vh - 84px);
         transition: transform 300ms ease;
         transform: translateX(100%);
-        color: ${colors.black};
-        background-color: ${colors.white};
+        background-color: ${colors.greige};
+        padding-top: 32px;
 
         .is-open > & {
             transform: translateX(0);
@@ -72,11 +73,21 @@ const Menu = styled('div')`
 `;
 
 const Item = styled(Link)`
-    padding: 8px 12px;
-    font-size: 18px;
+    font-size: 28px;
     line-height: 1em;
-    transition: all 200ms ease;
-    border-bottom: 1px solid transparent;
+    padding: 8px 0;
+    margin-bottom: 32px;
+    width: 100%;
+    text-align: center;
+
+    ${above.lg} {
+        width: auto;
+        padding: 8px 12px;
+        font-size: 18px;
+        margin-bottom: 0;
+        transition: border-bottom 1s ease;
+        border-bottom: 1px solid transparent;
+    }
 
     ${hover} {
         &:hover {
@@ -88,7 +99,7 @@ const Item = styled(Link)`
 const BackgroundWrapper = styled('div')`
     display: none;
 
-    ${below.md} {
+    ${below.lg} {
         position: absolute;
         top: 84px;
         left: 0;
@@ -118,15 +129,35 @@ const query = graphql`
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleMenuState = (justClose = false) => {
-        if (justClose && isOpen) {
-            setIsOpen(false);
-
-            return;
-        }
-
-        setIsOpen(!isOpen);
+    const closeMenu = () => {
+        setIsOpen(false);
+        document.querySelector('body').classList.remove('prevent-scroll');
     };
+
+    const openMenu = () => {
+        setIsOpen(true);
+        document.querySelector('body').classList.add('prevent-scroll');
+    };
+
+    const handleMenuState = (e, justClose = false) => {
+        if (isOpen) {
+            closeMenu();
+        } else if (!justClose) {
+            openMenu();
+        }
+    };
+
+    const handleResizeEvent = () => {
+        if (window.innerWidth >= 1024) {
+            closeMenu();
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResizeEvent);
+
+        return () => window.removeEventListener('resize', handleResizeEvent);
+    }, []);
 
     return (
         <StaticQuery
@@ -145,12 +176,12 @@ const Header = () => {
                     </Hamburger>
                     <Menu>
                         {data.allMenuItemsJson.edges.map(({ node: { title, slug } }) => (
-                            <Item to={slug} key={title} onClick={() => handleMenuState(true)}>
+                            <Item to={slug} key={title} onClick={e => handleMenuState(e, true)}>
                                 {title}
                             </Item>
                         ))}
                     </Menu>
-                    <BackgroundWrapper onClick={() => handleMenuState(true)} />
+                    <BackgroundWrapper onClick={e => handleMenuState(e, true)} />
                 </Navbar>
             )}
         />

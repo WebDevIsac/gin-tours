@@ -31,6 +31,7 @@ const Input = styled('input')`
     font-size: 16px;
     border-radius: 0;
     border: 1px solid ${colors.darkBlue};
+    background-color: ${colors.white};
     outline: none;
 `;
 
@@ -42,6 +43,7 @@ const Select = styled('select')`
     font-size: 16px;
     border-radius: 0;
     border: 1px solid ${colors.darkBlue};
+    background-color: ${colors.white};
     outline: none;
 `;
 

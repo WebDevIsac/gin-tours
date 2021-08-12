@@ -15,7 +15,9 @@ const Wrapper = styled('div')`
     align-items: center;
 `;
 
-const Image = styled('img')``;
+const Image = styled('img')`
+    width: 100%;
+`;
 
 const Travel = ({ data }) => {
     const { title, image } = data.travelsJson;

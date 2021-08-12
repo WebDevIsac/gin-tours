@@ -3,8 +3,8 @@ import Cookies from 'js-cookie';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import { useLocation } from '@reach/router';
+import { above, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
-import { hover } from 'util/mediaqueries';
 
 const OverlayWrapper = styled('div')`
     position: fixed;
@@ -23,7 +23,6 @@ const CookieBox = styled('div')`
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     z-index: 1;
-    padding: 48px;
     color: black;
     background-color: ${colors.greige};
     border: 2px solid ${colors.white};
@@ -31,28 +30,35 @@ const CookieBox = styled('div')`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 16px;
+    min-width: 300px;
+
+    ${above.lg} {
+        padding: 48px;
+    }
 `;
 
 const Buttons = styled('div')`
     margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
 `;
 
 const Button = styled('button')`
     padding: 12px;
     color: white;
     background-color: ${colors.darkBlue};
-    width: 120px;
-    display: inline-block;
+    width: calc(50% - 4px);
+    display: block;
     text-align: center;
 
     ${hover} {
         &:hover {
             opacity: 0.8;
         }
-    }
-
-    &:first-of-type {
-        margin-right: 8px;
     }
 `;
 
@@ -62,8 +68,6 @@ const CookieUnderAge = () => {
 
     useEffect(() => {
         const underAge = Cookies.get('under-age');
-
-        console.log(pathname);
 
         if (pathname !== '/under-20' && underAge !== 'true') {
             setRenderBox(true);
