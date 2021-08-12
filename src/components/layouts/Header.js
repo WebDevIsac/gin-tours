@@ -56,14 +56,15 @@ const Menu = styled('div')`
         flex-direction: column;
         position: absolute;
         z-index: 1;
-        top: 84px;
-        left: 64px;
         right: 0;
+        top: 84px;
+        width: 80vw;
+        max-width: 360px;
         height: calc(100vh - 84px);
         transition: transform 300ms ease;
         transform: translateX(100%);
-        color: ${colors.black};
-        background-color: ${colors.white};
+        background-color: ${colors.greige};
+        padding-top: 32px;
 
         .is-open > & {
             transform: translateX(0);
@@ -72,11 +73,21 @@ const Menu = styled('div')`
 `;
 
 const Item = styled(Link)`
-    padding: 8px 12px;
-    font-size: 18px;
+    font-size: 28px;
     line-height: 1em;
-    transition: all 200ms ease;
-    border-bottom: 1px solid transparent;
+    padding: 8px 0;
+    margin-bottom: 32px;
+    width: 100%;
+    text-align: center;
+
+    ${above.lg} {
+        width: auto;
+        padding: 8px 12px;
+        font-size: 18px;
+        margin-bottom: 0;
+        transition: border-bottom 1s ease;
+        border-bottom: 1px solid transparent;
+    }
 
     ${hover} {
         &:hover {
