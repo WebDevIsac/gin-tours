@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
@@ -35,7 +35,7 @@ const Hamburger = styled('div')`
     position: relative;
     z-index: 3;
 
-    ${above.md} {
+    ${above.lg} {
         display: none;
     }
 `;
@@ -52,7 +52,7 @@ const Menu = styled('div')`
     flex-direction: row;
     align-items: center;
 
-    ${below.md} {
+    ${below.lg} {
         flex-direction: column;
         position: absolute;
         z-index: 1;
@@ -99,7 +99,7 @@ const Item = styled(Link)`
 const BackgroundWrapper = styled('div')`
     display: none;
 
-    ${below.md} {
+    ${below.lg} {
         position: absolute;
         top: 84px;
         left: 0;
@@ -129,15 +129,35 @@ const query = graphql`
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleMenuState = (justClose = false) => {
-        if (justClose && isOpen) {
-            setIsOpen(false);
-
-            return;
-        }
-
-        setIsOpen(!isOpen);
+    const closeMenu = () => {
+        setIsOpen(false);
+        document.querySelector('body').classList.remove('prevent-scroll');
     };
+
+    const openMenu = () => {
+        setIsOpen(true);
+        document.querySelector('body').classList.add('prevent-scroll');
+    };
+
+    const handleMenuState = (e, justClose = false) => {
+        if (isOpen) {
+            closeMenu();
+        } else if (!justClose) {
+            openMenu();
+        }
+    };
+
+    const handleResizeEvent = () => {
+        if (window.innerWidth >= 1024) {
+            closeMenu();
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResizeEvent);
+
+        return () => window.removeEventListener('resize', handleResizeEvent);
+    }, []);
 
     return (
         <StaticQuery
@@ -156,12 +176,12 @@ const Header = () => {
                     </Hamburger>
                     <Menu>
                         {data.allMenuItemsJson.edges.map(({ node: { title, slug } }) => (
-                            <Item to={slug} key={title} onClick={() => handleMenuState(true)}>
+                            <Item to={slug} key={title} onClick={e => handleMenuState(e, true)}>
                                 {title}
                             </Item>
                         ))}
                     </Menu>
-                    <BackgroundWrapper onClick={() => handleMenuState(true)} />
+                    <BackgroundWrapper onClick={e => handleMenuState(e, true)} />
                 </Navbar>
             )}
         />
