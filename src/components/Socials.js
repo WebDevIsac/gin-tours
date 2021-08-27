@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import SocialIcon from 'components/icons/SocialIcon';
@@ -40,8 +39,8 @@ const Socials = () => {
             query={query}
             render={data => (
                 <Wrapper>
-                    {data.allSocialsJson.edges.map(({ node: { title, url, svgPath } }) => (
-                        <LinkTag key={title} href={url} target="_blank" rel="noopener">
+                    {data.allSocialsJson.edges.map(({ node: { url, svgPath } }, index) => (
+                        <LinkTag key={index} href={url} target="_blank" rel="noopener">
                             <SocialIcon path={svgPath} />
                         </LinkTag>
                     ))}
@@ -50,7 +49,5 @@ const Socials = () => {
         />
     );
 };
-
-Socials.propTypes = {};
 
 export default Socials;
