@@ -32,8 +32,8 @@ const Travels = ({ data }) => {
             <SEO title={title} />
             <h1>{title}</h1>
             <CardsRow>
-                {travels.map(({ node: { title, place, image, slug } }, index) => (
-                    <Card key={index} name={title} place={place} image={image} index={index} slug={slug} />
+                {travels.map(({ node }, index) => (
+                    <Card key={index} {...node} />
                 ))}
             </CardsRow>
         </>
@@ -58,14 +58,11 @@ export const query = graphql`
 Travels.propTypes = {
     data: PropTypes.shape({
         allTravelsJson: PropTypes.shape({
-            edges: PropTypes.arrayOf({
-                node: PropTypes.shape({
-                    title: PropTypes.string,
-                    place: PropTypes.string,
-                    image: PropTypes.string,
-                    slug: PropTypes.string,
-                }),
-            }),
+            edges: PropTypes.arrayOf(
+                PropTypes.shape({
+                    node: PropTypes.object,
+                })
+            ),
         }),
     }).isRequired,
 };
