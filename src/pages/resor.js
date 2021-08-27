@@ -58,14 +58,11 @@ export const query = graphql`
 Travels.propTypes = {
     data: PropTypes.shape({
         allTravelsJson: PropTypes.shape({
-            edges: PropTypes.arrayOf({
-                node: PropTypes.shape({
-                    title: PropTypes.string,
-                    place: PropTypes.string,
-                    image: PropTypes.string,
-                    slug: PropTypes.string,
-                }),
-            }),
+            edges: PropTypes.arrayOf(
+                PropTypes.shape({
+                    node: PropTypes.object,
+                })
+            ),
         }),
     }).isRequired,
 };

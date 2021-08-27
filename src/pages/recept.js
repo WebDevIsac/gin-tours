@@ -55,6 +55,7 @@ export const query = graphql`
                     slug
                     creator
                     image
+                    ingredients
                 }
             }
         }
@@ -64,14 +65,11 @@ export const query = graphql`
 Recipes.propTypes = {
     data: PropTypes.shape({
         allRecipesJson: PropTypes.shape({
-            edges: PropTypes.arrayOf({
-                node: PropTypes.shape({
-                    title: PropTypes.string,
-                    place: PropTypes.string,
-                    image: PropTypes.string,
-                    slug: PropTypes.string,
-                }),
-            }),
+            edges: PropTypes.arrayOf(
+                PropTypes.exact({
+                    node: PropTypes.object,
+                })
+            ),
         }),
     }).isRequired,
 };
