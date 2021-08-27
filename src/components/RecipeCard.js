@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import images from 'images/recipes';
@@ -28,27 +28,69 @@ const CardWrapper = styled('div')`
 const Column = styled('div')`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     color: ${colors.white};
     background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
     background-size: cover;
     background-position: center;
+    padding: 16px 0;
 `;
 
 const Box = styled('div')`
     font-size: 24px;
 `;
 
-const RecipeCard = ({ title, image, slug }) => {
+const List = styled('div')`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 16px;
+
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+`;
+
+const Span = styled('span')`
+    font-size: 18px;
+    text-align: center;
+
+    &:not(:last-of-type) {
+        margin-bottom: 12px;
+    }
+`;
+
+const BottomLink = styled('div')`
+    margin: 0 16px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 12px;
+    border-radius: 20px;
+`;
+
+const RecipeCard = ({ title, image, slug, ingredients }) => {
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    const handleNavigation = e => {
+        e.stopPropagation();
+    };
+
     return (
-        <CardWrapper>
+        <CardWrapper onClick={() => setIsFlipped(bool => !bool)}>
             <Column backgroundImage={images[image]}>
                 <Box>
                     <h3>{title}</h3>
-                    <Link to={slug}>Läs hela recepter</Link>
                 </Box>
+                <List>
+                    {ingredients.map((ingredient, index) => (
+                        <Span key={index}>{ingredient}</Span>
+                    ))}
+                </List>
+                <BottomLink>
+                    <Link to={`/recept${slug}`} onClick={handleNavigation}>
+                        Läs hela receptet
+                    </Link>
+                </BottomLink>
             </Column>
         </CardWrapper>
     );
@@ -56,6 +98,7 @@ const RecipeCard = ({ title, image, slug }) => {
 
 RecipeCard.propTypes = {
     image: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
     title: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
 };
