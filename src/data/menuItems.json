@@ -8,6 +8,10 @@
         "slug": "/resor"
     },
     {
+        "title": "Recept",
+        "slug": "/recept"
+    },
+    {
         "title": "Kontakt",
         "slug": "/kontakt"
     },

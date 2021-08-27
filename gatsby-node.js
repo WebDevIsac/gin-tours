@@ -8,15 +8,33 @@ exports.createPages = async ({ actions, graphql }) => {
                     }
                 }
             }
+
+            allRecipesJson {
+                edges {
+                    node {
+                        slug
+                    }
+                }
+            }
         }
     `);
 
-    data.allTravelsJson.edges.forEach((edge) => {
+    data.allTravelsJson.edges.forEach(edge => {
         const slug = edge.node.slug;
 
         actions.createPage({
             path: slug,
             component: require.resolve('./src/templates/resa.js'),
+            context: { slug },
+        });
+    });
+
+    data.allRecipesJson.edges.forEach(edge => {
+        const slug = edge.node.slug;
+
+        actions.createPage({
+            path: `/recept${slug}`,
+            component: require.resolve('./src/templates/recept.js'),
             context: { slug },
         });
     });

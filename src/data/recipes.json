@@ -1,26 +1,26 @@
 [
     {
-        "title": "Hernö",
-        "slug": "/herno",
-        "place": "Härnösand",
-        "image": "herno"
+        "title": "LET’S CALL IT A SPRITZ",
+        "slug": "/call-it-sprits",
+        "creator": "Stockholms Bränneri",
+        "image": "drink"
     },
     {
-        "title": "Stockholms Bränneri",
-        "slug": "/stockholm",
-        "place": "Stockholm",
-        "image": "stockholm"
+        "title": "LET’S CALL IT A SPRITZ",
+        "slug": "/call-it-sprits",
+        "creator": "Stockholms Bränneri",
+        "image": "drink"
     },
     {
-        "title": "Lydens Gin",
-        "slug": "/lyden",
-        "place": "Ljungby",
-        "image": "lyden"
+        "title": "LET’S CALL IT A SPRITZ",
+        "slug": "/call-it-sprits",
+        "creator": "Stockholms Bränneri",
+        "image": "drink"
     },
     {
-        "title": "Hellströms Gin",
-        "slug": "/hellstrom",
-        "place": "Gotland",
-        "image": "hellstrom"
+        "title": "LET’S CALL IT A SPRITZ",
+        "slug": "/call-it-sprits",
+        "creator": "Stockholms Bränneri",
+        "image": "drink"
     }
 ]
