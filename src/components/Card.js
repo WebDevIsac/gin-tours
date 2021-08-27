@@ -53,15 +53,15 @@ const Box = styled('div')`
     }
 `;
 
-const Card = ({ name, place, image, index, slug }) => {
+const Card = ({ title, place, image, slug }) => {
     return (
         <Link to={slug}>
-            <CardWrapper index={index}>
+            <CardWrapper>
                 <Column>
                     <Image src={images[image]} />
                     <Box>
                         <span>Plats: {place}</span>
-                        <h3>Titel: {name}</h3>
+                        <h3>Titel: {title}</h3>
                         <p>Bildtext</p>
                     </Box>
                 </Column>
@@ -72,8 +72,7 @@ const Card = ({ name, place, image, index, slug }) => {
 
 Card.propTypes = {
     image: PropTypes.string.isRequired,
-    index: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     place: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
 };

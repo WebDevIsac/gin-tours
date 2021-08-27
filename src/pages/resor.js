@@ -32,8 +32,8 @@ const Travels = ({ data }) => {
             <SEO title={title} />
             <h1>{title}</h1>
             <CardsRow>
-                {travels.map(({ node: { title, place, image, slug } }, index) => (
-                    <Card key={index} name={title} place={place} image={image} index={index} slug={slug} />
+                {travels.map(({ node }, index) => (
+                    <Card key={index} {...node} />
                 ))}
             </CardsRow>
         </>

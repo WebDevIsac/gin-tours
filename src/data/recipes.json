@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Hernö",
+        "slug": "/herno",
+        "place": "Härnösand",
+        "image": "herno"
+    },
+    {
+        "title": "Stockholms Bränneri",
+        "slug": "/stockholm",
+        "place": "Stockholm",
+        "image": "stockholm"
+    },
+    {
+        "title": "Lydens Gin",
+        "slug": "/lyden",
+        "place": "Ljungby",
+        "image": "lyden"
+    },
+    {
+        "title": "Hellströms Gin",
+        "slug": "/hellstrom",
+        "place": "Gotland",
+        "image": "hellstrom"
+    }
+]
