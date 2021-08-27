@@ -16,7 +16,7 @@ const Wrapper = styled('div')`
 `;
 
 const Image = styled('img')`
-    width: 100%;
+    width: 50%;
 `;
 
 const Travel = ({ data }) => {
