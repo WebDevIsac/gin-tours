@@ -10,45 +10,96 @@
             "2 cl Stockholms Aperitif - Röd",
             "2 cl Fresh Lemon Juice",
             "2 cl Honey Water"
-        ]
+        ],
+        "instructions": "*Honey Water: Honey in equal parts of warm water (chilled). Shake all above, follow by straining into your favorite high ball glass with tons of ice. Enjoy!",
+        "link": "https://www.stockholmsbranneri.com/callitaspritz"
     },
     {
-        "title": "LET’S CALL IT A SPRITZ",
-        "slug": "/call-it-sprits",
+        "title": "Pickled Midsummer",
+        "slug": "/pickled-midsummer",
         "creator": "Stockholms Bränneri",
         "image": "drink",
         "ingredients": [
-            "6 cl Sparkling Wine or Pet Nat (Erik used Lindenlaub - Apres l’Heure PetNat)",
-            "2 cl Stockholms Bränneri Pink gin",
+            "3 cl Stockholms Akvavit",
             "2 cl Stockholms Aperitif - Röd",
-            "2 cl Fresh Lemon Juice",
-            "2 cl Honey Water"
-        ]
+            "2 cl Honey Water (10:1)",
+            "3 cl Fresh Lemon Juice",
+            "2 cl Pickle Juice*",
+            "A dried dill sprig for garnish"
+        ],
+        "instructions": "Shake the above with ice and double strain into a Nick & Nora glass, garnish with dried dill. *The pickle juice is made from the botanicals of our Akvavit - juniper berries, angelica root, coriander seeds, heather, elderflower, caraway & fennel seeds, that are mixed together with water, apple cider vinegar and sugar.",
+        "link": "https://www.stockholmsbranneri.com/pickledmidsummer"
     },
     {
-        "title": "LET’S CALL IT A SPRITZ",
-        "slug": "/call-it-sprits",
+        "title": "Stockholm Calling",
+        "slug": "/stockholm-calling",
         "creator": "Stockholms Bränneri",
         "image": "drink",
         "ingredients": [
-            "6 cl Sparkling Wine or Pet Nat (Erik used Lindenlaub - Apres l’Heure PetNat)",
-            "2 cl Stockholms Bränneri Pink gin",
-            "2 cl Stockholms Aperitif - Röd",
-            "2 cl Fresh Lemon Juice",
-            "2 cl Honey Water"
-        ]
+            "45 ml Stockholms Bränneri Oak Gin",
+            "15 ml sherry",
+            "20 ml lemon",
+            "10 ml sugar",
+            "2 dashes Angostura bitter",
+            "80 ml soda water"
+        ],
+        "instructions": "Mix everything on ice in a highball glass. Top up with the soda. Garnish with your summer flower of choice.",
+        "link": "https://www.stockholmsbranneri.com/stockholmcalling"
     },
     {
-        "title": "LET’S CALL IT A SPRITZ",
-        "slug": "/call-it-sprits",
+        "title": "Puffran",
+        "slug": "/puffran",
         "creator": "Stockholms Bränneri",
         "image": "drink",
         "ingredients": [
-            "6 cl Sparkling Wine or Pet Nat (Erik used Lindenlaub - Apres l’Heure PetNat)",
-            "2 cl Stockholms Bränneri Pink gin",
-            "2 cl Stockholms Aperitif - Röd",
-            "2 cl Fresh Lemon Juice",
-            "2 cl Honey Water"
-        ]
+            "15 ml Stockholms Aperitif - Svart",
+            "40 ml Stockholms Bränneri Oak Gin",
+            "5 ml 1:1 Simple syrup",
+            "A dash of orange bitters",
+            "Orange zest for garnish"
+        ],
+        "instructions": "Stir in a mixing glass filled with ice. Strain into a coupe glass and squeeze a piece of orange zest over the glass.",
+        "link": "https://www.stockholmsbranneri.com/puffran"
+    },
+    {
+        "title": "Svart & Tonic",
+        "slug": "/svart-tonic",
+        "creator": "Stockholms Bränneri",
+        "image": "drink",
+        "ingredients": ["5 cl Stockholms Aperitif - Svart", "15 cl Neutral tonic water", "Lots of ice"],
+        "instructions": "Pour Svart and tonic water over tons of ice in a good looking glass. To spice it up, garnish with a slice of lemon or orange.",
+        "link": "https://www.stockholmsbranneri.com/svarttonic"
+    },
+    {
+        "title": "Lilla Bleckan",
+        "slug": "/lilla-bleckan",
+        "creator": "Stockholms Bränneri",
+        "image": "drink",
+        "ingredients": [
+            "12 cl Stockholms Aperitif - Svart",
+            "12 cl Vanilla infused yellow Chartreuse*",
+            "2 cl 1:1 Simple syrup",
+            "Heavy cream",
+            "(nigella seeds)"
+        ],
+        "instructions": "Mix everything except the cream. Pour into four smaller glasses and top with lightly whipped cream. If available, sprinkle some Nigella seeds on top.",
+        "link": "https://www.stockholmsbranneri.com/lilla-blaeckan"
+    },
+    {
+        "title": "B(l)ackflip",
+        "slug": "/blackflip",
+        "creator": "Stockholms Bränneri",
+        "image": "drink",
+        "ingredients": [
+            "40 ml Stockholms Aperitif - Svart",
+            "15 ml bourbon",
+            "40 ml heavy cream",
+            "20 ml cardamom/black pepper simple syrup*",
+            "1 whole egg",
+            "4 dashes Angostura Cocoa Bitters",
+            "Nutmeg for garnish"
+        ],
+        "instructions": "Shake Svart, bourbon, heavy cream, simple syrup and the egg in a shaker filled with ice, then double strain into a glass. Garnish with freshly grated nutmeg.",
+        "link": "https://www.stockholmsbranneri.com/blackflip"
     }
 ]

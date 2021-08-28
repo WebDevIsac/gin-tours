@@ -47,6 +47,7 @@ const List = styled('div')`
     flex-direction: column;
     align-items: center;
     padding: 64px 16px;
+    width: 100%;
 
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
 `;
