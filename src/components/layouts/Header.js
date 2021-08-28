@@ -14,16 +14,27 @@ const Navbar = styled('div')`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    padding: 24px 32px;
+    justify-content: center;
     height: 84px;
+    padding: 0 16px;
     color: ${colors.white};
     background-color: ${colors.greige};
+
+    ${above.md} {
+        justify-content: space-between;
+        padding: 0 32px;
+    }
 `;
 
 const Logotype = styled('div')`
     font-size: 24px;
     line-height: 1em;
+    height: 100%;
+`;
+
+const Image = styled('img')`
+    width: auto;
+    height: 100%;
 `;
 
 const Hamburger = styled('div')`
@@ -32,8 +43,9 @@ const Hamburger = styled('div')`
     justify-content: space-between;
     width: 40px;
     height: 24px;
-    position: relative;
+    position: absolute;
     z-index: 3;
+    right: 16px;
 
     ${above.lg} {
         display: none;
@@ -166,7 +178,7 @@ const Header = () => {
                 <Navbar className={isOpen ? 'is-open' : ''}>
                     <Logotype>
                         <Link to="/">
-                            <img width="200px" src={logo} />
+                            <Image src={logo} />
                         </Link>
                     </Logotype>
                     <Hamburger onClick={handleMenuState}>
