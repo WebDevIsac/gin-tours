@@ -1,7 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Layout from 'components/layouts/Layout';
 import styled from '@emotion/styled';
+import { graphql } from 'gatsby';
 import SEO from 'components/SEO/SEO';
+import Slider from 'components/Slider';
+import Card from 'components/Card';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -24,7 +28,17 @@ const Paragraph = styled('p')`
     line-height: 1.2em;
 `;
 
-const StartPage = () => {
+const Content = styled('div')`
+    margin-top: 64px;
+`;
+
+const H2 = styled('h2')`
+    text-align: center;
+`;
+
+const StartPage = ({ data }) => {
+    const travels = data.allTravelsJson.edges;
+
     return (
         <>
             <SEO title="Start" />
@@ -44,9 +58,44 @@ const StartPage = () => {
                         förtagskickoffen eller födelsedagsresa för ginälskaren.
                     </Paragraph>
                 </TextWrapper>
+                <Content>
+                    <H2>Boka din ginresa idag!</H2>
+                    <Slider>
+                        {travels.map(({ node }, index) => (
+                            <Card key={index} {...node} />
+                        ))}
+                    </Slider>
+                </Content>
             </Wrapper>
         </>
     );
+};
+
+export const query = graphql`
+    query {
+        allTravelsJson {
+            edges {
+                node {
+                    title
+                    place
+                    image
+                    slug
+                }
+            }
+        }
+    }
+`;
+
+StartPage.propTypes = {
+    data: PropTypes.shape({
+        allTravelsJson: PropTypes.shape({
+            edges: PropTypes.arrayOf(
+                PropTypes.shape({
+                    node: PropTypes.object,
+                })
+            ),
+        }),
+    }).isRequired,
 };
 
 StartPage.Layout = Layout;
