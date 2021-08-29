@@ -20,6 +20,14 @@ const Slider = ({ children }) => {
                 before: 500,
                 after: 500,
             }}
+            breakpoints={{
+                800: {
+                    peek: {
+                        before: 50,
+                        after: 50,
+                    },
+                },
+            }}
             perView={1}
             startAt={0}
             slideClassName="slider__frame"
