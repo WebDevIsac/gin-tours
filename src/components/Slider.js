@@ -17,18 +17,40 @@ const Slider = ({ children }) => {
                 classNames: 'fade',
             }}
             peek={{
-                before: 500,
-                after: 500,
+                before: 200,
+                after: 200,
             }}
             breakpoints={{
-                800: {
+                600: {
+                    peek: {
+                        before: 75,
+                        after: 75,
+                    },
+                    perView: 1,
+                },
+                768: {
                     peek: {
                         before: 50,
                         after: 50,
                     },
+                    perView: 1.5,
+                },
+                1024: {
+                    peek: {
+                        before: 50,
+                        after: 50,
+                    },
+                    perView: 2,
+                },
+                1440: {
+                    peek: {
+                        before: 50,
+                        after: 50,
+                    },
+                    perView: 3,
                 },
             }}
-            perView={1}
+            perView={3}
             startAt={0}
             slideClassName="slider__frame"
             focusAt="center"
