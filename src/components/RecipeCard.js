@@ -23,33 +23,21 @@ const CardWrapper = styled('div')`
         bottom: 0;
         left: 0;
     }
+
+    position: relative;
+    transition: transform ease-out 400ms;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    ${({ isFlippable, isFlipped }) => `
+        ${isFlippable && 'cursor: pointer;'}
+        ${isFlipped && 'transform: rotateY(180deg);'}
+    `}
 `;
 
-const Column = styled('div')`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    color: ${colors.white};
-    background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
-    background-size: cover;
-    background-position: center;
-    padding: 16px 0;
-`;
-
-const Box = styled('div')`
+const Title = styled('h3')`
     font-size: 24px;
-`;
-
-const List = styled('div')`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 64px 16px;
-    width: 100%;
-
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+    line-height: 24px;
 `;
 
 const Span = styled('span')`
@@ -61,7 +49,44 @@ const Span = styled('span')`
     }
 `;
 
-const BottomLink = styled('div')`
+const Column = styled('div')`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 16px 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: ${colors.white};
+`;
+
+const FrontColumn = styled(Column)`
+    background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
+    background-size: cover;
+    background-position: center;
+`;
+
+const BackColumn = styled(Column)`
+    background-color: ${colors.darkBlue};
+    transform: rotateY(180deg);
+`;
+
+const List = styled('div')`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 16px;
+    width: 100%;
+`;
+
+const ListWithGradient = styled(List)`
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+`;
+
+const FrontLink = styled('div')`
     margin: 0 16px;
     font-size: 20px;
     background-color: rgba(255, 255, 255, 0.6);
@@ -69,30 +94,56 @@ const BottomLink = styled('div')`
     border-radius: 20px;
 `;
 
-const RecipeCard = ({ title, image, slug, ingredients }) => {
+const BackLink = styled(FrontLink)`
+    position: relative;
+    z-index: 1;
+    padding: 16px;
+    border-radius: 30px;
+`;
+
+const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const handleNavigation = e => {
         e.stopPropagation();
     };
 
+    const handleFlip = () => {
+        if (isFlippable) {
+            setIsFlipped(bool => !bool);
+        }
+    };
+
     return (
-        <CardWrapper onClick={() => setIsFlipped(bool => !bool)}>
-            <Column backgroundImage={images[image]}>
-                <Box>
-                    <h3>{title}</h3>
-                </Box>
-                <List>
-                    {ingredients.map((ingredient, index) => (
-                        <Span key={index}>{ingredient}</Span>
-                    ))}
-                </List>
-                <BottomLink>
+        <CardWrapper isFlippable={isFlippable} isFlipped={isFlipped} onClick={handleFlip}>
+            <FrontColumn backgroundImage={images[image]}>
+                <Title>{title}</Title>
+                {!isFlippable && (
+                    <ListWithGradient>
+                        {ingredients.map((ingredient, index) => (
+                            <Span key={index}>{ingredient}</Span>
+                        ))}
+                    </ListWithGradient>
+                )}
+                {!isFlippable && (
                     <Link to={`/recept${slug}`} onClick={handleNavigation}>
-                        Läs hela receptet
+                        <FrontLink>Läs hela receptet</FrontLink>
                     </Link>
-                </BottomLink>
-            </Column>
+                )}
+            </FrontColumn>
+            {isFlippable && (
+                <BackColumn>
+                    <Title>{title}</Title>
+                    <List>
+                        {ingredients.map((ingredient, index) => (
+                            <Span key={index}>{ingredient}</Span>
+                        ))}
+                    </List>
+                    <Link to={`/recept${slug}`} onClick={handleNavigation}>
+                        <BackLink>Läs hela receptet</BackLink>
+                    </Link>
+                </BackColumn>
+            )}
         </CardWrapper>
     );
 };
@@ -100,8 +151,13 @@ const RecipeCard = ({ title, image, slug, ingredients }) => {
 RecipeCard.propTypes = {
     image: PropTypes.string.isRequired,
     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isFlippable: PropTypes.bool,
     title: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
+};
+
+RecipeCard.defaultProps = {
+    isFlippable: false,
 };
 
 export default RecipeCard;
