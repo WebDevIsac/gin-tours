@@ -6,6 +6,7 @@ import { graphql } from 'gatsby';
 import SEO from 'components/SEO/SEO';
 import Slider from 'components/Slider';
 import Card from 'components/Card';
+import RecipeCard from 'components/RecipeCard';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -38,6 +39,7 @@ const H2 = styled('h2')`
 
 const StartPage = ({ data }) => {
     const travels = data.allTravelsJson.edges;
+    const recipes = data.allRecipesJson.edges;
 
     return (
         <>
@@ -66,13 +68,21 @@ const StartPage = ({ data }) => {
                         ))}
                     </Slider>
                 </Content>
+                <Content>
+                    <H2>Kolla in våra magiska recept!</H2>
+                    <Slider>
+                        {recipes.map(({ node }, index) => (
+                            <RecipeCard key={index} {...node} />
+                        ))}
+                    </Slider>
+                </Content>
             </Wrapper>
         </>
     );
 };
 
 export const query = graphql`
-    query {
+    query MyQuery {
         allTravelsJson {
             edges {
                 node {
@@ -83,12 +93,30 @@ export const query = graphql`
                 }
             }
         }
+        allRecipesJson {
+            edges {
+                node {
+                    title
+                    slug
+                    creator
+                    image
+                    ingredients
+                }
+            }
+        }
     }
 `;
 
 StartPage.propTypes = {
     data: PropTypes.shape({
         allTravelsJson: PropTypes.shape({
+            edges: PropTypes.arrayOf(
+                PropTypes.shape({
+                    node: PropTypes.object,
+                })
+            ),
+        }),
+        allRecipesJson: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,
