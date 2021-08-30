@@ -39,7 +39,7 @@ const Recipes = ({ data }) => {
             <h1>{title}</h1>
             <CardsRow>
                 {recipes.map(({ node }, index) => (
-                    <RecipeCard key={index} {...node} />
+                    <RecipeCard isFlippable key={index} {...node} />
                 ))}
             </CardsRow>
         </>
