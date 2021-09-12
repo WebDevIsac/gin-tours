@@ -28,13 +28,13 @@ const Travel = ({ data }) => {
             <Wrapper>
                 <h1>{title}</h1>
                 <Image src={images[image]} />
-                {information.map((info, index) => (
+                {information?.map((info, index) => (
                     <p key={index}>{info}</p>
                 ))}
-                {bookingInformation.map((info, index) => (
+                {bookingInformation?.map((info, index) => (
                     <p key={index}>{info}</p>
                 ))}
-                {prices.map((info, index) => (
+                {prices?.map((info, index) => (
                     <p key={index}>{info}</p>
                 ))}
                 <BookingForm />
