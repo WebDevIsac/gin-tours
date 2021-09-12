@@ -17,15 +17,17 @@ const Navbar = styled('div')`
     justify-content: center;
     height: 84px;
     padding: 0 16px;
-    color: ${colors.white};
     background-color: transparent;
     transition: background-color 300ms ease;
+    color: ${colors.white};
 
     &.scrolled {
         background-color: ${colors.greige};
+        color: ${colors.white};
     }
 
     ${above.md} {
+        color: ${colors.black};
         justify-content: space-between;
         padding: 0 32px;
     }
@@ -61,12 +63,13 @@ const Line = styled('span')`
     display: inline-block;
     width: 100%;
     height: 2px;
-    background-color: ${colors.white};
     transform-origin: 100% 100%;
-    transition: transform 200ms ease, opacity 500ms ease;
+    transition: transform 300ms ease;
     opacity: 1;
+    background-color: ${colors.black};
 
     .is-open & {
+        background-color: ${colors.white};
         &:first-of-type {
             transform: translateY(14px);
         }
@@ -120,6 +123,10 @@ const Item = styled(Link)`
 
     ${hover} {
         &:hover {
+            border-bottom-color: ${colors.black};
+        }
+
+        .scrolled &:hover {
             border-bottom-color: ${colors.white};
         }
     }
@@ -134,7 +141,7 @@ const BackgroundWrapper = styled('div')`
         left: 0;
         right: 0;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.6);
 
         .is-open > & {
             display: block;
