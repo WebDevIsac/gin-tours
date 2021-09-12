@@ -20,7 +20,7 @@ const Image = styled('img')`
 `;
 
 const Travel = ({ data }) => {
-    const { title, image } = data.travelsJson;
+    const { title, image, information, bookingInformation, prices } = data.travelsJson;
 
     return (
         <>
@@ -28,6 +28,15 @@ const Travel = ({ data }) => {
             <Wrapper>
                 <h1>{title}</h1>
                 <Image src={images[image]} />
+                {information.map((info, index) => (
+                    <p key={index}>{info}</p>
+                ))}
+                {bookingInformation.map((info, index) => (
+                    <p key={index}>{info}</p>
+                ))}
+                {prices.map((info, index) => (
+                    <p key={index}>{info}</p>
+                ))}
                 <BookingForm />
             </Wrapper>
         </>
@@ -37,8 +46,11 @@ const Travel = ({ data }) => {
 export const query = graphql`
     query ($slug: String!) {
         travelsJson(slug: { eq: $slug }) {
-            title
+            bookingInformation
             image
+            information
+            title
+            prices
         }
     }
 `;
@@ -46,8 +58,11 @@ export const query = graphql`
 Travel.propTypes = {
     data: PropTypes.shape({
         travelsJson: PropTypes.shape({
+            bookingInformation: PropTypes.arrayOf(PropTypes.string),
             image: PropTypes.string,
+            information: PropTypes.arrayOf(PropTypes.string),
             title: PropTypes.string,
+            prices: PropTypes.array,
         }),
     }).isRequired,
 };

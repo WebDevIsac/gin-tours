@@ -34,7 +34,7 @@ const Column = styled('div')`
 
 const Image = styled('img')`
     width: 100%;
-    height: 70%;
+    height: 75%;
     object-fit: cover;
 `;
 
@@ -43,14 +43,19 @@ const Box = styled('div')`
     flex-direction: column;
     padding: 32px;
     width: 100%;
-    height: 30%;
+    height: 25%;
     color: black;
     border-top: 1px solid black;
     flex: 1 0 auto;
+`;
 
-    & > span {
-        color: grey;
-    }
+const Span = styled('span')`
+    color: grey;
+    font-size: 18px;
+`;
+
+const H2 = styled('h2')`
+    font-size: 28px;
 `;
 
 const Card = ({ title, place, image, slug }) => {
@@ -60,9 +65,8 @@ const Card = ({ title, place, image, slug }) => {
                 <Column>
                     <Image src={images[image]} />
                     <Box>
-                        <span>Plats: {place}</span>
-                        <h3>Titel: {title}</h3>
-                        <p>Bildtext</p>
+                        <Span>{place}</Span>
+                        <H2>{title}</H2>
                     </Box>
                 </Column>
             </CardWrapper>

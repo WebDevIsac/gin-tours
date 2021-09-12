@@ -25,6 +25,11 @@ const BackgroundImage = styled('div')`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+
+    ${above.md} {
+        justify-content: center;
+        background-position: center center;
+    }
 `;
 
 const H1 = styled('h1')`
