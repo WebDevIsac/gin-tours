@@ -110,6 +110,11 @@ const FrontLink = styled('div')`
     background-color: rgba(255, 255, 255, 0.6);
     padding: 12px;
     border-radius: 20px;
+    transition: background-color 200ms ease;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
 `;
 
 const BackLink = styled(FrontLink)`
@@ -117,11 +122,6 @@ const BackLink = styled(FrontLink)`
     z-index: 1;
     padding: 16px;
     border-radius: 30px;
-    transition: background-color 200ms ease;
-
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-    }
 `;
 
 const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
