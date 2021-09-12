@@ -18,7 +18,12 @@ const Navbar = styled('div')`
     height: 84px;
     padding: 0 16px;
     color: ${colors.white};
-    background-color: ${colors.greige};
+    background-color: transparent;
+    transition: background-color 300ms ease;
+
+    &.scrolled {
+        background-color: ${colors.greige};
+    }
 
     ${above.md} {
         justify-content: space-between;
@@ -42,7 +47,7 @@ const Hamburger = styled('div')`
     flex-direction: column;
     justify-content: space-between;
     width: 40px;
-    height: 24px;
+    height: 30px;
     position: absolute;
     z-index: 3;
     right: 16px;
@@ -57,6 +62,18 @@ const Line = styled('span')`
     width: 100%;
     height: 2px;
     background-color: ${colors.white};
+    transform-origin: 100% 100%;
+    transition: transform 200ms ease, opacity 500ms ease;
+    opacity: 1;
+
+    .is-open & {
+        &:first-of-type {
+            transform: translateY(14px);
+        }
+        &:last-of-type {
+            transform: translateY(-14px);
+        }
+    }
 `;
 
 const Menu = styled('div')`
@@ -69,10 +86,10 @@ const Menu = styled('div')`
         position: absolute;
         z-index: 1;
         right: 0;
-        top: 84px;
+        top: 0;
         width: 80vw;
         max-width: 360px;
-        height: calc(100vh - 84px);
+        height: 100vh;
         transition: transform 300ms ease;
         transform: translateX(100%);
         background-color: ${colors.greige};
@@ -113,7 +130,7 @@ const BackgroundWrapper = styled('div')`
 
     ${below.lg} {
         position: absolute;
-        top: 84px;
+        top: 0;
         left: 0;
         right: 0;
         height: 100vh;
@@ -140,6 +157,7 @@ const query = graphql`
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const closeMenu = () => {
         setIsOpen(false);
@@ -165,17 +183,36 @@ const Header = () => {
         }
     };
 
+    const handleScrollEvent = () => {
+        if (window.location.pathname === '/') {
+            if (window.scrollY + 84 >= window.innerHeight) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        } else {
+            setIsScrolled(true);
+        }
+    };
+
     useEffect(() => {
         window.addEventListener('resize', handleResizeEvent);
+        window.addEventListener('scroll', handleScrollEvent);
 
-        return () => window.removeEventListener('resize', handleResizeEvent);
+        handleResizeEvent();
+        handleScrollEvent();
+
+        return () => {
+            window.removeEventListener('resize', handleResizeEvent);
+            window.removeEventListener('scroll', handleScrollEvent);
+        };
     }, []);
 
     return (
         <StaticQuery
             query={query}
             render={data => (
-                <Navbar className={isOpen ? 'is-open' : ''}>
+                <Navbar className={(isOpen ? 'is-open ' : '') + (isScrolled ? 'scrolled' : '')}>
                     <Logotype>
                         <Link to="/">
                             <Image src={logo} />
