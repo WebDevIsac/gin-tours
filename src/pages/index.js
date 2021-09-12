@@ -61,7 +61,7 @@ const StartPage = ({ data }) => {
     const travels = data.allTravelsJson.edges;
     const recipes = data.allRecipesJson.edges;
 
-    const image = useWindowWidth() > 620 ? desktopImage : mobileImage;
+    const image = useWindowWidth() > 768 ? desktopImage : mobileImage;
 
     return (
         <>
