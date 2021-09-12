@@ -68,6 +68,10 @@ const Line = styled('span')`
     opacity: 1;
     background-color: ${colors.black};
 
+    .scrolled & {
+        background-color: ${colors.white};
+    }
+
     .is-open & {
         background-color: ${colors.white};
         &:first-of-type {
