@@ -3,19 +3,32 @@ import PropTypes from 'prop-types';
 import Layout from 'components/layouts/Layout';
 import styled from '@emotion/styled';
 import { graphql } from 'gatsby';
+import { above } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
 import Slider from 'components/Slider';
 import Card from 'components/Card';
 import RecipeCard from 'components/RecipeCard';
+import desktopImage from 'images/desktop-image.jpg';
+import mobileImage from 'images/mobile-image.jpg';
+import { useWindowWidth } from 'util/useWindowWidth';
 
 const Wrapper = styled('div')`
     width: 100%;
     height: 100%;
+
+    margin-top: -84px;
 `;
 
-const Image = styled('img')`
-    object-fit: contain;
+const BackgroundImage = styled('div')`
     width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+
+    ${above.md} {
+        background-position: center center;
+    }
 `;
 
 const TextWrapper = styled('div')`
@@ -48,11 +61,13 @@ const StartPage = ({ data }) => {
     const travels = data.allTravelsJson.edges;
     const recipes = data.allRecipesJson.edges;
 
+    const image = useWindowWidth() > 620 ? desktopImage : mobileImage;
+
     return (
         <>
             <SEO title="Start" />
             <Wrapper>
-                <Image src="https://s3-eu-west-1.amazonaws.com/v2.beefeatergin.com/stage/Article/8187/hero/1/hero_1920x858.jpeg" />
+                <BackgroundImage style={{ backgroundImage: `url(${image})` }} />
                 <TextWrapper>
                     <H1>Gin Tours</H1>
                     <Paragraph>
