@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
+import { globalHistory } from '@reach/router';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
@@ -217,6 +218,14 @@ const Header = () => {
             window.removeEventListener('resize', handleResizeEvent);
             window.removeEventListener('scroll', handleScrollEvent);
         };
+    }, []);
+
+    useEffect(() => {
+        globalHistory.listen(({ action }) => {
+            if (action === 'PUSH') {
+                handleScrollEvent();
+            }
+        });
     }, []);
 
     return (
