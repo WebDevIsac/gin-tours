@@ -23,8 +23,8 @@ const Slider = ({ children }) => {
             breakpoints={{
                 600: {
                     peek: {
-                        before: 75,
-                        after: 75,
+                        before: 60,
+                        after: 60,
                     },
                     perView: 1,
                 },
