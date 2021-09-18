@@ -12,8 +12,7 @@
         "bookingInformation": [
             "Är ni fler än 10 personer bokar vi en privat provning för er.",
             "Se och välj planerade turer nedan, alternativt skicka in ett önskat datum och antal personer så kan vi lägga upp det som en ny provning"
-        ],
-        "prices": ["Tasting of five different gins: 425 SEK per person"]
+        ]
     },
     {
         "title": "Stockholms Bränneri",

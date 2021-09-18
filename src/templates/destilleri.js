@@ -21,8 +21,7 @@ const Image = styled('img')`
 `;
 
 const Distillery = ({ data }) => {
-    const { title, image, information, bookingInformation, prices, accommodations /* , restaurants */ } =
-        data.distilleriesJson;
+    const { title, image, information, bookingInformation, accommodations /* , restaurants */ } = data.distilleriesJson;
 
     return (
         <>
@@ -34,9 +33,6 @@ const Distillery = ({ data }) => {
                     <p key={index}>{info}</p>
                 ))}
                 {bookingInformation?.map((info, index) => (
-                    <p key={index}>{info}</p>
-                ))}
-                {prices?.map((info, index) => (
                     <p key={index}>{info}</p>
                 ))}
                 <BookingForm distillery={title} accommodations={accommodations} /* restaurants={restaurants} */ />
@@ -52,7 +48,6 @@ export const query = graphql`
             image
             information
             title
-            prices
             accommodations
             # restaurants
         }
