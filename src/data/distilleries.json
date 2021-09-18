@@ -4,6 +4,8 @@
         "slug": "/herno",
         "place": "Härnösand",
         "image": "herno",
+        "accommodations": ["Hotel Royal", "First Hotel"],
+        "restaurants": ["Engströms", "Apa"],
         "information": [
             "Under en provning lär ni er om historian bakom Hernö Gin, vårat utbud och våra ingredienser som är en stor del av karaktären i varje gin."
         ],

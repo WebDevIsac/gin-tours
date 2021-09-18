@@ -20,8 +20,9 @@ const Image = styled('img')`
     width: 50%;
 `;
 
-const Travel = ({ data }) => {
-    const { title, image, information, bookingInformation, prices } = data.distilleriesJson;
+const Distillery = ({ data }) => {
+    const { title, image, information, bookingInformation, prices, accommodations /* , restaurants */ } =
+        data.distilleriesJson;
 
     return (
         <>
@@ -38,7 +39,7 @@ const Travel = ({ data }) => {
                 {prices?.map((info, index) => (
                     <p key={index}>{info}</p>
                 ))}
-                <BookingForm distillery={title} />
+                <BookingForm distillery={title} accommodations={accommodations} /* restaurants={restaurants} */ />
             </Wrapper>
         </>
     );
@@ -52,22 +53,26 @@ export const query = graphql`
             information
             title
             prices
+            accommodations
+            # restaurants
         }
     }
 `;
 
-Travel.propTypes = {
+Distillery.propTypes = {
     data: PropTypes.shape({
         distilleriesJson: PropTypes.shape({
+            accommodations: PropTypes.arrayOf(PropTypes.string),
             bookingInformation: PropTypes.arrayOf(PropTypes.string),
             image: PropTypes.string,
             information: PropTypes.arrayOf(PropTypes.string),
             title: PropTypes.string,
             prices: PropTypes.array,
+            restaurants: PropTypes.arrayOf(PropTypes.string),
         }),
     }).isRequired,
 };
 
-Travel.Layout = Layout;
+Distillery.Layout = Layout;
 
-export default Travel;
+export default Distillery;

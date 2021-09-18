@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { navigate } from '@reach/router';
 import styled from '@emotion/styled';
+import { above } from 'util/mediaqueries';
 import colors from 'config/colors';
 
 const Form = styled('form')`
-    padding: 64px 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     max-width: 600px;
+    padding: 64px 0;
+
+    ${above.md} {
+        padding: 64px 32px;
+    }
 `;
 
 const InputWrapper = styled('div')`
@@ -65,21 +72,45 @@ const SubmitButton = styled('button')`
     }
 `;
 
-const BookingForm = () => {
+const BookingForm = ({ accommodations, distillery, restaurants }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [formValues, setFormValues] = useState({
         name: '',
-        _replyto: '',
-        place: '',
+        email: '',
+        visitors: '4',
+        accommodation: accommodations[0],
+        // restaurant: restaurants[0],
     });
 
     const handleSubmit = e => {
         e.preventDefault();
+        setIsLoading(true);
 
-        const xhr = new XMLHttpRequest();
-        const formUrl = 'https://formspree.io/f/mbjqprqv';
-        xhr.open('POST', formUrl, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(formValues));
+        if (Object.values(formValues).every(i => i)) {
+            const xhr = new XMLHttpRequest();
+            const formUrl = 'https://formspree.io/f/mbjqprqv';
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    setIsLoading(false);
+                    if (xhr.response) {
+                        const response = JSON.parse(xhr.response);
+                        if (response.ok) {
+                            navigate(`/tack?email=${formValues.email}`);
+                            return;
+                        }
+                    }
+
+                    console.error('Error');
+                }
+            };
+
+            xhr.open('POST', formUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({ ...formValues, distillery, _replyto: formValues.email }));
+        } else {
+            setIsLoading(false);
+        }
     };
 
     const handleChange = e => {
@@ -97,20 +128,62 @@ const BookingForm = () => {
             </InputWrapper>
             <InputWrapper>
                 <Label for="email">Email</Label>
-                <Input type="email" name="_replyto" id="email" onChange={handleChange} />
+                <Input type="email" name="email" id="email" onChange={handleChange} />
             </InputWrapper>
             <InputWrapper>
-                <Label for="place">Plats</Label>
-                <Select name="place" id="place" onChange={handleChange}>
-                    <Option value="">Välj destilleri</Option>
-                    <Option value="hernö">Hernö</Option>
-                    <Option value="härnösand">Härnösand</Option>
-                    <Option value="lydens gin">Lydens Gin</Option>
+                <Label for="visitors">Antal personer</Label>
+                <Select name="visitors" id="visitors" value={formValues.visitors} onChange={handleChange}>
+                    <Option value="1">1</Option>
+                    <Option value="2">2</Option>
+                    <Option value="3">3</Option>
+                    <Option value="4">4</Option>
+                    <Option value="5">5</Option>
+                    <Option value="6">6</Option>
+                    <Option value="7">7</Option>
+                    <Option value="8">8</Option>
+                    <Option value="9">9</Option>
+                    <Option value="10+">10+</Option>
                 </Select>
             </InputWrapper>
+            <InputWrapper>
+                <Label for="accommodation">Boende</Label>
+                <Select
+                    name="accommodation"
+                    id="accommodation"
+                    value={formValues.accommodation}
+                    onChange={handleChange}
+                >
+                    {accommodations.map((accommodation, index) => (
+                        <Option key={index} value={accommodation}>
+                            {accommodation}
+                        </Option>
+                    ))}
+                </Select>
+            </InputWrapper>
+            {/* <InputWrapper>
+                <Label for="accommodation">Middagsrestaurang</Label>
+                <Select name="accommodation" id="accommodation" value={formValues.restaurants} onChange={handleChange}>
+                    {restaurants.map((restaurant, index) => (
+                        <Option key={index} value={restaurant}>
+                            {restaurant}
+                        </Option>
+                    ))}
+                </Select>
+            </InputWrapper> */}
             <SubmitButton type="submit">SKICKA</SubmitButton>
         </Form>
     );
+};
+
+BookingForm.propTypes = {
+    accommodations: PropTypes.arrayOf(PropTypes.string),
+    distillery: PropTypes.string.isRequired,
+    restaurants: PropTypes.arrayOf(PropTypes.string),
+};
+
+BookingForm.defaultProps = {
+    accommodations: [],
+    restaurants: [],
 };
 
 export default BookingForm;
