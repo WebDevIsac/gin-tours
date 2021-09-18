@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above, below } from 'util/mediaqueries';
-import images from 'images/destilleries';
+import images from 'images/distilleries';
 
 const CardWrapper = styled('div')`
     position: relative;

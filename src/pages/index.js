@@ -59,7 +59,7 @@ const H3 = styled('h3')`
 `;
 
 const StartPage = ({ data }) => {
-    const travels = data.allTravelsJson.edges;
+    const distilleries = data.allDistilleriesJson.edges;
     const recipes = data.allRecipesJson.edges;
 
     const image = useWindowWidth() > 768 ? desktopImage : mobileImage;
@@ -86,7 +86,7 @@ const StartPage = ({ data }) => {
                 <Content>
                     <H3>Boka din ginresa idag!</H3>
                     <Slider>
-                        {travels.map(({ node }, index) => (
+                        {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
                         ))}
                     </Slider>
@@ -106,7 +106,7 @@ const StartPage = ({ data }) => {
 
 export const query = graphql`
     query MyQuery {
-        allTravelsJson {
+        allDistilleriesJson {
             edges {
                 node {
                     title
@@ -132,7 +132,7 @@ export const query = graphql`
 
 StartPage.propTypes = {
     data: PropTypes.shape({
-        allTravelsJson: PropTypes.shape({
+        allDistilleriesJson: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,

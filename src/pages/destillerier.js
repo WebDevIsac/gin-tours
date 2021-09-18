@@ -23,8 +23,8 @@ const CardsRow = styled('div')`
     }
 `;
 
-const Travels = ({ data }) => {
-    const travels = data.allTravelsJson.edges;
+const Distilleries = ({ data }) => {
+    const distilleries = data.allDistilleriesJson.edges;
     const title = 'Resor';
 
     return (
@@ -32,7 +32,7 @@ const Travels = ({ data }) => {
             <SEO title={title} />
             <h1>{title}</h1>
             <CardsRow>
-                {travels.map(({ node }, index) => (
+                {distilleries.map(({ node }, index) => (
                     <Card key={index} {...node} />
                 ))}
             </CardsRow>
@@ -42,7 +42,7 @@ const Travels = ({ data }) => {
 
 export const query = graphql`
     query {
-        allTravelsJson {
+        allDistilleriesJson {
             edges {
                 node {
                     title
@@ -55,9 +55,9 @@ export const query = graphql`
     }
 `;
 
-Travels.propTypes = {
+Distilleries.propTypes = {
     data: PropTypes.shape({
-        allTravelsJson: PropTypes.shape({
+        allDistilleriesJson: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,
@@ -67,6 +67,6 @@ Travels.propTypes = {
     }).isRequired,
 };
 
-Travels.Layout = Layout;
+Distilleries.Layout = Layout;
 
-export default Travels;
+export default Distilleries;

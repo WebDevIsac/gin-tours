@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import images from 'images/destilleries';
+import images from 'images/distilleries';
 import BookingForm from 'components/BookingForm';
 
 const Wrapper = styled('div')`
@@ -13,6 +13,7 @@ const Wrapper = styled('div')`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 16px;
 `;
 
 const Image = styled('img')`
@@ -20,7 +21,7 @@ const Image = styled('img')`
 `;
 
 const Travel = ({ data }) => {
-    const { title, image, information, bookingInformation, prices } = data.travelsJson;
+    const { title, image, information, bookingInformation, prices } = data.distilleriesJson;
 
     return (
         <>
@@ -37,7 +38,7 @@ const Travel = ({ data }) => {
                 {prices?.map((info, index) => (
                     <p key={index}>{info}</p>
                 ))}
-                <BookingForm />
+                <BookingForm distillery={title} />
             </Wrapper>
         </>
     );
@@ -45,7 +46,7 @@ const Travel = ({ data }) => {
 
 export const query = graphql`
     query ($slug: String!) {
-        travelsJson(slug: { eq: $slug }) {
+        distilleriesJson(slug: { eq: $slug }) {
             bookingInformation
             image
             information
@@ -57,7 +58,7 @@ export const query = graphql`
 
 Travel.propTypes = {
     data: PropTypes.shape({
-        travelsJson: PropTypes.shape({
+        distilleriesJson: PropTypes.shape({
             bookingInformation: PropTypes.arrayOf(PropTypes.string),
             image: PropTypes.string,
             information: PropTypes.arrayOf(PropTypes.string),
