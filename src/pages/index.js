@@ -25,6 +25,7 @@ const BackgroundImage = styled('div')`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
+    background-attachment: fixed;
 
     ${above.md} {
         background-position: center center;
