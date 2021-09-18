@@ -6,6 +6,7 @@ import { above } from 'util/mediaqueries';
 import colors from 'config/colors';
 
 const Form = styled('form')`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,8 +73,44 @@ const SubmitButton = styled('button')`
     }
 `;
 
-const BookingForm = ({ accommodations, distillery, restaurants }) => {
-    const [isLoading, setIsLoading] = useState(false);
+const LoadingWrapper = styled('div')`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Spinner = styled('div')`
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 4px solid ${colors.darkBlue};
+    border-right: 4px solid transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+
+    @keyframes spinner-border {
+        0% {
+            transform: rotate(0);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+`;
+
+const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
+    const [state, setState] = useState({
+        isLoading: false,
+        validationError: null,
+    });
+
     const [formValues, setFormValues] = useState({
         name: '',
         email: '',
@@ -84,15 +121,22 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        setIsLoading(true);
+        setState({
+            ...state,
+            isLoading: true,
+            validationError: null,
+        });
 
         if (Object.values(formValues).every(i => i)) {
             const xhr = new XMLHttpRequest();
             const formUrl = 'https://formspree.io/f/mbjqprqv';
 
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
-                    setIsLoading(false);
+                    setState({
+                        ...state,
+                        isLoading: false,
+                    });
                     if (xhr.response) {
                         const response = JSON.parse(xhr.response);
                         if (response.ok) {
@@ -100,6 +144,12 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
                             return;
                         }
                     }
+
+                    setState({
+                        ...state,
+                        isLoading: false,
+                        validationError: 'Något gick fel, försök igen eller kontakta oss gärna',
+                    });
 
                     console.error('Error');
                 }
@@ -109,11 +159,22 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({ ...formValues, distillery, _replyto: formValues.email }));
         } else {
-            setIsLoading(false);
+            setState({
+                ...state,
+                validationError: 'Fyll i all information',
+                isLoading: false,
+            });
         }
     };
 
     const handleChange = e => {
+        if (state.validationError) {
+            setState({
+                ...state,
+                validationError: null,
+            });
+        }
+
         setFormValues({
             ...formValues,
             [e.target.name]: e.target.value,
@@ -123,15 +184,15 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
     return (
         <Form method="post" onSubmit={handleSubmit}>
             <InputWrapper>
-                <Label for="name">Namn</Label>
+                <Label htmlFor="name">Namn</Label>
                 <Input type="text" name="name" id="name" onChange={handleChange} />
             </InputWrapper>
             <InputWrapper>
-                <Label for="email">Email</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input type="email" name="email" id="email" onChange={handleChange} />
             </InputWrapper>
             <InputWrapper>
-                <Label for="visitors">Antal personer</Label>
+                <Label htmlFor="visitors">Antal personer</Label>
                 <Select name="visitors" id="visitors" value={formValues.visitors} onChange={handleChange}>
                     <Option value="1">1</Option>
                     <Option value="2">2</Option>
@@ -146,7 +207,7 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
                 </Select>
             </InputWrapper>
             <InputWrapper>
-                <Label for="accommodation">Boende</Label>
+                <Label htmlFor="accommodation">Boende</Label>
                 <Select
                     name="accommodation"
                     id="accommodation"
@@ -161,7 +222,7 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
                 </Select>
             </InputWrapper>
             {/* <InputWrapper>
-                <Label for="accommodation">Middagsrestaurang</Label>
+                <Label htmlFor="accommodation">Middagsrestaurang</Label>
                 <Select name="accommodation" id="accommodation" value={formValues.restaurants} onChange={handleChange}>
                     {restaurants.map((restaurant, index) => (
                         <Option key={index} value={restaurant}>
@@ -170,7 +231,13 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
                     ))}
                 </Select>
             </InputWrapper> */}
+            {!!state.validationError && <span>{state.validationError}</span>}
             <SubmitButton type="submit">SKICKA</SubmitButton>
+            {state.isLoading && (
+                <LoadingWrapper>
+                    <Spinner />
+                </LoadingWrapper>
+            )}
         </Form>
     );
 };
@@ -178,12 +245,12 @@ const BookingForm = ({ accommodations, distillery, restaurants }) => {
 BookingForm.propTypes = {
     accommodations: PropTypes.arrayOf(PropTypes.string),
     distillery: PropTypes.string.isRequired,
-    restaurants: PropTypes.arrayOf(PropTypes.string),
+    // restaurants: PropTypes.arrayOf(PropTypes.string),
 };
 
 BookingForm.defaultProps = {
     accommodations: [],
-    restaurants: [],
+    // restaurants: [],
 };
 
 export default BookingForm;
