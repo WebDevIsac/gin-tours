@@ -4,15 +4,17 @@
         "slug": "/herno",
         "place": "Härnösand",
         "image": "herno",
-        "accommodations": ["Hotel Royal", "First Hotel"],
-        "restaurants": ["Engströms", "Apa"],
+        "bookingImage": "hernoPlace",
         "information": [
-            "Under en provning lär ni er om historian bakom Hernö Gin, vårat utbud och våra ingredienser som är en stor del av karaktären i varje gin."
+            "Vår weekend resa till härnösand är perfekt för dig eller er som älskar gin, gillar att träffa likasinnade människor och vill lära dig mer om hur själva hantverket går till på sveriges första renodlade gin distillery. I detta paket som vi sätter ihop åt er ingår:"
         ],
-        "bookingInformation": [
-            "Är ni fler än 10 personer bokar vi en privat provning för er.",
-            "Se och välj planerade turer nedan, alternativt skicka in ett önskat datum och antal personer så kan vi lägga upp det som en ny provning"
-        ]
+        "travelPlan": [
+            "En hotellnatt på höga kusten hotellet med hotellfrukost.",
+            "Transport till och från alla planerade stopp under dagen",
+            "En privat provning med … och rundtur runt själva destilleriet där ni kan se hur kopparpannan Kierstin, Marit och Yvonne står.",
+            "Restaurangbesök på en av härnösands bästa restauranger vid namn Engstroms food & deli där ni kommer få en 3 rätters meny där vi matchar maten med olika gin drinkar gjorda med hernö ginen som vi tidigare besökt."
+        ],
+        "sendToSite": { "text": "Läs mer om Hernö Destilleri", "link": { "text": "här", "url": "https://hernogin.se" } }
     },
     {
         "title": "Stockholms Bränneri",

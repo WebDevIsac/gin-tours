@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
 import styled from '@emotion/styled';
@@ -105,7 +105,7 @@ const Spinner = styled('div')`
     }
 `;
 
-const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
+const BookingForm = ({ accommodations, distillery /* restaurants */ }, ref) => {
     const [state, setState] = useState({
         isLoading: false,
         validationError: null,
@@ -115,7 +115,7 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
         name: '',
         email: '',
         visitors: '4',
-        accommodation: accommodations[0],
+        // accommodation: accommodations[0],
         // restaurant: restaurants[0],
     });
 
@@ -182,7 +182,7 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
     };
 
     return (
-        <Form method="post" onSubmit={handleSubmit}>
+        <Form ref={ref} method="post" onSubmit={handleSubmit}>
             <InputWrapper>
                 <Label htmlFor="name">Namn</Label>
                 <Input type="text" name="name" id="name" onChange={handleChange} />
@@ -206,7 +206,7 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
                     <Option value="10+">10+</Option>
                 </Select>
             </InputWrapper>
-            <InputWrapper>
+            {/* <InputWrapper>
                 <Label htmlFor="accommodation">Boende</Label>
                 <Select
                     name="accommodation"
@@ -220,7 +220,7 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
                         </Option>
                     ))}
                 </Select>
-            </InputWrapper>
+            </InputWrapper> */}
             {/* <InputWrapper>
                 <Label htmlFor="accommodation">Middagsrestaurang</Label>
                 <Select name="accommodation" id="accommodation" value={formValues.restaurants} onChange={handleChange}>
@@ -232,7 +232,7 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }) => {
                 </Select>
             </InputWrapper> */}
             {!!state.validationError && <span>{state.validationError}</span>}
-            <SubmitButton type="submit">SKICKA</SubmitButton>
+            <SubmitButton type="submit">BOKA</SubmitButton>
             {state.isLoading && (
                 <LoadingWrapper>
                     <Spinner />
@@ -253,4 +253,4 @@ BookingForm.defaultProps = {
     // restaurants: [],
 };
 
-export default BookingForm;
+export default forwardRef(BookingForm);
