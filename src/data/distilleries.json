@@ -4,7 +4,7 @@
         "slug": "/herno",
         "place": "Härnösand",
         "image": "herno",
-        "images": { "hero": "hernoPlace", "slider": "herno", "travelPlan": "hernoTravel" },
+        "images": { "hero": "hernoPlace", "slider": "herno", "plans": "plans" },
         "information": [
             "Vår weekend resa till härnösand är perfekt för dig eller er som älskar gin, gillar att träffa likasinnade människor och vill lära dig mer om hur själva hantverket går till på sveriges första renodlade gin distillery. I detta paket som vi sätter ihop åt er ingår:"
         ],
@@ -25,7 +25,7 @@
         "slug": "/stockholm",
         "place": "Stockholm",
         "image": "stockholm",
-        "images": { "hero": "hernoPlace", "slider": "herno", "travelPlan": "hernoTravel" },
+        "images": { "hero": "hernoPlace", "slider": "herno", "plans": "plans" },
         "information": [
             "Vår weekend resa till härnösand är perfekt för dig eller er som älskar gin, gillar att träffa likasinnade människor och vill lära dig mer om hur själva hantverket går till på sveriges första renodlade gin distillery. I detta paket som vi sätter ihop åt er ingår:"
         ],
@@ -46,7 +46,7 @@
         "slug": "/lyden",
         "place": "Ljungby",
         "image": "lyden",
-        "images": { "hero": "hernoPlace", "slider": "herno", "travelPlan": "hernoTravel" },
+        "images": { "hero": "hernoPlace", "slider": "herno", "plans": "plans" },
         "information": [
             "Vår weekend resa till härnösand är perfekt för dig eller er som älskar gin, gillar att träffa likasinnade människor och vill lära dig mer om hur själva hantverket går till på sveriges första renodlade gin distillery. I detta paket som vi sätter ihop åt er ingår:"
         ],
@@ -67,7 +67,7 @@
         "slug": "/hellstrom",
         "place": "Gotland",
         "image": "hellstrom",
-        "images": { "hero": "hernoPlace", "slider": "herno", "travelPlan": "hernoTravel" },
+        "images": { "hero": "hernoPlace", "slider": "herno", "plans": "plans" },
         "information": [
             "Vår weekend resa till härnösand är perfekt för dig eller er som älskar gin, gillar att träffa likasinnade människor och vill lära dig mer om hur själva hantverket går till på sveriges första renodlade gin distillery. I detta paket som vi sätter ihop åt er ingår:"
         ],

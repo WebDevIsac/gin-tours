@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Layout from 'components/layouts/Layout';
 import styled from '@emotion/styled';
 import { graphql } from 'gatsby';
-import { above } from 'util/mediaqueries';
+import { above, hover } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
 import Slider from 'components/Slider';
 import Card from 'components/Card';
@@ -25,7 +25,10 @@ const BackgroundImage = styled('div')`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
-    background-attachment: fixed;
+
+    ${hover} {
+        background-attachment: fixed;
+    }
 
     ${above.md} {
         background-position: center center;

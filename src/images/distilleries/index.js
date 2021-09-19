@@ -3,6 +3,7 @@ import herno from './herno.jpeg';
 import lyden from './lyden.jpeg';
 import stockholm from './stockholm.jpeg';
 import hernoPlace from './herno-place.jpeg';
+import plans from './plans.jpeg';
 
 export default {
     hellstrom,
@@ -10,4 +11,5 @@ export default {
     lyden,
     stockholm,
     hernoPlace,
+    plans,
 };
