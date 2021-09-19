@@ -56,8 +56,8 @@ const Distillery = ({ data }) => {
             <SEO title={title} />
             <Wrapper>
                 <h1>{title}</h1>
-                <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
                 <Image src={distilleryImages[images.hero]} />
+                <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
                 {information?.map((info, index) => (
                     <Paragraph key={index}>{info}</Paragraph>
                 ))}
@@ -66,7 +66,9 @@ const Distillery = ({ data }) => {
                         <ListItem key={index}>{item}</ListItem>
                     ))}
                 </OrderedList>
+                <Image src={distilleryImages[images.plans]} />
                 {transport && <TransportInfo>{transport}</TransportInfo>}
+                <span>Antal platser kvar: 16 st</span>
 
                 <BookingForm
                     ref={formRef}
@@ -88,7 +90,7 @@ export const query = graphql`
             travelPlan
             transport
             images {
-                travelPlan
+                plans
                 hero
             }
             sendToSite {
@@ -113,7 +115,7 @@ Distillery.propTypes = {
             title: PropTypes.string,
             prices: PropTypes.array,
             restaurants: PropTypes.arrayOf(PropTypes.string),
-            travelPlan: PropTypes.array,
+            travelPlan: PropTypes.object,
             sendToSite: PropTypes.string,
             transport: PropTypes.string,
         }),
