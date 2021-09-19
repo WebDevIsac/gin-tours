@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import { navigate } from '@reach/router';
 import styled from '@emotion/styled';
+import { above } from 'util/mediaqueries';
 import colors from 'config/colors';
 
 const Form = styled('form')`
-    padding: 64px 32px;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     max-width: 600px;
+    padding: 64px 0;
+
+    ${above.md} {
+        padding: 64px 32px;
+    }
 `;
 
 const InputWrapper = styled('div')`
@@ -65,24 +73,108 @@ const SubmitButton = styled('button')`
     }
 `;
 
-const BookingForm = () => {
+const LoadingWrapper = styled('div')`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Spinner = styled('div')`
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 4px solid ${colors.darkBlue};
+    border-right: 4px solid transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+
+    @keyframes spinner-border {
+        0% {
+            transform: rotate(0);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+`;
+
+const BookingForm = ({ accommodations, distillery /* restaurants */ }, ref) => {
+    const [state, setState] = useState({
+        isLoading: false,
+        validationError: null,
+    });
+
     const [formValues, setFormValues] = useState({
         name: '',
-        _replyto: '',
-        place: '',
+        email: '',
+        visitors: '4',
+        // accommodation: accommodations[0],
+        // restaurant: restaurants[0],
     });
 
     const handleSubmit = e => {
         e.preventDefault();
+        setState({
+            ...state,
+            isLoading: true,
+            validationError: null,
+        });
 
-        const xhr = new XMLHttpRequest();
-        const formUrl = 'https://formspree.io/f/mbjqprqv';
-        xhr.open('POST', formUrl, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(formValues));
+        if (Object.values(formValues).every(i => i)) {
+            const xhr = new XMLHttpRequest();
+            const formUrl = 'https://formspree.io/f/mbjqprqv';
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    setState({
+                        ...state,
+                        isLoading: false,
+                    });
+                    if (xhr.response) {
+                        const response = JSON.parse(xhr.response);
+                        if (response.ok) {
+                            navigate(`/tack?email=${formValues.email}`);
+                            return;
+                        }
+                    }
+
+                    setState({
+                        ...state,
+                        isLoading: false,
+                        validationError: 'Något gick fel, försök igen eller kontakta oss gärna',
+                    });
+
+                    console.error('Error');
+                }
+            };
+
+            xhr.open('POST', formUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({ ...formValues, distillery, _replyto: formValues.email }));
+        } else {
+            setState({
+                ...state,
+                validationError: 'Fyll i all information',
+                isLoading: false,
+            });
+        }
     };
 
     const handleChange = e => {
+        if (state.validationError) {
+            setState({
+                ...state,
+                validationError: null,
+            });
+        }
+
         setFormValues({
             ...formValues,
             [e.target.name]: e.target.value,
@@ -90,27 +182,75 @@ const BookingForm = () => {
     };
 
     return (
-        <Form method="post" onSubmit={handleSubmit}>
+        <Form ref={ref} method="post" onSubmit={handleSubmit}>
             <InputWrapper>
-                <Label for="name">Namn</Label>
+                <Label htmlFor="name">Namn</Label>
                 <Input type="text" name="name" id="name" onChange={handleChange} />
             </InputWrapper>
             <InputWrapper>
-                <Label for="email">Email</Label>
-                <Input type="email" name="_replyto" id="email" onChange={handleChange} />
+                <Label htmlFor="email">Email</Label>
+                <Input type="email" name="email" id="email" onChange={handleChange} />
             </InputWrapper>
             <InputWrapper>
-                <Label for="place">Plats</Label>
-                <Select name="place" id="place" onChange={handleChange}>
-                    <Option value="">Välj destilleri</Option>
-                    <Option value="hernö">Hernö</Option>
-                    <Option value="härnösand">Härnösand</Option>
-                    <Option value="lydens gin">Lydens Gin</Option>
+                <Label htmlFor="visitors">Antal personer</Label>
+                <Select name="visitors" id="visitors" value={formValues.visitors} onChange={handleChange}>
+                    <Option value="1">1</Option>
+                    <Option value="2">2</Option>
+                    <Option value="3">3</Option>
+                    <Option value="4">4</Option>
+                    <Option value="5">5</Option>
+                    <Option value="6">6</Option>
+                    <Option value="7">7</Option>
+                    <Option value="8">8</Option>
+                    <Option value="9">9</Option>
+                    <Option value="10+">10+</Option>
                 </Select>
             </InputWrapper>
-            <SubmitButton type="submit">SKICKA</SubmitButton>
+            {/* <InputWrapper>
+                <Label htmlFor="accommodation">Boende</Label>
+                <Select
+                    name="accommodation"
+                    id="accommodation"
+                    value={formValues.accommodation}
+                    onChange={handleChange}
+                >
+                    {accommodations.map((accommodation, index) => (
+                        <Option key={index} value={accommodation}>
+                            {accommodation}
+                        </Option>
+                    ))}
+                </Select>
+            </InputWrapper> */}
+            {/* <InputWrapper>
+                <Label htmlFor="accommodation">Middagsrestaurang</Label>
+                <Select name="accommodation" id="accommodation" value={formValues.restaurants} onChange={handleChange}>
+                    {restaurants.map((restaurant, index) => (
+                        <Option key={index} value={restaurant}>
+                            {restaurant}
+                        </Option>
+                    ))}
+                </Select>
+            </InputWrapper> */}
+            {!!state.validationError && <span>{state.validationError}</span>}
+            <SubmitButton type="submit">BOKA</SubmitButton>
+            {state.isLoading && (
+                <LoadingWrapper>
+                    <Spinner />
+                </LoadingWrapper>
+            )}
         </Form>
     );
 };
 
-export default BookingForm;
+BookingForm.propTypes = {
+    accommodations: PropTypes.arrayOf(PropTypes.string),
+    distillery: PropTypes.string.isRequired,
+    // restaurants: PropTypes.arrayOf(PropTypes.string),
+};
+
+BookingForm.defaultProps = {
+    accommodations: [],
+    // restaurants: [],
+};
+
+export default forwardRef(BookingForm);

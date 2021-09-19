@@ -1,7 +1,7 @@
 exports.createPages = async ({ actions, graphql }) => {
     const { data } = await graphql(`
         query {
-            allTravelsJson {
+            allDistilleriesJson {
                 edges {
                     node {
                         slug
@@ -19,12 +19,12 @@ exports.createPages = async ({ actions, graphql }) => {
         }
     `);
 
-    data.allTravelsJson.edges.forEach(edge => {
+    data.allDistilleriesJson.edges.forEach(edge => {
         const slug = edge.node.slug;
 
         actions.createPage({
             path: slug,
-            component: require.resolve('./src/templates/resa.js'),
+            component: require.resolve('./src/templates/destilleri.js'),
             context: { slug },
         });
     });
