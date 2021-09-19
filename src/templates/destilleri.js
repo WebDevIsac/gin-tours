@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import images from 'images/distilleries';
+import distilleryImages from 'images/distilleries';
 import BookingForm from 'components/BookingForm';
 
 const Wrapper = styled('div')`
@@ -40,8 +40,10 @@ const ScrollButton = styled('button')`
     text-decoration: underline;
 `;
 
+const TransportInfo = styled('span')``;
+
 const Distillery = ({ data }) => {
-    const { title, bookingImage, information, accommodations, travelPlan, sendToSite, restaurants } =
+    const { title, information, accommodations, travelPlan, sendToSite, restaurants, transport, images } =
         data.distilleriesJson;
     const formRef = useRef();
 
@@ -55,7 +57,7 @@ const Distillery = ({ data }) => {
             <Wrapper>
                 <h1>{title}</h1>
                 <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
-                <Image src={images[bookingImage]} />
+                <Image src={distilleryImages[images.hero]} />
                 {information?.map((info, index) => (
                     <Paragraph key={index}>{info}</Paragraph>
                 ))}
@@ -64,6 +66,7 @@ const Distillery = ({ data }) => {
                         <ListItem key={index}>{item}</ListItem>
                     ))}
                 </OrderedList>
+                {transport && <TransportInfo>{transport}</TransportInfo>}
 
                 <BookingForm
                     ref={formRef}
@@ -79,11 +82,15 @@ const Distillery = ({ data }) => {
 export const query = graphql`
     query ($slug: String!) {
         distilleriesJson(slug: { eq: $slug }) {
-            bookingImage
             information
             title
             # accommodations
             travelPlan
+            transport
+            images {
+                travelPlan
+                hero
+            }
             sendToSite {
                 text
                 link {
@@ -101,13 +108,14 @@ Distillery.propTypes = {
         distilleriesJson: PropTypes.shape({
             accommodations: PropTypes.arrayOf(PropTypes.string),
             bookingInformation: PropTypes.arrayOf(PropTypes.string),
-            bookingImage: PropTypes.string,
+            images: PropTypes.arrayOf(PropTypes.string),
             information: PropTypes.arrayOf(PropTypes.string),
             title: PropTypes.string,
             prices: PropTypes.array,
             restaurants: PropTypes.arrayOf(PropTypes.string),
             travelPlan: PropTypes.array,
             sendToSite: PropTypes.string,
+            transport: PropTypes.string,
         }),
     }).isRequired,
 };
