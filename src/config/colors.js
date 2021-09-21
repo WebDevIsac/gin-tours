@@ -8,4 +8,5 @@ export default {
     greige: '#A1B6AB',
     blue: '#507281',
     darkBlue: '#204251',
+    red: '#CC0000',
 };

@@ -1,5 +1,9 @@
 const path = require('path');
 
+require('dotenv').config({
+    path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
     siteMetadata: {
         title: 'Gin Tours',
@@ -13,6 +17,7 @@ module.exports = {
     },
     plugins: [
         'gatsby-plugin-emotion',
+        'gatsby-transformer-json',
         {
             resolve: 'gatsby-plugin-root-import',
             options: {
@@ -25,11 +30,18 @@ module.exports = {
                 images: path.join(__dirname, 'src/images'),
             },
         },
-        `gatsby-transformer-json`,
         {
             resolve: `gatsby-source-filesystem`,
             options: {
                 path: `./src/data/`,
+            },
+        },
+        {
+            resolve: 'gatsby-plugin-mailchimp',
+            options: {
+                endpoint:
+                    'https://Gintours.us19.list-manage.com/subscribe/post?u=8f3f5253c3967c5a4014eec0a&amp;id=f2a819bda9',
+                timeout: 3500, // number; the amount of time, in milliseconds, that you want to allow mailchimp to respond to your request before timing out. defaults to 3500
             },
         },
     ],

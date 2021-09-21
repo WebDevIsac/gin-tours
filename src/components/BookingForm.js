@@ -4,6 +4,7 @@ import { navigate } from '@reach/router';
 import styled from '@emotion/styled';
 import { above } from 'util/mediaqueries';
 import colors from 'config/colors';
+import Input from 'components/elements/Input';
 
 const Form = styled('form')`
     position: relative;
@@ -22,25 +23,12 @@ const Form = styled('form')`
 const InputWrapper = styled('div')`
     margin-bottom: 24px;
     width: 100%;
-    position: relative;
 `;
 
 const Label = styled('label')`
     font-size: 16px;
     line-height: 1em;
     color: ${colors.grey};
-`;
-
-const Input = styled('input')`
-    width: 100%;
-    height: 40px;
-    margin-top: 4px;
-    padding: 0 12px;
-    font-size: 16px;
-    border-radius: 0;
-    border: 1px solid ${colors.darkBlue};
-    background-color: ${colors.white};
-    outline: none;
 `;
 
 const Select = styled('select')`
@@ -105,7 +93,7 @@ const Spinner = styled('div')`
     }
 `;
 
-const BookingForm = ({ accommodations, distillery /* restaurants */ }, ref) => {
+const BookingForm = ({ /* accommodations, */ distillery /* restaurants */ }, ref) => {
     const [state, setState] = useState({
         isLoading: false,
         validationError: null,
@@ -182,7 +170,7 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }, ref) => {
     };
 
     return (
-        <Form ref={ref} method="post" onSubmit={handleSubmit}>
+        <Form ref={ref} onSubmit={handleSubmit}>
             <InputWrapper>
                 <Label htmlFor="name">Namn</Label>
                 <Input type="text" name="name" id="name" onChange={handleChange} />
@@ -243,13 +231,13 @@ const BookingForm = ({ accommodations, distillery /* restaurants */ }, ref) => {
 };
 
 BookingForm.propTypes = {
-    accommodations: PropTypes.arrayOf(PropTypes.string),
+    // accommodations: PropTypes.arrayOf(PropTypes.string),
     distillery: PropTypes.string.isRequired,
     // restaurants: PropTypes.arrayOf(PropTypes.string),
 };
 
 BookingForm.defaultProps = {
-    accommodations: [],
+    // accommodations: [],
     // restaurants: [],
 };
 
