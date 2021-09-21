@@ -22,6 +22,7 @@
         "eslint-plugin-react": "^7.24.0",
         "gatsby": "^3.6.2",
         "gatsby-plugin-emotion": "^6.7.1",
+        "gatsby-plugin-mailchimp": "^5.2.2",
         "gatsby-plugin-root-import": "^2.0.6",
         "gatsby-source-filesystem": "^3.9.0",
         "gatsby-transformer-json": "^3.9.0",
