@@ -11,6 +11,7 @@ import RecipeCard from 'components/RecipeCard';
 import desktopImage from 'images/desktop-image.jpg';
 import mobileImage from 'images/mobile-image.jpg';
 import { useWindowWidth } from 'util/useWindowWidth';
+import Newsletter from 'components/Newsletter';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -82,10 +83,11 @@ const StartPage = ({ data }) => {
                         runt om i världen.
                     </Paragraph>
                     <Paragraph>
-                        Våra resor passa sig prefekt för kompisgänget som vill hitta på en kul aktivitet,
-                        förtagskickoffen eller födelsedagsresa för ginälskaren.
+                        Våra resor passar sig perfekt för kompisgänget som vill hitta på en kul aktivitet,
+                        företagskickoffen eller födelsedagsresa för ginälskaren.
                     </Paragraph>
                 </TextWrapper>
+                <Newsletter />
                 <Content>
                     <H3>Boka din ginresa idag!</H3>
                     <Slider>
