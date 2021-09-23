@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { above } from 'util/mediaqueries';
 import colors from 'config/colors';
 import addToMailchimp from 'gatsby-plugin-mailchimp';
 
 const Wrapper = styled('div')`
-    height: 600px;
     width: 100%;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: ${colors.blue};
+    padding: 16px;
+
+    ${above.md} {
+        height: 600px;
+    }
 `;
 
 const Heading = styled('span')`
@@ -18,11 +24,17 @@ const Heading = styled('span')`
     line-height: 1em;
     margin-bottom: 32px;
     color: ${colors.white};
+    text-align: center;
 `;
 
 const Form = styled('form')`
-    width: 600px;
-    height: 240px;
+    height: 160px;
+    width: 100%;
+    max-width: 440px;
+
+    ${above.md} {
+        max-width: 600px;
+    }
 `;
 
 const InputWrapper = styled('div')``;
