@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { above } from 'util/mediaqueries';
 import colors from 'config/colors';
@@ -28,7 +28,6 @@ const Heading = styled('span')`
 `;
 
 const Form = styled('form')`
-    height: 160px;
     width: 100%;
     max-width: 440px;
 
@@ -51,35 +50,53 @@ const Input = styled('input')`
     outline: none;
 `;
 
-const Button = styled('button')`
+const ButtonWrapper = styled('div')`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 40px;
-    background-color: white;
     margin-top: 32px;
 `;
 
-const ErrorMsg = styled('span')`
-    display: inline-block;
-    width: 100%;
-    margin-top: 12px;
-    color: ${colors.red};
+const Button = styled('button')`
+    height: 100%;
+    width: 120px;
     text-align: center;
+    color: white;
+    font-size: 24px;
+    line-height: 1em;
 `;
 
-const SubscribeMsg = styled('span')`
-    display: inline-block;
-    width: 100%;
-    margin-top: 12px;
-    color: ${colors.green};
-    text-align: center;
+const SubscribeMsg = styled('div')`
+    position: relative;
+    width: auto;
+    height: 100%;
+    color: ${colors.white};
+    padding: 8px;
+
+    &.error {
+        border-bottom: 1px solid red;
+    }
+`;
+
+const Msg = styled('span')`
+    font-size: 18px;
+    line-height: 1em;
+
+    ${above.md} {
+        font-size: 20px;
+        line-height: 1em;
+    }
 `;
 
 const Newsletter = () => {
     const [inputEmail, setInputEmail] = useState(null);
-    const [status, setStatus] = useState(null);
+    const [statusMsg, setStatusMsg] = useState();
+    const inputRef = useRef();
 
     const inputChange = e => {
-        setStatus(null);
+        setStatusMsg();
         setInputEmail(e.target.value);
     };
 
@@ -90,12 +107,18 @@ const Newsletter = () => {
 
         if (result === 'success') {
             if (msg.includes('Thank you for subscribing')) {
-                setStatus('success');
+                setStatusMsg({ text: 'Tack! Du prenumererar nu på vårt nyhetsbrev!', status: 'success' });
             }
         } else if (msg.includes('The email you entered is not valid')) {
-            setStatus('notValid');
+            setStatusMsg({ text: 'Du har angett en felaktig e-postadress', status: 'error' });
         } else if (msg.includes('is already subscribed to list')) {
-            setStatus('alreadySubscribed');
+            setStatusMsg({ text: 'Tack! Du prenumererar redan på vårt nyhetsbrev!', status: 'success' });
+        }
+    };
+
+    const handleMsgClick = () => {
+        if (statusMsg.status === 'error') {
+            inputRef.current.focus();
         }
     };
 
@@ -104,14 +127,24 @@ const Newsletter = () => {
             <Heading>Skriv upp dig för vårt nyhetsbrev</Heading>
             <Form novalidate onSubmit={submitSignup}>
                 <InputWrapper>
-                    <Input type="email" name="email" id="email" placeholder="Ange din email" onChange={inputChange} />
+                    <Input
+                        ref={inputRef}
+                        type="text"
+                        name="email"
+                        id="email"
+                        placeholder="Ange din email"
+                        onChange={inputChange}
+                    />
                 </InputWrapper>
-                <Button type="submit">Skicka</Button>
-                {status === 'notValid' && <ErrorMsg>Du har angett en felaktig e-postadress</ErrorMsg>}
-                {status === 'success' && <SubscribeMsg>Tack! Du prenumererar nu på vårt nyhetsbrev!</SubscribeMsg>}
-                {status === 'alreadySubscribed' && (
-                    <SubscribeMsg>Tack! Du prenumererar redan på vårt nyhetsbrev!</SubscribeMsg>
-                )}
+                <ButtonWrapper>
+                    {!statusMsg ? (
+                        <Button type="submit">Skicka</Button>
+                    ) : (
+                        <SubscribeMsg className={statusMsg.status} onClick={handleMsgClick}>
+                            <Msg>{statusMsg.text}</Msg>
+                        </SubscribeMsg>
+                    )}
+                </ButtonWrapper>
             </Form>
         </Wrapper>
     );
