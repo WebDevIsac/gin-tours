@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Layout from 'components/layouts/Layout';
+import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import { graphql } from 'gatsby';
+import Layout from 'components/layouts/Layout';
 import { above, hover } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
 import Slider from 'components/Slider';
@@ -97,7 +97,9 @@ const StartPage = ({ data }) => {
                     </Slider>
                 </Content>
                 <Content>
-                    <H3>Kolla in våra magiska recept!</H3>
+                    <H3>
+                        Kolla in våra magiska recept! <Link to="/recept">Se alla</Link>
+                    </H3>
                     <Slider>
                         {recipes.map(({ node }, index) => (
                             <RecipeCard key={index} {...node} />

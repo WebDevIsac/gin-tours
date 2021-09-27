@@ -95,7 +95,13 @@ const List = styled('div')`
 `;
 
 const ListWithGradient = styled(List)`
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.01),
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.01)
+    );
     position: absolute;
     top: 32px;
 
@@ -107,13 +113,13 @@ const ListWithGradient = styled(List)`
 const FrontLink = styled('div')`
     margin: 0 16px;
     font-size: 20px;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 12px;
     border-radius: 20px;
     transition: background-color 200ms ease;
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(0, 0, 0, 0.5);
     }
 `;
 
@@ -122,6 +128,11 @@ const BackLink = styled(FrontLink)`
     z-index: 1;
     padding: 16px;
     border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.6);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
 `;
 
 const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
