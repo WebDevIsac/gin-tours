@@ -3,7 +3,7 @@
         "title": "LET’S CALL IT A SPRITZ",
         "slug": "/call-it-sprits",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "callItSpritz",
         "ingredients": [
             "6 cl Sparkling Wine or Pet Nat (Erik used Lindenlaub - Apres l’Heure PetNat)",
             "2 cl Stockholms Bränneri Pink gin",
@@ -18,7 +18,7 @@
         "title": "Pickled Midsummer",
         "slug": "/pickled-midsummer",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "pickledMidsummer",
         "ingredients": [
             "3 cl Stockholms Akvavit",
             "2 cl Stockholms Aperitif - Röd",
@@ -34,7 +34,7 @@
         "title": "Stockholm Calling",
         "slug": "/stockholm-calling",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "stockholmCalling",
         "ingredients": [
             "45 ml Stockholms Bränneri Oak Gin",
             "15 ml sherry",
@@ -50,7 +50,7 @@
         "title": "Puffran",
         "slug": "/puffran",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "puffran",
         "ingredients": [
             "15 ml Stockholms Aperitif - Svart",
             "40 ml Stockholms Bränneri Oak Gin",
@@ -65,7 +65,7 @@
         "title": "Svart & Tonic",
         "slug": "/svart-tonic",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "svartTonic",
         "ingredients": ["5 cl Stockholms Aperitif - Svart", "15 cl Neutral tonic water", "Lots of ice"],
         "instructions": "Pour Svart and tonic water over tons of ice in a good looking glass. To spice it up, garnish with a slice of lemon or orange.",
         "link": "https://www.stockholmsbranneri.com/svarttonic"
@@ -74,7 +74,7 @@
         "title": "Lilla Bleckan",
         "slug": "/lilla-bleckan",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "lillablackan",
         "ingredients": [
             "12 cl Stockholms Aperitif - Svart",
             "12 cl Vanilla infused yellow Chartreuse*",
@@ -89,7 +89,7 @@
         "title": "B(l)ackflip",
         "slug": "/blackflip",
         "creator": "Stockholms Bränneri",
-        "image": "drink",
+        "image": "blackflip",
         "ingredients": [
             "40 ml Stockholms Aperitif - Svart",
             "15 ml bourbon",
