@@ -39,9 +39,35 @@ module.exports = {
         {
             resolve: 'gatsby-plugin-mailchimp',
             options: {
-                endpoint:
-                    'https://Gintours.us19.list-manage.com/subscribe/post?u=8f3f5253c3967c5a4014eec0a&amp;id=f2a819bda9',
+                endpoint: process.env.GATSBY_MAILCHIMP_ENDPOINT,
                 timeout: 3500, // number; the amount of time, in milliseconds, that you want to allow mailchimp to respond to your request before timing out. defaults to 3500
+            },
+        },
+        {
+            resolve: `gatsby-plugin-google-gtag`,
+            options: {
+                // You can add multiple tracking ids and a pageview event will be fired for all of them.
+                trackingIds: [
+                    process.env.GATSBY_GOOGLE_ANALYTICS_ID, // Google Analytics / GA
+                    // 'AW-CONVERSION_ID', // Google Ads / Adwords / AW
+                    // 'DC-FLOODIGHT_ID', // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
+                ],
+                // This object gets passed directly to the gtag config command
+                // This config will be shared across all trackingIds
+                gtagConfig: {
+                    // 'optimize_id': 'OPT_CONTAINER_ID',
+                    'anonymize_ip': true,
+                    'cookie_expires': 1,
+                },
+                // This object is used for configuration specific to this plugin
+                pluginConfig: {
+                    // Puts tracking script in the head instead of the body
+                    head: false,
+                    // Setting this parameter is also optional
+                    respectDNT: true,
+                    // Avoids sending pageview hits from custom paths
+                    exclude: [],
+                },
             },
         },
     ],
