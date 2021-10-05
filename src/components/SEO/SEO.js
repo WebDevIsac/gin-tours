@@ -41,6 +41,7 @@ const SEO = ({ title, description, image }) => {
         <Helmet title={seo.title} titleTemplate={titleTemplate}>
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
+            <meta name="facebook-domain-verification" content={process.env.GATSBY_FACEBOOK_DOMAIN_VERIFICATION} />
 
             <Facebook
                 pageUrl={seo.url}
