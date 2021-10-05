@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
+import { Meta } from 'react-head';
 import Layout from 'components/layouts/Layout';
 import { above, hover } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
@@ -70,6 +71,7 @@ const StartPage = ({ data }) => {
 
     return (
         <>
+            <Meta name="facebook-domain-verification" content={process.env.GATSBY_FACEBOOK_DOMAIN_VERIFICATION} />
             <SEO title="Start" />
             <Wrapper>
                 <BackgroundImage style={{ backgroundImage: `url(${image})` }} />
