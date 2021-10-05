@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import Helmet from 'react-helmet';
+import { Meta } from 'react-head';
 import Layout from 'components/layouts/Layout';
 import { above, hover } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
@@ -71,9 +71,7 @@ const StartPage = ({ data }) => {
 
     return (
         <>
-            <Helmet>
-                <meta name="facebook-domain-verification" content={process.env.GATSBY_FACEBOOK_DOMAIN_VERIFICATION} />
-            </Helmet>
+            <Meta name="facebook-domain-verification" content={process.env.GATSBY_FACEBOOK_DOMAIN_VERIFICATION} />
             <SEO title="Start" />
             <Wrapper>
                 <BackgroundImage style={{ backgroundImage: `url(${image})` }} />
