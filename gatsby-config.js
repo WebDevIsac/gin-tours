@@ -18,7 +18,7 @@ module.exports = {
     plugins: [
         'gatsby-plugin-emotion',
         'gatsby-transformer-json',
-        'gatsby-plugin-react-head',
+        'gatsby-plugin-react-helmet',
         {
             resolve: 'gatsby-plugin-root-import',
             options: {
