@@ -102,7 +102,7 @@ const StartPage = ({ data }) => {
                 </Content>
                 <Content>
                     <H3>
-                        Kolla in våra magiska recept! <Link to="/recept">Se alla</Link>
+                        Kolla in alla magiska recept! <Link to="/recept">Se alla</Link>
                     </H3>
                     <Slider>
                         {recipes.map(({ node }, index) => (
