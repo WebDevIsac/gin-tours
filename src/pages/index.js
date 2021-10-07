@@ -11,7 +11,6 @@ import Card from 'components/Card';
 import RecipeCard from 'components/RecipeCard';
 import desktopImage from 'images/desktop-image.jpg';
 import mobileImage from 'images/mobile-image.jpg';
-import { useWindowWidth } from 'util/useWindowWidth';
 import Newsletter from 'components/Newsletter';
 
 const Wrapper = styled('div')`
@@ -27,12 +26,14 @@ const BackgroundImage = styled('div')`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
+    background-image: url(${mobileImage});
 
     ${hover} {
         background-attachment: fixed;
     }
 
     ${above.md} {
+        background-image: url(${desktopImage});
         background-position: center center;
     }
 `;
@@ -67,8 +68,6 @@ const StartPage = ({ data }) => {
     const distilleries = data.allDistilleriesJson.edges;
     const recipes = data.allRecipesJson.edges;
 
-    const image = useWindowWidth() > 768 ? desktopImage : mobileImage;
-
     return (
         <>
             <Helmet>
@@ -76,7 +75,7 @@ const StartPage = ({ data }) => {
             </Helmet>
             <SEO title="Start" />
             <Wrapper>
-                <BackgroundImage style={{ backgroundImage: `url(${image})` }} />
+                <BackgroundImage />
                 <TextWrapper>
                     <H1>Gin Tours</H1>
                     <Paragraph>
@@ -102,7 +101,7 @@ const StartPage = ({ data }) => {
                 </Content>
                 <Content>
                     <H3>
-                        Kolla in våra magiska recept! <Link to="/recept">Se alla</Link>
+                        Kolla in alla magiska recept! <Link to="/recept">Se alla</Link>
                     </H3>
                     <Slider>
                         {recipes.map(({ node }, index) => (
