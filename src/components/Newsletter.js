@@ -20,11 +20,15 @@ const Wrapper = styled('div')`
 `;
 
 const Heading = styled('span')`
-    font-size: 32px;
+    font-size: 28px;
     line-height: 1em;
     margin-bottom: 32px;
     color: ${colors.white};
     text-align: center;
+
+    ${above.md} {
+        font-size: 32px;
+    }
 `;
 
 const Form = styled('form')`
