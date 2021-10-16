@@ -124,7 +124,7 @@ const Newsletter = () => {
 
     return (
         <Wrapper>
-            <Heading>Skriv upp dig för vårt nyhetsbrev</Heading>
+            <Heading>Skriv upp dig på vårt nyhetsbrev</Heading>
             <Form novalidate onSubmit={submitSignup}>
                 <InputWrapper>
                     <Input

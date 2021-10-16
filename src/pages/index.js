@@ -64,6 +64,17 @@ const H3 = styled('h3')`
     line-height: 1em;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: underline;
+
+    ${hover} {
+        transition: opacity 200ms ease;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+`;
+
 const StartPage = ({ data }) => {
     const distilleries = data.allDistilleriesJson.edges;
     const recipes = data.allRecipesJson.edges;
@@ -101,7 +112,7 @@ const StartPage = ({ data }) => {
                 </Content>
                 <Content>
                     <H3>
-                        Kolla in alla magiska recept! <Link to="/recept">Se alla</Link>
+                        Kolla in alla magiska recept! <StyledLink to="/recept">Se alla</StyledLink>
                     </H3>
                     <Slider>
                         {recipes.map(({ node }, index) => (
