@@ -8,12 +8,14 @@ const Wrapper = styled('div')`
     height: 100%;
 `;
 
+const H1 = styled('h1')``;
+
 const UnderAge = () => {
     return (
         <>
             <SEO title="Under 20" />
             <Wrapper>
-                <h1>Under 20</h1>
+                <H1>Under 20</H1>
                 <p>
                     Du är tyvärr för ung för att ta del av våra resor. Har du kommit hit av misstag gå tillbaks till
                     startsidan
