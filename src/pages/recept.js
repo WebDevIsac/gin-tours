@@ -29,6 +29,10 @@ const CardsRow = styled('div')`
     }
 `;
 
+const H1 = styled('h1')`
+    display: none;
+`;
+
 const Recipes = ({ data }) => {
     const recipes = data.allRecipesJson.edges;
     const title = 'Recept';
@@ -36,7 +40,7 @@ const Recipes = ({ data }) => {
     return (
         <>
             <SEO title={title} />
-            <h1>{title}</h1>
+            <H1>{title}</H1>
             <CardsRow>
                 {recipes.map(({ node }, index) => (
                     <RecipeCard isFlippable key={index} {...node} />

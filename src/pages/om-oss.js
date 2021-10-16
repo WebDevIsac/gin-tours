@@ -18,6 +18,8 @@ const Wrapper = styled('div')`
     }
 `;
 
+const H1 = styled('h1')``;
+
 const Paragraph = styled('p')``;
 
 const StyledH2 = styled('h2')`
@@ -54,7 +56,7 @@ const About = () => {
         <>
             <SEO title={title} />
             <Wrapper>
-                <h1>{title}</h1>
+                <H1>{title}</H1>
                 <Paragraph>
                     Vi erbjuder resor till de främsta men även uppkommande destillerier runtom i landet.
                 </Paragraph>

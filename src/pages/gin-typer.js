@@ -16,6 +16,10 @@ const Wrapper = styled('div')`
     }
 `;
 
+const H1 = styled('h1')`
+    display: none;
+`;
+
 const Section = styled('section')``;
 
 const H3 = styled('h3')`
@@ -46,7 +50,7 @@ const About = () => {
     return (
         <>
             <SEO title={title} />
-            <h1>{title}</h1>
+            <H1>{title}</H1>
             <StaticQuery
                 query={query}
                 render={data => (

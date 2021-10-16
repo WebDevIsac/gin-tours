@@ -17,6 +17,8 @@ const Wrapper = styled('div')`
     padding: 16px;
 `;
 
+const H1 = styled('h1')``;
+
 const Image = styled('img')`
     width: 100%;
 `;
@@ -55,7 +57,7 @@ const Distillery = ({ data }) => {
         <>
             <SEO title={title} />
             <Wrapper>
-                <h1>{title}</h1>
+                <H1>{title}</H1>
                 <Image src={distilleryImages[images.hero]} />
                 <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
                 {information?.map((info, index) => (
