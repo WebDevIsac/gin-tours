@@ -55,13 +55,22 @@ const Paragraph = styled('p')`
 `;
 
 const Content = styled('div')`
-    margin-top: 64px;
+    margin-top: 32px;
+
+    ${above.md} {
+        margin-top: 64px;
+    }
 `;
 
 const H3 = styled('h3')`
     text-align: center;
-    font-size: 32px;
     line-height: 1em;
+    margin: 0 8px;
+    font-size: 24px;
+
+    ${above.md} {
+        font-size: 32px;
+    }
 `;
 
 const StyledLink = styled(Link)`
@@ -102,14 +111,14 @@ const StartPage = ({ data }) => {
                     </Paragraph>
                 </TextWrapper>
                 <Newsletter />
-                <Content>
+                {/* <Content>
                     <H3>Boka din ginresa idag!</H3>
                     <Slider>
                         {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
                         ))}
                     </Slider>
-                </Content>
+                </Content> */}
                 <Content>
                     <H3>
                         Kolla in alla magiska recept! <StyledLink to="/recept">Se alla</StyledLink>
