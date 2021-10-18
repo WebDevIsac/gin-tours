@@ -78,11 +78,15 @@ const About = () => {
                     <ContactList>
                         <ListItem>
                             Har du några frågor,&nbsp;
-                            <StyledLink href="mailto:kundservice@gintours.se">kontaka vår support</StyledLink>
+                            <StyledLink href="mailto:kundservice@gintours.se" rel="nofollow">
+                                kontaka vår support
+                            </StyledLink>
                         </ListItem>
                         <ListItem>
                             Specilla önskemål eller idéer,&nbsp;
-                            <StyledLink href="mailto:boka@gintours.se">boka resa via mail</StyledLink>
+                            <StyledLink href="mailto:boka@gintours.se" rel="nofollow">
+                                boka resa via mail
+                            </StyledLink>
                         </ListItem>
                     </ContactList>
                 </ContactWrapper>
@@ -92,19 +96,31 @@ const About = () => {
                     <Column>
                         <Span>Isac Larsson</Span>
                         <Span>
-                            E-mail: <StyledLink href="mailto:isac@gintours.se">isac@gintours.se</StyledLink>
+                            E-mail:{' '}
+                            <StyledLink href="mailto:isac@gintours.se" rel="nofollow">
+                                isac@gintours.se
+                            </StyledLink>
                         </Span>
                         <Span>
-                            Telefon nummer: <StyledLink href="tel:+46709482427">+46 709 48 24 27</StyledLink>
+                            Telefon nummer:{' '}
+                            <StyledLink href="tel:+46709482427" rel="nofollow">
+                                +46 709 48 24 27
+                            </StyledLink>
                         </Span>
                     </Column>
                     <Column>
                         <Span>Oskar Lim</Span>
                         <Span>
-                            E-mail: <StyledLink href="mailto:oskar@gintours.se">oskar@gintours.se</StyledLink>
+                            E-mail:{' '}
+                            <StyledLink href="mailto:oskar@gintours.se" rel="nofollow">
+                                oskar@gintours.se
+                            </StyledLink>
                         </Span>
                         <Span>
-                            Telefon nummer: <StyledLink href="tel:+46760184800">+46 760 18 48 00</StyledLink>
+                            Telefon nummer:{' '}
+                            <StyledLink href="tel:+46760184800" rel="nofollow">
+                                +46 760 18 48 00
+                            </StyledLink>
                         </Span>
                     </Column>
                 </OrganizationWrapper>
