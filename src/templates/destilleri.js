@@ -58,7 +58,7 @@ const Distillery = ({ data }) => {
             <SEO title={title} />
             <Wrapper>
                 <H1>{title}</H1>
-                <Image src={distilleryImages[images.hero]} />
+                <Image src={distilleryImages[images.hero]} alt={title} />
                 <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
                 {information?.map((info, index) => (
                     <Paragraph key={index}>{info}</Paragraph>

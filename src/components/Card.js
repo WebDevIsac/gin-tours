@@ -90,7 +90,7 @@ const Card = ({ title, place, image, slug }) => {
         <Link to={slug}>
             <CardWrapper>
                 <Column>
-                    <Image src={images[image]} />
+                    <Image src={images[image]} alt={title} />
                     <Box>
                         <Span>{place}</Span>
                         <H3>{title}</H3>

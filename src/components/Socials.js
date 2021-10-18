@@ -40,7 +40,7 @@ const Socials = () => {
             render={data => (
                 <Wrapper>
                     {data.allSocialsJson.edges.map(({ node: { url, svgPath } }, index) => (
-                        <LinkTag key={index} href={url} target="_blank" rel="noopener">
+                        <LinkTag key={index} href={url} target="_blank" rel="noopener nofollow">
                             <SocialIcon path={svgPath} />
                         </LinkTag>
                     ))}
