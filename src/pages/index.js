@@ -62,7 +62,7 @@ const Content = styled('div')`
     }
 `;
 
-const H3 = styled('h3')`
+const H2 = styled('h2')`
     text-align: center;
     line-height: 1em;
     margin: 0 8px;
@@ -112,7 +112,7 @@ const StartPage = ({ data }) => {
                 </TextWrapper>
                 <Newsletter />
                 <Content>
-                    <H3>Boka din ginresa idag!</H3>
+                    <H2>Boka din ginresa idag!</H2>
                     <Slider>
                         {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
@@ -120,9 +120,9 @@ const StartPage = ({ data }) => {
                     </Slider>
                 </Content>
                 <Content>
-                    <H3>
+                    <H2>
                         Kolla in alla magiska recept! <StyledLink to="/recept">Se alla</StyledLink>
-                    </H3>
+                    </H2>
                     <Slider>
                         {recipes.map(({ node }, index) => (
                             <RecipeCard key={index} {...node} />

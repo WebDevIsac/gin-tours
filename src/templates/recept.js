@@ -57,7 +57,7 @@ const Ingredient = styled('li')`
     margin-bottom: 8px;
 `;
 
-const H3 = styled('h3')`
+const H2 = styled('h2')`
     font-size: 24px;
 `;
 
@@ -77,13 +77,13 @@ const Recipe = ({ data }) => {
                     <H1>{title}</H1>
                 </BackgroundImage>
                 <Content>
-                    <H3>Ingredienser</H3>
+                    <H2>Ingredienser</H2>
                     <IngredientsList>
                         {ingredients.map((ingredient, index) => (
                             <Ingredient key={index}>{ingredient}</Ingredient>
                         ))}
                     </IngredientsList>
-                    <H3>Instruktioner</H3>
+                    <H2>Instruktioner</H2>
                     {instructions && <Instructions>{instructions}</Instructions>}
                 </Content>
             </Wrapper>
