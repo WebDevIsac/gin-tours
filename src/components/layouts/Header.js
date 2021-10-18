@@ -235,7 +235,7 @@ const Header = () => {
                 <Navbar className={(isOpen ? 'is-open ' : '') + (isScrolled ? 'scrolled' : '')}>
                     <Logotype>
                         <Link to="/">
-                            <Image src={logo} />
+                            <Image src={logo} alt="Gin tours logo" />
                         </Link>
                     </Logotype>
                     <Hamburger onClick={handleMenuState}>

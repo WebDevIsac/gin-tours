@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react';
 import { baseStyle, resetStyle } from 'config/style';
@@ -16,19 +17,26 @@ const Page = styled('div')`
 
 const Layout = ({ children }) => {
     return (
-        <Page>
-            <Global
-                styles={css`
-                    ${resetStyle}
-                    ${baseStyle}
-                `}
+        <>
+            <Helmet
+                htmlAttributes={{
+                    lang: 'sv',
+                }}
             />
-            <Header />
-            <PageWrapper>{children}</PageWrapper>
-            <Footer />
-            <CookieConsent />
-            <CookieUnderAge />
-        </Page>
+            <Page>
+                <Global
+                    styles={css`
+                        ${resetStyle}
+                        ${baseStyle}
+                    `}
+                />
+                <Header />
+                <PageWrapper>{children}</PageWrapper>
+                <Footer />
+                <CookieConsent />
+                <CookieUnderAge />
+            </Page>
+        </>
     );
 };
 
