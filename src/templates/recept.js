@@ -61,13 +61,17 @@ const H2 = styled('h2')`
     font-size: 24px;
 `;
 
+const H3 = styled('h3')`
+    font-size: 18px;
+`;
+
 const Instructions = styled('p')`
     font-size: 20px;
     line-height: 1.2em;
 `;
 
 const Recipe = ({ data }) => {
-    const { title, image, ingredients, instructions } = data.recipesJson;
+    const { title, image, creator, ingredients, instructions } = data.recipesJson;
 
     return (
         <>
@@ -85,6 +89,7 @@ const Recipe = ({ data }) => {
                     </IngredientsList>
                     <H2>Instruktioner</H2>
                     {instructions && <Instructions>{instructions}</Instructions>}
+                    <H3>Recept från {creator}</H3>
                 </Content>
             </Wrapper>
         </>
@@ -96,6 +101,7 @@ export const query = graphql`
         recipesJson(slug: { eq: $slug }) {
             title
             image
+            creator
             ingredients
             instructions
         }
@@ -105,6 +111,7 @@ export const query = graphql`
 Recipe.propTypes = {
     data: PropTypes.shape({
         recipesJson: PropTypes.shape({
+            creator: PropTypes.string,
             image: PropTypes.string,
             title: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
