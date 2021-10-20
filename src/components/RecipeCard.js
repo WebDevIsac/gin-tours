@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import images from 'images/recipes';
+import distillyImages from 'images/distilleries';
 import { above, below } from 'util/mediaqueries';
 import colors from 'config/colors';
 import { Link } from 'gatsby';
@@ -35,6 +36,17 @@ const CardWrapper = styled('div')`
         ${isFlippable && 'cursor: pointer;'}
         ${isFlipped && 'transform: rotateY(180deg);'}
     `}
+`;
+
+const BadgeWrapper = styled('div')`
+    position: absolute;
+    top: 16px;
+    left: 16px;
+`;
+
+const Badge = styled('img')`
+    width: 64px;
+    height: auto;
 `;
 
 const Title = styled('h3')`
@@ -135,7 +147,7 @@ const BackLink = styled(FrontLink)`
     }
 `;
 
-const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
+const RecipeCard = ({ badge, title, image, slug, ingredients, isFlippable }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const handleNavigation = e => {
@@ -151,6 +163,11 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
     return (
         <CardWrapper isFlippable={isFlippable} isFlipped={isFlipped} onClick={handleFlip}>
             <FrontColumn backgroundImage={images[image]} className={isFlippable && isFlipped ? 'hide' : ''}>
+                {!isFlipped && (
+                    <BadgeWrapper>
+                        <Badge src={distillyImages[badge]} />
+                    </BadgeWrapper>
+                )}
                 <Title>{title}</Title>
                 {!isFlippable && (
                     <ListWithGradient>
@@ -159,7 +176,9 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
                         ))}
                     </ListWithGradient>
                 )}
-                {!isFlippable && (
+                {isFlippable ? (
+                    <FrontLink>Se ingredienser</FrontLink>
+                ) : (
                     <Link to={`/recept${slug}`} onClick={handleNavigation}>
                         <FrontLink>Läs hela receptet</FrontLink>
                     </Link>
@@ -183,6 +202,7 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable }) => {
 };
 
 RecipeCard.propTypes = {
+    badge: PropTypes.string,
     image: PropTypes.string.isRequired,
     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
     isFlippable: PropTypes.bool,
@@ -191,6 +211,7 @@ RecipeCard.propTypes = {
 };
 
 RecipeCard.defaultProps = {
+    badge: '',
     isFlippable: false,
 };
 
