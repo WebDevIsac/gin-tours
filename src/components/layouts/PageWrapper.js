@@ -6,7 +6,6 @@ const PageLayout = styled('main')`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 2400px;
     margin: 84px auto 0;
 `;
 
