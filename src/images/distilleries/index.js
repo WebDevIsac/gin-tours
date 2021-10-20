@@ -4,6 +4,7 @@ import lyden from './lyden.jpeg';
 import stockholm from './stockholm.jpeg';
 import hernoPlace from './herno-place.jpeg';
 import plans from './plans.jpeg';
+import stockholmsbranneriBadge from './stockholmsbranneri-badge.png';
 
 export default {
     hellstrom,
@@ -12,4 +13,5 @@ export default {
     stockholm,
     hernoPlace,
     plans,
+    stockholmsbranneriBadge,
 };
