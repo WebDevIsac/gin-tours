@@ -152,6 +152,7 @@ export const query = graphql`
                     title
                     slug
                     creator
+                    badge
                     image
                     ingredients
                 }
