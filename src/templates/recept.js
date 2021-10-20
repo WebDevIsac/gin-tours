@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import colors from 'config/colors';
-import { above } from 'util/mediaqueries';
+import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import images from 'images/recipes';
@@ -21,14 +21,14 @@ const BackgroundImage = styled('div')`
     height: 80vh;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: top center;
+    background-position: 50% 0%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
     ${above.md} {
         justify-content: center;
-        background-position: center center;
+        background-position: 50% 25%;
     }
 `;
 
@@ -42,6 +42,7 @@ const Content = styled('div')`
     flex-direction: column;
     align-items: center;
     padding: 24px;
+    max-width: 800px;
 `;
 
 const IngredientsList = styled('ul')`
@@ -52,7 +53,8 @@ const IngredientsList = styled('ul')`
 `;
 
 const Ingredient = styled('li')`
-    width: 80%;
+    font-size: 18px;
+    width: 35%;
     text-align: left;
     margin-bottom: 8px;
 `;
@@ -63,6 +65,7 @@ const H2 = styled('h2')`
 
 const H3 = styled('h3')`
     font-size: 18px;
+    line-height: 1.2em;
 `;
 
 const Instructions = styled('p')`
@@ -70,8 +73,19 @@ const Instructions = styled('p')`
     line-height: 1.2em;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: underline;
+
+    ${hover} {
+        transition: opacity 200ms ease;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+`;
+
 const Recipe = ({ data }) => {
-    const { title, image, creator, ingredients, instructions } = data.recipesJson;
+    const { title, image, creator, ingredients, instructions, link } = data.recipesJson;
 
     return (
         <>
@@ -89,7 +103,12 @@ const Recipe = ({ data }) => {
                     </IngredientsList>
                     <H2>Instruktioner</H2>
                     {instructions && <Instructions>{instructions}</Instructions>}
-                    <H3>Recept från {creator}</H3>
+                    <H3>
+                        Recept från{' '}
+                        <StyledLink to={link} target="_blank" rel="noopener nofollow">
+                            {creator}
+                        </StyledLink>
+                    </H3>
                 </Content>
             </Wrapper>
         </>
@@ -104,6 +123,7 @@ export const query = graphql`
             creator
             ingredients
             instructions
+            link
         }
     }
 `;
@@ -113,9 +133,10 @@ Recipe.propTypes = {
         recipesJson: PropTypes.shape({
             creator: PropTypes.string,
             image: PropTypes.string,
-            title: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
             instructions: PropTypes.string,
+            link: PropTypes.string,
+            title: PropTypes.string,
         }),
     }).isRequired,
 };
