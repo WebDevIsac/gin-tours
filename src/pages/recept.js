@@ -24,8 +24,6 @@ const CardsRow = styled('div')`
 
     ${above.xl} {
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 16px;
-        padding: 16px 64px;
     }
 `;
 
