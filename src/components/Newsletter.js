@@ -31,6 +31,14 @@ const Heading = styled('span')`
     }
 `;
 
+const Paragraph = styled('p')`
+    max-width: 720px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.2em;
+    color: ${colors.white};
+`;
+
 const Form = styled('form')`
     width: 100%;
     max-width: 440px;
@@ -49,9 +57,39 @@ const Input = styled('input')`
     padding: 0 12px;
     font-size: 16px;
     border-radius: 0;
-    border: 1px solid ${colors.darkBlue};
+    border: none;
     background-color: ${colors.white};
     outline: none;
+`;
+
+const Row = styled('div')`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+`;
+
+const Checkbox = styled('div')`
+    width: 16px;
+    height: 16px;
+    background-color: ${colors.white};
+    margin-right: 8px;
+
+    &.is-checked {
+        background-color: ${colors.darkBlue};
+    }
+`;
+
+const HiddenCheckbox = styled('input')`
+    position: absolute;
+    left: -99999px;
+`;
+
+const Span = styled('span')`
+    color: ${colors.white};
+    user-select: none;
 `;
 
 const ButtonWrapper = styled('div')`
@@ -97,6 +135,7 @@ const Msg = styled('span')`
 const Newsletter = () => {
     const [inputEmail, setInputEmail] = useState(null);
     const [statusMsg, setStatusMsg] = useState();
+    const [isChecked, setIsChecked] = useState();
     const inputRef = useRef();
 
     const inputChange = e => {
@@ -104,8 +143,19 @@ const Newsletter = () => {
         setInputEmail(e.target.value);
     };
 
+    const handlePolicy = () => {
+        if (!isChecked) {
+            setStatusMsg();
+        }
+        setIsChecked(!isChecked);
+    };
+
     const submitSignup = async e => {
         e.preventDefault();
+        if (!isChecked) {
+            setStatusMsg({ text: 'Godkänn villkoren för att fortsätta', status: 'error' });
+            return;
+        }
         const response = await addToMailchimp(inputEmail);
         const { result, msg } = response;
 
@@ -129,6 +179,11 @@ const Newsletter = () => {
     return (
         <Wrapper>
             <Heading>Skriv upp dig på vårt nyhetsbrev</Heading>
+            <Paragraph>
+                Gin Tours nyhetsbrev är för gin entusiaster som vill få nyheterna först av alla. Som prenumerant kommer
+                du få recept tips, information om släppta resor och provningar, information om vad som har hänt i gin
+                sverige samt vara först med framtida erbjudanden.{' '}
+            </Paragraph>
             <Form novalidate onSubmit={submitSignup}>
                 <InputWrapper>
                     <Input
@@ -140,9 +195,14 @@ const Newsletter = () => {
                         onChange={inputChange}
                     />
                 </InputWrapper>
+                <Row onClick={handlePolicy}>
+                    <Checkbox className={isChecked ? 'is-checked' : ''} />
+                    <HiddenCheckbox type="checkbox" />
+                    <Span>Jag godkänner villkoren</Span>
+                </Row>
                 <ButtonWrapper>
                     {!statusMsg ? (
-                        <Button type="submit">Skicka</Button>
+                        <Button type="submit">Prenumerera</Button>
                     ) : (
                         <SubscribeMsg className={statusMsg.status} onClick={handleMsgClick}>
                             <Msg>{statusMsg.text}</Msg>
