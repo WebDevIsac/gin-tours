@@ -55,17 +55,17 @@ const Paragraph = styled('p')`
 `;
 
 const Content = styled('div')`
-    margin-top: 32px;
+    padding: 32px 0;
 
     ${above.md} {
-        margin-top: 64px;
+        padding: 64px 0;
     }
 `;
 
 const H2 = styled('h2')`
     text-align: center;
     line-height: 1em;
-    margin: 0 8px;
+    margin: 0 8px 16px;
     font-size: 24px;
 
     ${above.md} {

@@ -25,6 +25,10 @@ const CardsRow = styled('div')`
         grid-gap: 16px;
         padding: 16px 64px;
     }
+
+    ${above.xl} {
+        grid-template-columns: repeat(4, 1fr);
+    }
 `;
 
 const Distilleries = ({ data }) => {
