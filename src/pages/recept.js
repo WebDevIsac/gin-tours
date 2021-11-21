@@ -17,6 +17,11 @@ const CardsRow = styled('div')`
     padding: 16px;
 
     ${above.md} {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 16px;
+    }
+
+    ${above.lg} {
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 16px;
         padding: 16px 64px;
