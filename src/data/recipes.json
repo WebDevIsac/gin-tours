@@ -1,5 +1,15 @@
 [
     {
+        "title": "Hernö Gin flip",
+        "slug": "/herno-gin-flip",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "hernoGinFlip",
+        "ingredients": ["50 ml Hernö Gin", "30 ml simple syrup", "1 whole egg"],
+        "instructions": "Pour Hernö Gin, simple syrup and one whole egg into a shaker. Shake everything without ice. Add ice and shake again. Double strain into a chilled glass.",
+        "link": "https://hernogin.com/cocktail-drinks/herno-flip/"
+    },
+    {
         "title": "LET’S CALL IT A SPRITZ",
         "slug": "/call-it-sprits",
         "creator": "Stockholms Bränneri",
@@ -14,6 +24,16 @@
         ],
         "instructions": "*Honey Water: Honey in equal parts of warm water (chilled). Shake all above, follow by straining into your favorite high ball glass with tons of ice. Enjoy!",
         "link": "https://www.stockholmsbranneri.com/callitaspritz"
+    },
+    {
+        "title": "Bee’s knees",
+        "slug": "/bees-knees",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "beesKnees",
+        "ingredients": ["60 ml Hernö Gin", "25 ml honeywater", "20 ml lemon juice"],
+        "instructions": "Shake Hernö Gin, honeywater and fresh lemon juice with ice for about 8 seconds. Strain into a coupette glass or cocktail glass. \nTo make honeywater, dissolve two parts honey in one part warm water.",
+        "link": "https://hernogin.com/cocktail-drinks/bees-knees/"
     },
     {
         "title": "Pickled Midsummer",
@@ -50,6 +70,31 @@
         "link": "https://www.stockholmsbranneri.com/stockholmcalling"
     },
     {
+        "title": "Tom Collins",
+        "slug": "/tom-collins",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "tomCollins",
+        "ingredients": ["50 ml Hernö Old Tom Gin", "30 ml lemon juice", "20 ml simple syrup", "lemon wedge"],
+        "instructions": "Add Hernö Old Tom Gin, fresh lemon juice and simple syrup in to a highball glass. Fill the glass with ice, top it up with soda and give it a nice quick stir. Garnish with a lemon wedge",
+        "link": "https://hernogin.com/cocktail-drinks/tom-collins/"
+    },
+    {
+        "title": "Hernö Basil Smash",
+        "slug": "/herno-basil-smash",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "hernoBasilSmash",
+        "ingredients": [
+            "50 ml Hernö Old Tom Gin",
+            "1 bunch basil leaves, more than you think",
+            "25 ml fresh lemon juice",
+            "15 ml simple syrup"
+        ],
+        "instructions": "Place basil leaves and lemon juice in a shaker, gently muddle (smash) and top of with the rest of the ingredients. Shake vigorously and double strain into an ice-filled glass. Garnish with a couple of basil leaves.",
+        "link": "https://hernogin.com/cocktail-drinks/herno-basil-smash-herno-gin-cocktail/"
+    },
+    {
         "title": "Puffran",
         "slug": "/puffran",
         "creator": "Stockholms Bränneri",
@@ -66,6 +111,16 @@
         "link": "https://www.stockholmsbranneri.com/puffran"
     },
     {
+        "title": "Hernö Gin flip raspberry",
+        "slug": "/herno-gin-flip-raspberry",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "hernoGinFlipRaspberry",
+        "ingredients": ["50 ml Hernö Pink BTL Gin", "30 ml raspberry syrup", "1 whole egg"],
+        "instructions": "Pour Hernö Pink BTL Gin, raspberry syrup* and one whole egg into a shaker. Shake everything without ice. Add ice and shake again. Double strain into a chilled glass. \n*Raspberry syrup: Just cook 500 g. sugar and 500 g. water to a syrup. Add 250 g. raspberries and let it rest for three hours. Strain. Ready to use.",
+        "link": "https://hernogin.com/cocktail-drinks/herno-gin-flip-raspberry/"
+    },
+    {
         "title": "Svart & Tonic",
         "slug": "/svart-tonic",
         "creator": "Stockholms Bränneri",
@@ -74,6 +129,24 @@
         "ingredients": ["5 cl Stockholms Aperitif - Svart", "15 cl Neutral tonic water", "Lots of ice"],
         "instructions": "Pour Svart and tonic water over tons of ice in a good looking glass. To spice it up, garnish with a slice of lemon or orange.",
         "link": "https://www.stockholmsbranneri.com/svarttonic"
+    },
+    {
+        "title": "The Negroni Warmer",
+        "slug": "/negroni-warmer",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "negroniWarmer",
+        "ingredients": [
+            "20 ml Hernö Old Tom Gin",
+            "20 ml Antica Formula Vermouth",
+            "20 ml Carpano Botanic Bitter",
+            "20 ml water",
+            "20 ml sugar",
+            "whipped cream",
+            "freshly grated orange rind or nutmeg"
+        ],
+        "instructions": "Pour Hernö Old Tom Gin, Antica Formula Vermouth, Carpano Botanic Bitter, water and sugar into a saucepan. Heat. Pour into a glass. Top with whipped cream and freshly grated orange rind or nutmeg",
+        "link": "https://hernogin.com/cocktail-drinks/the-negroni-warmer/"
     },
     {
         "title": "Lilla Bleckan",
@@ -108,5 +181,22 @@
         ],
         "instructions": "Shake Svart, bourbon, heavy cream, simple syrup and the egg in a shaker filled with ice, then double strain into a glass. Garnish with freshly grated nutmeg.",
         "link": "https://www.stockholmsbranneri.com/blackflip"
+    },
+    {
+        "title": "Ramos gin fizz",
+        "slug": "/ramos-gin-fizz",
+        "creator": "Hernö Gin",
+        "badge": "hernoBadge",
+        "image": "ramosGinFizz",
+        "ingredients": [
+            "60 ml Hernö Gin",
+            "15 ml Heavy Cream",
+            "15 ml lemon Juice",
+            "15 ml lime Juice",
+            "20 ml simple Syrup",
+            "2 dash Orange Flower Water egg white from a whole egg soda water"
+        ],
+        "instructions": "Mix everything except the soda water in a shaker and shake it for about 1 minute. Then again and again. Add ice. Shake again and again and again. Pour 30 ml of soda water slowly to a highball glass and start building your Ramos. Let it take time, don’t stress, a Ramos takes time. Strain a little bit more. Are you done? Probably not. Add more soda to the shaker to get more froth. Are you done? Maybe. You decide.",
+        "link": "https://hernogin.com/cocktail-drinks/ramos-gin-fizz/"
     }
 ]
