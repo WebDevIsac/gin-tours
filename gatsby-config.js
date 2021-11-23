@@ -19,6 +19,7 @@ module.exports = {
         'gatsby-plugin-emotion',
         'gatsby-transformer-json',
         'gatsby-plugin-react-helmet',
+        'gatsby-plugin-image',
         {
             resolve: 'gatsby-plugin-root-import',
             options: {
@@ -74,6 +75,26 @@ module.exports = {
                 enableWebVitalsTracking: true,
                 // Defaults to https://www.googletagmanager.com
                 // selfHostedOrigin: 'YOUR_SELF_HOSTED_ORIGIN',
+            },
+        },
+        {
+            resolve: 'gatsby-source-sanity',
+            options: {
+                projectId: '3o8hq6wq',
+                dataset: 'production',
+                // a token with read permissions is required
+                // if you have a private dataset
+                token: process.env.SANITY_TOKEN,
+
+                // If the Sanity GraphQL API was deployed using `--tag <name>`,
+                // use `graphqlTag` to specify the tag name. Defaults to `default`.
+                graphqlTag: 'default',
+            },
+        },
+        {
+            resolve: 'gatsby-plugin-snipcart',
+            options: {
+                apiKey: 'MDkwNmNhOGMtYTE3MC00NTM3LWE0NjctOTc5ZjE4M2EzMGY4NjM3NzMyNjQ3MDQyMjcxODkz',
             },
         },
     ],
