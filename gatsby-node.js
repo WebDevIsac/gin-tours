@@ -1,26 +1,30 @@
 exports.createPages = async ({ actions, graphql }) => {
     const { data } = await graphql(`
         query {
-            allDistilleriesJson {
+            allSanityDistilleries {
                 edges {
                     node {
-                        slug
+                        slug {
+                            current
+                        }
                     }
                 }
             }
 
-            allRecipesJson {
+            allSanityRecipes {
                 edges {
                     node {
-                        slug
+                        slug {
+                            current
+                        }
                     }
                 }
             }
         }
     `);
 
-    data.allDistilleriesJson.edges.forEach(edge => {
-        const slug = edge.node.slug;
+    data.allSanityDistilleries.edges.forEach(edge => {
+        const slug = edge.node.slug.current;
 
         actions.createPage({
             path: slug,
@@ -29,8 +33,8 @@ exports.createPages = async ({ actions, graphql }) => {
         });
     });
 
-    data.allRecipesJson.edges.forEach(edge => {
-        const slug = edge.node.slug;
+    data.allSanityRecipes.edges.forEach(edge => {
+        const slug = edge.node.slug.current;
 
         actions.createPage({
             path: `/recept${slug}`,
