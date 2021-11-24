@@ -80,11 +80,12 @@ module.exports = {
         {
             resolve: 'gatsby-source-sanity',
             options: {
-                projectId: '3o8hq6wq',
+                projectId: process.env.GATSBY_SANITY_ID,
                 dataset: 'production',
+
                 // a token with read permissions is required
                 // if you have a private dataset
-                token: process.env.SANITY_TOKEN,
+                // token: process.env.SANITY_TOKEN,
 
                 // If the Sanity GraphQL API was deployed using `--tag <name>`,
                 // use `graphqlTag` to specify the tag name. Defaults to `default`.
@@ -94,7 +95,7 @@ module.exports = {
         {
             resolve: 'gatsby-plugin-snipcart',
             options: {
-                apiKey: 'MDkwNmNhOGMtYTE3MC00NTM3LWE0NjctOTc5ZjE4M2EzMGY4NjM3NzMyNjQ3MDQyMjcxODkz',
+                apiKey: process.env.GATSBY_SNIPCART_API_KEY,
             },
         },
     ],
