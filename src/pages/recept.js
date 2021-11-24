@@ -37,7 +37,7 @@ const H1 = styled('h1')`
 `;
 
 const Recipes = ({ data }) => {
-    const recipes = data.allRecipesJson.edges;
+    const recipes = data.allSanityRecipes.edges;
     const title = 'Recept';
 
     return (
@@ -55,15 +55,28 @@ const Recipes = ({ data }) => {
 
 export const query = graphql`
     query {
-        allRecipesJson {
+        allSanityRecipes {
             edges {
                 node {
                     title
-                    slug
-                    creator
-                    badge
-                    image
+                    slug {
+                        current
+                    }
+                    image {
+                        url {
+                            asset {
+                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
                     ingredients
+                    distillery {
+                        badge {
+                            asset {
+                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -72,7 +85,7 @@ export const query = graphql`
 
 Recipes.propTypes = {
     data: PropTypes.shape({
-        allRecipesJson: PropTypes.shape({
+        allSanityRecipes: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.exact({
                     node: PropTypes.object,

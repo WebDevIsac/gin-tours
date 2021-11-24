@@ -85,8 +85,8 @@ const StyledLink = styled(Link)`
 `;
 
 const StartPage = ({ data }) => {
-    const distilleries = data.allDistilleriesJson.edges;
-    const recipes = data.allRecipesJson.edges;
+    const distilleries = data.allSanityDistilleries.edges;
+    const recipes = data.allSanityRecipes.edges;
 
     return (
         <>
@@ -136,25 +136,46 @@ const StartPage = ({ data }) => {
 
 export const query = graphql`
     query MyQuery {
-        allDistilleriesJson {
+        allSanityDistilleries {
             edges {
                 node {
                     title
                     place
-                    image
-                    slug
+                    image {
+                        url {
+                            asset {
+                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
+                    slug {
+                        current
+                    }
                 }
             }
         }
-        allRecipesJson {
+        allSanityRecipes {
             edges {
                 node {
                     title
-                    slug
-                    creator
-                    badge
-                    image
+                    slug {
+                        current
+                    }
+                    image {
+                        url {
+                            asset {
+                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
                     ingredients
+                    distillery {
+                        badge {
+                            asset {
+                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -163,14 +184,14 @@ export const query = graphql`
 
 StartPage.propTypes = {
     data: PropTypes.shape({
-        allDistilleriesJson: PropTypes.shape({
+        allSanityDistilleries: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,
                 })
             ),
         }),
-        allRecipesJson: PropTypes.shape({
+        allSanityRecipes: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,

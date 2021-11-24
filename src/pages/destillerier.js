@@ -32,7 +32,7 @@ const CardsRow = styled('div')`
 `;
 
 const Distilleries = ({ data }) => {
-    const distilleries = data.allDistilleriesJson.edges;
+    const distilleries = data.allSanityDistilleries.edges;
     const title = 'Resor';
 
     return (
@@ -50,13 +50,21 @@ const Distilleries = ({ data }) => {
 
 export const query = graphql`
     query {
-        allDistilleriesJson {
+        allSanityDistilleries {
             edges {
                 node {
                     title
                     place
-                    image
-                    slug
+                    image {
+                        url {
+                            asset {
+                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
+                    slug {
+                        current
+                    }
                 }
             }
         }
@@ -65,7 +73,7 @@ export const query = graphql`
 
 Distilleries.propTypes = {
     data: PropTypes.shape({
-        allDistilleriesJson: PropTypes.shape({
+        allSanityDistilleries: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,
