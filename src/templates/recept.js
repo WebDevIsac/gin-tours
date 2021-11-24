@@ -59,18 +59,19 @@ const Content = styled('div')`
     align-items: center;
     padding: 24px;
     max-width: 800px;
+    width: 100%;
 `;
 
 const IngredientsList = styled('ul')`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 30%;
 `;
 
 const Ingredient = styled('li')`
     font-size: 18px;
-    width: 35%;
+    width: 100%;
     text-align: left;
     margin-bottom: 8px;
 `;

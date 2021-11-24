@@ -171,11 +171,11 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }
                 backgroundImage={image?.url?.asset.gatsbyImageData}
                 className={isFlippable && isFlipped ? 'hide' : ''}
             >
-                <FakeBackgroundImage image={image?.url?.asset.gatsbyImageData} />
+                <FakeBackgroundImage image={image?.url?.asset.gatsbyImageData} alt={image.alt} />
 
                 {!isFlipped && (
                     <BadgeWrapper>
-                        <GatsbyImage image={distillery.badge.asset.gatsbyImageData} />
+                        <GatsbyImage image={distillery.badge.asset.gatsbyImageData} alt={`${title}-badge`} />
                     </BadgeWrapper>
                 )}
                 <Title>{title}</Title>
@@ -214,11 +214,11 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }
 RecipeCard.propTypes = {
     badge: PropTypes.string,
     distillery: PropTypes.object.isRequired,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.object.isRequired,
     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
     isFlippable: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.object.isRequired,
 };
 
 RecipeCard.defaultProps = {

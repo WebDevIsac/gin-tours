@@ -63,6 +63,7 @@ export const query = graphql`
                         current
                     }
                     image {
+                        alt
                         url {
                             asset {
                                 gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)

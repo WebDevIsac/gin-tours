@@ -142,6 +142,7 @@ export const query = graphql`
                     title
                     place
                     image {
+                        alt
                         url {
                             asset {
                                 gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
@@ -162,6 +163,7 @@ export const query = graphql`
                         current
                     }
                     image {
+                        alt
                         url {
                             asset {
                                 gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)

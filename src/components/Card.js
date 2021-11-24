@@ -81,7 +81,7 @@ const Card = ({ title, place, image, slug }) => {
             <CardWrapper>
                 <Column>
                     <ImageWrapper>
-                        <GatsbyImage image={image?.url?.asset.gatsbyImageData} />
+                        <GatsbyImage image={image?.url?.asset.gatsbyImageData} alt={image.alt} />
                     </ImageWrapper>
                     <Box>
                         <Span>{place}</Span>
@@ -94,10 +94,10 @@ const Card = ({ title, place, image, slug }) => {
 };
 
 Card.propTypes = {
-    image: PropTypes.string.isRequired,
+    image: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     place: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.object.isRequired,
 };
 
 export default Card;
