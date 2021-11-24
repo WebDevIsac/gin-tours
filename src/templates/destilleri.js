@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import BookingForm from 'components/BookingForm';
+import GoogleMaps from 'components/GoogleMaps';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -44,39 +45,31 @@ const ScrollButton = styled('button')`
 const TransportInfo = styled('span')``;
 
 const Distillery = ({ data }) => {
-    const { title, information, accommodations, travelPlan, sendToSite, restaurants, transport, images } =
+    const { title, information, accommodations, travelPlan, sendToSite, restaurants, transport, images, geopoint } =
         data.sanityDistilleries;
+    const { dates } = data.sanityProducts;
+
     const formRef = useRef();
 
     const handleScroll = () => {
         formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
 
+    console.log(geopoint);
+
     return (
         <>
             <SEO title={title} />
             <Wrapper>
                 <H1>{title}</H1>
-                {/* <Image src={distilleryImages[images.hero]} alt={title} />
                 <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
-                {information?.map((info, index) => (
-                    <Paragraph key={index}>{info}</Paragraph>
-                ))}
+                <GoogleMaps />
                 <OrderedList>
                     {travelPlan?.map((item, index) => (
                         <ListItem key={index}>{item}</ListItem>
                     ))}
                 </OrderedList>
-                <Image src={distilleryImages[images.plans]} />
                 {transport && <TransportInfo>{transport}</TransportInfo>}
-                <span>Antal platser kvar: 16 st</span>
-
-                <BookingForm
-                    ref={formRef}
-                    distillery={title}
-                    accommodations={accommodations}
-                    restaurants={restaurants}
-                /> */}
             </Wrapper>
         </>
     );
@@ -86,16 +79,11 @@ export const query = graphql`
     query ($slug: String!) {
         sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
-            # accommodations
-            # image
-            # sendToSite {
-            #     text
-            #     link {
-            #         text
-            #         url
-            #     }
-            # }
-            # restaurants
+            # geopoint
+        }
+
+        sanityProducts(distillery: { slug: { current: { eq: $slug } } }) {
+            dates
         }
     }
 `;
@@ -113,6 +101,9 @@ Distillery.propTypes = {
             travelPlan: PropTypes.array,
             sendToSite: PropTypes.object,
             transport: PropTypes.string,
+        }),
+        sanityProducts: PropTypes.shape({
+            dates: PropTypes.array,
         }),
     }).isRequired,
 };
