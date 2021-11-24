@@ -4,7 +4,6 @@ import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import distilleryImages from 'images/distilleries';
 import BookingForm from 'components/BookingForm';
 
 const Wrapper = styled('div')`
@@ -46,7 +45,7 @@ const TransportInfo = styled('span')``;
 
 const Distillery = ({ data }) => {
     const { title, information, accommodations, travelPlan, sendToSite, restaurants, transport, images } =
-        data.distilleriesJson;
+        data.sanityDistilleries;
     const formRef = useRef();
 
     const handleScroll = () => {
@@ -58,7 +57,7 @@ const Distillery = ({ data }) => {
             <SEO title={title} />
             <Wrapper>
                 <H1>{title}</H1>
-                <Image src={distilleryImages[images.hero]} alt={title} />
+                {/* <Image src={distilleryImages[images.hero]} alt={title} />
                 <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
                 {information?.map((info, index) => (
                     <Paragraph key={index}>{info}</Paragraph>
@@ -77,7 +76,7 @@ const Distillery = ({ data }) => {
                     distillery={title}
                     accommodations={accommodations}
                     restaurants={restaurants}
-                />
+                /> */}
             </Wrapper>
         </>
     );
@@ -85,23 +84,17 @@ const Distillery = ({ data }) => {
 
 export const query = graphql`
     query ($slug: String!) {
-        distilleriesJson(slug: { eq: $slug }) {
-            information
+        sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
             # accommodations
-            travelPlan
-            transport
-            images {
-                plans
-                hero
-            }
-            sendToSite {
-                text
-                link {
-                    text
-                    url
-                }
-            }
+            # image
+            # sendToSite {
+            #     text
+            #     link {
+            #         text
+            #         url
+            #     }
+            # }
             # restaurants
         }
     }
@@ -109,7 +102,7 @@ export const query = graphql`
 
 Distillery.propTypes = {
     data: PropTypes.shape({
-        distilleriesJson: PropTypes.shape({
+        sanityDistilleries: PropTypes.shape({
             accommodations: PropTypes.arrayOf(PropTypes.string),
             bookingInformation: PropTypes.arrayOf(PropTypes.string),
             images: PropTypes.object,

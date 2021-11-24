@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import colors from 'config/colors';
 import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import images from 'images/recipes';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -16,7 +16,23 @@ const Wrapper = styled('div')`
     align-items: center;
 `;
 
-const BackgroundImage = styled('div')`
+const FakeBackgroundImage = styled(GatsbyImage)`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    & > img {
+        object-fit: cover !important;
+        object-position: 0% 0% !important;
+        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
+    }
+`;
+
+const ImageWrapper = styled('div')`
+    position: relative;
     width: 100%;
     height: 80vh;
     background-size: cover;
@@ -85,15 +101,16 @@ const StyledLink = styled(Link)`
 `;
 
 const Recipe = ({ data }) => {
-    const { title, image, creator, ingredients, instructions, link } = data.recipesJson;
+    const { title, image, distillery, ingredients, instructions, link } = data.sanityRecipes;
 
     return (
         <>
             <SEO title={title} />
             <Wrapper>
-                <BackgroundImage style={{ backgroundImage: `url(${images[image]})` }}>
+                <ImageWrapper>
+                    <FakeBackgroundImage image={image.url.asset.gatsbyImageData} />
                     <H1>{title}</H1>
-                </BackgroundImage>
+                </ImageWrapper>
                 <Content>
                     <H2>Ingredienser</H2>
                     <IngredientsList>
@@ -106,7 +123,7 @@ const Recipe = ({ data }) => {
                     <H3>
                         Recept från{' '}
                         <StyledLink to={link} target="_blank" rel="noopener nofollow">
-                            {creator}
+                            {distillery.title}
                         </StyledLink>
                     </H3>
                 </Content>
@@ -117,12 +134,20 @@ const Recipe = ({ data }) => {
 
 export const query = graphql`
     query ($slug: String!) {
-        recipesJson(slug: { eq: $slug }) {
+        sanityRecipes(slug: { current: { eq: $slug } }) {
             title
-            image
-            creator
+            image {
+                url {
+                    asset {
+                        gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                    }
+                }
+            }
+            distillery {
+                title
+            }
             ingredients
-            instructions
+            # instructions
             link
         }
     }
