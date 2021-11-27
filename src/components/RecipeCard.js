@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import images from 'images/recipes';
-import distillyImages from 'images/distilleries';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { above, below } from 'util/mediaqueries';
 import colors from 'config/colors';
 import { Link } from 'gatsby';
@@ -44,11 +43,6 @@ const BadgeWrapper = styled('div')`
     left: 16px;
 `;
 
-const Badge = styled('img')`
-    width: 64px;
-    height: auto;
-`;
-
 const Title = styled('h3')`
     font-size: 24px;
     line-height: 24px;
@@ -87,11 +81,22 @@ const Column = styled('div')`
     }
 `;
 
-const FrontColumn = styled(Column)`
-    background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
-    background-size: cover;
-    background-position: center;
+const FakeBackgroundImage = styled(GatsbyImage)`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    & > img {
+        object-fit: cover !important;
+        object-position: 0% 0% !important;
+        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
+    }
 `;
+
+const FrontColumn = styled(Column)``;
 
 const BackColumn = styled(Column)`
     background-color: ${colors.darkBlue};
@@ -147,7 +152,7 @@ const BackLink = styled(FrontLink)`
     }
 `;
 
-const RecipeCard = ({ badge, title, image, slug, ingredients, isFlippable }) => {
+const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const handleNavigation = e => {
@@ -162,10 +167,15 @@ const RecipeCard = ({ badge, title, image, slug, ingredients, isFlippable }) => 
 
     return (
         <CardWrapper isFlippable={isFlippable} isFlipped={isFlipped} onClick={handleFlip}>
-            <FrontColumn backgroundImage={images[image]} className={isFlippable && isFlipped ? 'hide' : ''}>
+            <FrontColumn
+                backgroundImage={image?.url?.asset.gatsbyImageData}
+                className={isFlippable && isFlipped ? 'hide' : ''}
+            >
+                <FakeBackgroundImage image={image?.url?.asset.gatsbyImageData} alt={image.alt} />
+
                 {!isFlipped && (
                     <BadgeWrapper>
-                        <Badge src={distillyImages[badge]} />
+                        <GatsbyImage image={distillery.badge.asset.gatsbyImageData} alt={`${title}-badge`} />
                     </BadgeWrapper>
                 )}
                 <Title>{title}</Title>
@@ -179,7 +189,7 @@ const RecipeCard = ({ badge, title, image, slug, ingredients, isFlippable }) => 
                 {isFlippable ? (
                     <FrontLink>Se ingredienser</FrontLink>
                 ) : (
-                    <Link to={`/recept${slug}`} onClick={handleNavigation}>
+                    <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
                         <FrontLink>Läs hela receptet</FrontLink>
                     </Link>
                 )}
@@ -192,7 +202,7 @@ const RecipeCard = ({ badge, title, image, slug, ingredients, isFlippable }) => 
                             <Span key={index}>{ingredient}</Span>
                         ))}
                     </List>
-                    <Link to={`/recept${slug}`} onClick={handleNavigation}>
+                    <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
                         <BackLink>Läs hela receptet</BackLink>
                     </Link>
                 </BackColumn>
@@ -203,11 +213,12 @@ const RecipeCard = ({ badge, title, image, slug, ingredients, isFlippable }) => 
 
 RecipeCard.propTypes = {
     badge: PropTypes.string,
-    image: PropTypes.string.isRequired,
+    distillery: PropTypes.object.isRequired,
+    image: PropTypes.object.isRequired,
     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
     isFlippable: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.object.isRequired,
 };
 
 RecipeCard.defaultProps = {

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { above } from 'util/mediaqueries';
-import images from 'images/distilleries';
 
 const CardWrapper = styled('div')`
     position: relative;
@@ -28,18 +28,18 @@ const ImageWrapper = styled('div')`
         display: block;
         padding-bottom: 100%;
     }
-`;
 
-const Image = styled('img')`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    & > * {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
 
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 `;
 
 const Box = styled('div')`
@@ -77,11 +77,11 @@ const H3 = styled('h3')`
 
 const Card = ({ title, place, image, slug }) => {
     return (
-        <Link to={slug}>
+        <Link to={slug.current}>
             <CardWrapper>
                 <Column>
                     <ImageWrapper>
-                        <Image src={images[image]} alt={title} />
+                        <GatsbyImage image={image?.url?.asset.gatsbyImageData} alt={image.alt} />
                     </ImageWrapper>
                     <Box>
                         <Span>{place}</Span>
@@ -94,10 +94,10 @@ const Card = ({ title, place, image, slug }) => {
 };
 
 Card.propTypes = {
-    image: PropTypes.string.isRequired,
+    image: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     place: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.object.isRequired,
 };
 
 export default Card;
