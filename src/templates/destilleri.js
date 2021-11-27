@@ -19,57 +19,40 @@ const Wrapper = styled('div')`
 
 const H1 = styled('h1')``;
 
-const Image = styled('img')`
-    width: 100%;
-`;
-
-const Paragraph = styled('p')`
+const Button = styled('button')`
     font-size: 24px;
-    line-height: 1em;
-`;
-
-const OrderedList = styled('ol')``;
-
-const ListItem = styled('li')`
-    font-size: 20px;
-    line-height: 1em;
-`;
-
-const ScrollButton = styled('button')`
-    font-size: 18px;
     line-height: 1em;
     padding: 16px;
     text-decoration: underline;
 `;
 
-const TransportInfo = styled('span')``;
-
 const Distillery = ({ data }) => {
-    const { title, information, accommodations, travelPlan, sendToSite, restaurants, transport, images, geopoint } =
-        data.sanityDistilleries;
-    const { dates } = data.sanityProducts;
-
-    const formRef = useRef();
-
-    const handleScroll = () => {
-        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    };
-
-    console.log(geopoint);
+    const { title, image, geopoint, slug } = data.sanityDistilleries;
+    const { dates, price } = data.sanityProducts;
 
     return (
         <>
             <SEO title={title} />
             <Wrapper>
                 <H1>{title}</H1>
-                <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
-                <GoogleMaps />
-                <OrderedList>
-                    {travelPlan?.map((item, index) => (
-                        <ListItem key={index}>{item}</ListItem>
+                <span>Tillgängliga datum</span>
+                <ul>
+                    {dates.map(date => (
+                        <li key={date}>{date}</li>
                     ))}
-                </OrderedList>
-                {transport && <TransportInfo>{transport}</TransportInfo>}
+                </ul>
+                <Button
+                    className="snipcart-add-item"
+                    data-item-id="herno-gin"
+                    data-item-price={price}
+                    data-item-url={slug.current}
+                    data-item-description="Resa till Hernö Gins destilleri i Härnösand"
+                    data-item-image={image.url.asset.url}
+                    data-item-name="Herno Gin"
+                >
+                    Boka resa
+                </Button>
+                <GoogleMaps geopoint={geopoint} />
             </Wrapper>
         </>
     );
@@ -79,11 +62,26 @@ export const query = graphql`
     query ($slug: String!) {
         sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
-            # geopoint
+            image {
+                alt
+                url {
+                    asset {
+                        url
+                    }
+                }
+            }
+            geopoint {
+                lat
+                lng
+            }
+            slug {
+                current
+            }
         }
 
         sanityProducts(distillery: { slug: { current: { eq: $slug } } }) {
             dates
+            price
         }
     }
 `;
