@@ -174,7 +174,7 @@ export const query = graphql`
                     distillery {
                         badge {
                             asset {
-                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                                gatsbyImageData(width: 70, fit: FILLMAX, placeholder: BLURRED)
                             }
                         }
                     }
