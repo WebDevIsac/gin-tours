@@ -27,7 +27,7 @@ const Button = styled('button')`
 `;
 
 const Distillery = ({ data }) => {
-    const { title, image, geopoint, slug } = data.sanityDistilleries;
+    const { title, image, geopoint, slug, place } = data.sanityDistilleries;
     const { dates, price } = data.sanityProducts || {};
 
     return (
@@ -48,12 +48,12 @@ const Distillery = ({ data }) => {
                 {!!price && (
                     <Button
                         className="snipcart-add-item"
-                        data-item-id="herno-gin"
+                        data-item-id={title.replace(' ', '-').toLowerCase()}
                         data-item-price={price}
                         data-item-url={slug.current}
-                        data-item-description="Resa till Hernö Gins destilleri i Härnösand"
+                        data-item-description={`Resa till ${title} destilleri i ${place}`}
                         data-item-image={image.asset.url}
-                        data-item-name="Herno Gin"
+                        data-item-name={title}
                     >
                         Boka resa
                     </Button>
@@ -68,6 +68,7 @@ export const query = graphql`
     query ($slug: String!) {
         sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
+            place
             image {
                 asset {
                     url
