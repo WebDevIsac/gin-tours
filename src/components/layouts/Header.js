@@ -249,11 +249,6 @@ const Header = () => {
                                 {title}
                             </Item>
                         ))}
-                        <Link to="#" className="snipcart-checkout">
-                            Gå till kassan
-                        </Link>
-                        <span className="snipcart-items-count"></span>
-                        <span className="snipcart-total-price"></span>
                     </Menu>
                     <BackgroundWrapper onClick={e => handleMenuState(e, true)} />
                 </Navbar>
