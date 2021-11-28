@@ -109,7 +109,7 @@ const Recipe = ({ data }) => {
             <SEO title={title} />
             <Wrapper>
                 <ImageWrapper>
-                    <FakeBackgroundImage image={image.url.asset.gatsbyImageData} />
+                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
                     <H1>{title}</H1>
                 </ImageWrapper>
                 <Content>
@@ -138,10 +138,8 @@ export const query = graphql`
         sanityRecipes(slug: { current: { eq: $slug } }) {
             title
             image {
-                url {
-                    asset {
-                        gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
-                    }
+                asset {
+                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
                 }
             }
             distillery {

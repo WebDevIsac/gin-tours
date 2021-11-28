@@ -28,30 +28,36 @@ const Button = styled('button')`
 
 const Distillery = ({ data }) => {
     const { title, image, geopoint, slug } = data.sanityDistilleries;
-    const { dates, price } = data.sanityProducts;
+    const { dates, price } = data.sanityProducts || {};
 
     return (
         <>
             <SEO title={title} />
             <Wrapper>
                 <H1>{title}</H1>
-                <span>Tillgängliga datum</span>
-                <ul>
-                    {dates.map(date => (
-                        <li key={date}>{date}</li>
-                    ))}
-                </ul>
-                <Button
-                    className="snipcart-add-item"
-                    data-item-id="herno-gin"
-                    data-item-price={price}
-                    data-item-url={slug.current}
-                    data-item-description="Resa till Hernö Gins destilleri i Härnösand"
-                    data-item-image={image.url.asset.url}
-                    data-item-name="Herno Gin"
-                >
-                    Boka resa
-                </Button>
+                {!!dates && (
+                    <>
+                        <span>Tillgängliga datum</span>
+                        <ul>
+                            {dates.map(date => (
+                                <li key={date}>{date}</li>
+                            ))}
+                        </ul>
+                    </>
+                )}
+                {!!price && (
+                    <Button
+                        className="snipcart-add-item"
+                        data-item-id="herno-gin"
+                        data-item-price={price}
+                        data-item-url={slug.current}
+                        data-item-description="Resa till Hernö Gins destilleri i Härnösand"
+                        data-item-image={image.asset.url}
+                        data-item-name="Herno Gin"
+                    >
+                        Boka resa
+                    </Button>
+                )}
                 <GoogleMaps geopoint={geopoint} />
             </Wrapper>
         </>
@@ -63,11 +69,8 @@ export const query = graphql`
         sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
             image {
-                alt
-                url {
-                    asset {
-                        url
-                    }
+                asset {
+                    url
                 }
             }
             geopoint {

@@ -171,7 +171,7 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }
                 backgroundImage={image?.url?.asset.gatsbyImageData}
                 className={isFlippable && isFlipped ? 'hide' : ''}
             >
-                <FakeBackgroundImage image={image?.url?.asset.gatsbyImageData} alt={image.alt} />
+                <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
 
                 {!isFlipped && (
                     <BadgeWrapper>

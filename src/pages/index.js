@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
+import { GatsbyImage, withArtDirection, getImage } from 'gatsby-plugin-image';
 import Layout from 'components/layouts/Layout';
 import { above, hover } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
 import Slider from 'components/Slider';
 import Card from 'components/Card';
 import RecipeCard from 'components/RecipeCard';
-import desktopImage from 'images/desktop-image.jpg';
-import mobileImage from 'images/mobile-image.jpg';
 import Newsletter from 'components/Newsletter';
 
 const Wrapper = styled('div')`
@@ -23,18 +22,22 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div')`
     width: 100%;
     height: 100vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-image: url(${mobileImage});
+    position: relative;
+    clip-path: inset(0);
+`;
 
-    ${hover} {
-        background-attachment: fixed;
-    }
+const FakeBackgroundImage = styled(GatsbyImage)`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 
-    ${above.md} {
-        background-image: url(${desktopImage});
-        background-position: center center;
+    & > img {
+        object-fit: cover !important;
+        object-position: 0% 0% !important;
+        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
     }
 `;
 
@@ -87,6 +90,14 @@ const StyledLink = styled(Link)`
 const StartPage = ({ data }) => {
     const distilleries = data.allSanityDistilleries.edges;
     const recipes = data.allSanityRecipes.edges;
+    const configs = data.sanityConfigs;
+
+    const images = withArtDirection(getImage(configs.desktopImage.asset.gatsbyImageData), [
+        {
+            media: '(max-width: 1024px)',
+            image: getImage(configs.mobileImage.asset.gatsbyImageData),
+        },
+    ]);
 
     return (
         <>
@@ -95,7 +106,9 @@ const StartPage = ({ data }) => {
             </Helmet>
             <SEO title="Start" />
             <Wrapper>
-                <BackgroundImage />
+                <BackgroundImage>
+                    <FakeBackgroundImage image={images} alt="Page hero" />
+                </BackgroundImage>
                 <TextWrapper>
                     <H1>Gin Tours</H1>
                     <Paragraph>
@@ -135,18 +148,15 @@ const StartPage = ({ data }) => {
 };
 
 export const query = graphql`
-    query MyQuery {
+    query FrontPageQuery {
         allSanityDistilleries {
             edges {
                 node {
                     title
                     place
                     image {
-                        alt
-                        url {
-                            asset {
-                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
-                            }
+                        asset {
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
                         }
                     }
                     slug {
@@ -163,11 +173,8 @@ export const query = graphql`
                         current
                     }
                     image {
-                        alt
-                        url {
-                            asset {
-                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
-                            }
+                        asset {
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
                         }
                     }
                     ingredients
@@ -178,6 +185,18 @@ export const query = graphql`
                             }
                         }
                     }
+                }
+            }
+        }
+        sanityConfigs {
+            desktopImage {
+                asset {
+                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                }
+            }
+            mobileImage {
+                asset {
+                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
                 }
             }
         }
