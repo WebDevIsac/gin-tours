@@ -81,7 +81,7 @@ const Card = ({ title, place, image, slug }) => {
             <CardWrapper>
                 <Column>
                     <ImageWrapper>
-                        <GatsbyImage image={image?.url?.asset.gatsbyImageData} alt={image.alt} />
+                        <GatsbyImage image={image?.asset.gatsbyImageData} alt={title} />
                     </ImageWrapper>
                     <Box>
                         <Span>{place}</Span>

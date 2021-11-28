@@ -56,11 +56,8 @@ export const query = graphql`
                     title
                     place
                     image {
-                        alt
-                        url {
-                            asset {
-                                gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
-                            }
+                        asset {
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
                         }
                     }
                     slug {
