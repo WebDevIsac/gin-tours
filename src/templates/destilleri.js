@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import BookingForm from 'components/BookingForm';
 import GoogleMaps from 'components/GoogleMaps';
 
 const Wrapper = styled('div')`
@@ -27,7 +26,7 @@ const Button = styled('button')`
 `;
 
 const Distillery = ({ data }) => {
-    const { title, image, geopoint, slug } = data.sanityDistilleries;
+    const { title, image, geopoint, slug, place } = data.sanityDistilleries;
     const { dates, price } = data.sanityProducts || {};
 
     return (
@@ -48,12 +47,12 @@ const Distillery = ({ data }) => {
                 {!!price && (
                     <Button
                         className="snipcart-add-item"
-                        data-item-id="herno-gin"
+                        data-item-id={title.replace(' ', '-').toLowerCase()}
                         data-item-price={price}
                         data-item-url={slug.current}
-                        data-item-description="Resa till Hernö Gins destilleri i Härnösand"
+                        data-item-description={`Resa till ${title} destilleri i ${place}`}
                         data-item-image={image.asset.url}
-                        data-item-name="Herno Gin"
+                        data-item-name={title}
                     >
                         Boka resa
                     </Button>
@@ -68,6 +67,7 @@ export const query = graphql`
     query ($slug: String!) {
         sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
+            place
             image {
                 asset {
                     url
@@ -92,16 +92,11 @@ export const query = graphql`
 Distillery.propTypes = {
     data: PropTypes.shape({
         sanityDistilleries: PropTypes.shape({
-            accommodations: PropTypes.arrayOf(PropTypes.string),
-            bookingInformation: PropTypes.arrayOf(PropTypes.string),
-            images: PropTypes.object,
-            information: PropTypes.arrayOf(PropTypes.string),
             title: PropTypes.string,
-            prices: PropTypes.array,
-            restaurants: PropTypes.arrayOf(PropTypes.string),
-            travelPlan: PropTypes.array,
-            sendToSite: PropTypes.object,
-            transport: PropTypes.string,
+            image: PropTypes.object,
+            geopoint: PropTypes.object,
+            slug: PropTypes.object,
+            place: PropTypes.string,
         }),
         sanityProducts: PropTypes.shape({
             dates: PropTypes.array,
