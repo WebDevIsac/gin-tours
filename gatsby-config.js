@@ -20,6 +20,8 @@ module.exports = {
         'gatsby-transformer-json',
         'gatsby-plugin-react-helmet',
         'gatsby-plugin-image',
+        'gatsby-plugin-sharp',
+        'gatsby-transformer-sharp',
         {
             resolve: 'gatsby-plugin-root-import',
             options: {
