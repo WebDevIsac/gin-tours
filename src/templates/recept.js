@@ -26,8 +26,7 @@ const FakeBackgroundImage = styled(GatsbyImage)`
 
     & > img {
         object-fit: cover !important;
-        object-position: 0% 0% !important;
-        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
+        object-position: 50% 25% !important;
     }
 `;
 
@@ -35,9 +34,6 @@ const ImageWrapper = styled('div')`
     position: relative;
     width: 100%;
     height: 80vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 0%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -120,7 +116,13 @@ const Recipe = ({ data }) => {
                         ))}
                     </IngredientsList>
                     <H2>Instruktioner</H2>
-                    {instructions && <Instructions>{instructions}</Instructions>}
+                    {instructions?.length && (
+                        <Wrapper>
+                            {instructions[0].children.map(({ text }, index) => (
+                                <Instructions key={index}>{text}</Instructions>
+                            ))}
+                        </Wrapper>
+                    )}
                     <H3>
                         Recept från{' '}
                         <StyledLink to={link} target="_blank" rel="noopener nofollow">
@@ -146,7 +148,11 @@ export const query = graphql`
                 title
             }
             ingredients
-            # instructions
+            instructions {
+                children {
+                    text
+                }
+            }
             link
         }
     }
@@ -154,8 +160,8 @@ export const query = graphql`
 
 Recipe.propTypes = {
     data: PropTypes.shape({
-        recipesJson: PropTypes.shape({
-            creator: PropTypes.string,
+        sanityRecipes: PropTypes.shape({
+            distillery: PropTypes.string,
             image: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
             instructions: PropTypes.string,
