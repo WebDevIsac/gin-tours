@@ -116,7 +116,13 @@ const Recipe = ({ data }) => {
                         ))}
                     </IngredientsList>
                     <H2>Instruktioner</H2>
-                    {instructions && <Instructions>{instructions}</Instructions>}
+                    {instructions?.length && (
+                        <Wrapper>
+                            {instructions[0].children.map(({ text }, index) => (
+                                <Instructions key={index}>{text}</Instructions>
+                            ))}
+                        </Wrapper>
+                    )}
                     <H3>
                         Recept från{' '}
                         <StyledLink to={link} target="_blank" rel="noopener nofollow">
@@ -142,7 +148,11 @@ export const query = graphql`
                 title
             }
             ingredients
-            # instructions
+            instructions {
+                children {
+                    text
+                }
+            }
             link
         }
     }
@@ -150,8 +160,8 @@ export const query = graphql`
 
 Recipe.propTypes = {
     data: PropTypes.shape({
-        recipesJson: PropTypes.shape({
-            creator: PropTypes.string,
+        sanityRecipes: PropTypes.shape({
+            distillery: PropTypes.string,
             image: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
             instructions: PropTypes.string,
