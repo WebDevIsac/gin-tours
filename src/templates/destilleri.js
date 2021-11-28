@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import BookingForm from 'components/BookingForm';
 import GoogleMaps from 'components/GoogleMaps';
 
 const Wrapper = styled('div')`
@@ -93,16 +92,11 @@ export const query = graphql`
 Distillery.propTypes = {
     data: PropTypes.shape({
         sanityDistilleries: PropTypes.shape({
-            accommodations: PropTypes.arrayOf(PropTypes.string),
-            bookingInformation: PropTypes.arrayOf(PropTypes.string),
-            images: PropTypes.object,
-            information: PropTypes.arrayOf(PropTypes.string),
             title: PropTypes.string,
-            prices: PropTypes.array,
-            restaurants: PropTypes.arrayOf(PropTypes.string),
-            travelPlan: PropTypes.array,
-            sendToSite: PropTypes.object,
-            transport: PropTypes.string,
+            image: PropTypes.object,
+            geopoint: PropTypes.object,
+            slug: PropTypes.object,
+            place: PropTypes.string,
         }),
         sanityProducts: PropTypes.shape({
             dates: PropTypes.array,
