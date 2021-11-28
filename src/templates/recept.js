@@ -26,8 +26,7 @@ const FakeBackgroundImage = styled(GatsbyImage)`
 
     & > img {
         object-fit: cover !important;
-        object-position: 0% 0% !important;
-        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
+        object-position: 50% 25% !important;
     }
 `;
 
@@ -35,9 +34,6 @@ const ImageWrapper = styled('div')`
     position: relative;
     width: 100%;
     height: 80vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 0%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
