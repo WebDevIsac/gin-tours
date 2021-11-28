@@ -23,15 +23,15 @@ exports.createPages = async ({ actions, graphql }) => {
         }
     `);
 
-    data.allSanityDistilleries.edges.forEach(edge => {
-        const slug = edge.node.slug.current;
+    // data.allSanityDistilleries.edges.forEach(edge => {
+    //     const slug = edge.node.slug.current;
 
-        actions.createPage({
-            path: slug,
-            component: require.resolve('./src/templates/destilleri.js'),
-            context: { slug },
-        });
-    });
+    //     actions.createPage({
+    //         path: slug,
+    //         component: require.resolve('./src/templates/destilleri.js'),
+    //         context: { slug },
+    //     });
+    // });
 
     data.allSanityRecipes.edges.forEach(edge => {
         const slug = edge.node.slug.current;
