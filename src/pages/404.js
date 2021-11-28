@@ -69,7 +69,7 @@ const NotFoundPage = ({ data }) => {
             <SEO title="404 - Sidan kunde inte hittas" />
             <Wrapper>
                 <BackgroundImage>
-                    <FakeBackgroundImage image={images} />
+                    <FakeBackgroundImage image={images} alt="Page hero" />
                 </BackgroundImage>
                 <h1>404 - Sidan kunde inte hittas</h1>
                 <StyledLink to="/">Gå till startsidan</StyledLink>

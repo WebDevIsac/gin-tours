@@ -109,7 +109,7 @@ const Recipe = ({ data }) => {
             <SEO title={title} />
             <Wrapper>
                 <ImageWrapper>
-                    <FakeBackgroundImage image={image.asset.gatsbyImageData} />
+                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
                     <H1>{title}</H1>
                 </ImageWrapper>
                 <Content>

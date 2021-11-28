@@ -107,7 +107,7 @@ const StartPage = ({ data }) => {
             <SEO title="Start" />
             <Wrapper>
                 <BackgroundImage>
-                    <FakeBackgroundImage image={images} />
+                    <FakeBackgroundImage image={images} alt="Page hero" />
                 </BackgroundImage>
                 <TextWrapper>
                     <H1>Gin Tours</H1>
