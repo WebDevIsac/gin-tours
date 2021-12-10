@@ -10,10 +10,14 @@ import SEO from 'components/SEO/SEO';
 
 const Wrapper = styled('div')`
     width: 100%;
-    height: 100%;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    ${above.md} {
+        flex-direction: row;
+    }
 `;
 
 const FakeBackgroundImage = styled(GatsbyImage)`
@@ -32,13 +36,14 @@ const FakeBackgroundImage = styled(GatsbyImage)`
 
 const ImageWrapper = styled('div')`
     position: relative;
-    width: 100%;
-    height: 80vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    width: 100%;
 
     ${above.md} {
+        width: 50%;
         justify-content: center;
         background-position: 50% 25%;
     }
@@ -52,17 +57,21 @@ const H1 = styled('h1')`
 const Content = styled('div')`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 24px;
-    max-width: 800px;
+    height: 100%;
     width: 100%;
+
+    ${above.md} {
+        width: 50%;
+    }
 `;
 
 const IngredientsList = styled('ul')`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
 `;
 
 const Ingredient = styled('li')`
@@ -81,6 +90,8 @@ const H3 = styled('h3')`
     line-height: 1.2em;
 `;
 
+const InstructionsBox = styled('div')``;
+
 const Instructions = styled('p')`
     font-size: 20px;
     line-height: 1.2em;
@@ -91,8 +102,9 @@ const StyledLink = styled(Link)`
 
     ${hover} {
         transition: opacity 200ms ease;
+
         &:hover {
-            opacity: 0.8;
+            opacity: 0.6;
         }
     }
 `;
@@ -117,14 +129,14 @@ const Recipe = ({ data }) => {
                     </IngredientsList>
                     <H2>Instruktioner</H2>
                     {instructions?.length && (
-                        <Wrapper>
-                            {instructions[0].children.map(({ text }, index) => (
-                                <Instructions key={index}>{text}</Instructions>
-                            ))}
-                        </Wrapper>
+                        <InstructionsBox>
+                            {instructions.map(({ children }) =>
+                                children.map(({ text }, index) => <Instructions key={index}>{text}</Instructions>)
+                            )}
+                        </InstructionsBox>
                     )}
                     <H3>
-                        Recept från{' '}
+                        Recept från&nbsp;
                         <StyledLink to={link} target="_blank" rel="noopener nofollow">
                             {distillery.title}
                         </StyledLink>
