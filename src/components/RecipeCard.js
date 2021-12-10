@@ -92,8 +92,7 @@ const FakeBackgroundImage = styled(GatsbyImage)`
 
     & > img {
         object-fit: cover !important;
-        object-position: 0% 0% !important;
-        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
+        object-position: 50% 0% !important;
     }
 `;
 
