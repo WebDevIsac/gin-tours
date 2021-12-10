@@ -7,10 +7,6 @@ import SEO from 'components/SEO/SEO';
 import Layout from 'components/layouts/Layout';
 import Card from 'components/Card';
 
-const H1 = styled('h1')`
-    display: none;
-`;
-
 const CardsRow = styled('div')`
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -38,7 +34,6 @@ const Distilleries = ({ data }) => {
     return (
         <>
             <SEO title={title} />
-            <H1>{title}</H1>
             <CardsRow>
                 {distilleries.map(({ node }, index) => (
                     <Card key={index} {...node} />

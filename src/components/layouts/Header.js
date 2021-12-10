@@ -4,7 +4,7 @@ import { globalHistory } from '@reach/router';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
-import logo from 'images/logo.png';
+import logo from 'images/logo.webp';
 
 const Navbar = styled('div')`
     position: fixed;
@@ -235,7 +235,7 @@ const Header = () => {
                 <Navbar className={(isOpen ? 'is-open ' : '') + (isScrolled ? 'scrolled' : '')}>
                     <Logotype>
                         <Link to="/">
-                            <Image src={logo} alt="Gin tours logo" />
+                            <Image width="210px" height="84px" src={logo} alt="Gin tours logo" />
                         </Link>
                     </Logotype>
                     <Hamburger onClick={handleMenuState}>
