@@ -167,10 +167,7 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }
 
     return (
         <CardWrapper isFlippable={isFlippable} isFlipped={isFlipped} onClick={handleFlip}>
-            <FrontColumn
-                backgroundImage={image?.url?.asset.gatsbyImageData}
-                className={isFlippable && isFlipped ? 'hide' : ''}
-            >
+            <FrontColumn className={isFlippable && isFlipped ? 'hide' : ''}>
                 <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
 
                 {!isFlipped && (

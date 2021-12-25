@@ -10,12 +10,12 @@ import SEO from 'components/SEO/SEO';
 
 const Wrapper = styled('div')`
     width: 100%;
-    height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     ${above.md} {
+        align-items: flex-start;
         flex-direction: row;
     }
 `;
@@ -36,13 +36,14 @@ const FakeBackgroundImage = styled(GatsbyImage)`
 
 const ImageWrapper = styled('div')`
     position: relative;
-    height: 100%;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     width: 100%;
 
     ${above.md} {
+        height: 90vh;
         width: 50%;
         justify-content: center;
         background-position: 50% 25%;

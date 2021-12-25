@@ -101,7 +101,7 @@ const Menu = styled('div')`
         transition: transform 300ms ease;
         transform: translateX(100%);
         background-color: ${colors.greige};
-        padding-top: 32px;
+        padding-top: 64px;
 
         .is-open > & {
             transform: translateX(0);
