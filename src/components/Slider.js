@@ -1,17 +1,63 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Glide from 'react-glidejs';
+import styled from '@emotion/styled';
+import { above } from 'util/mediaqueries';
+import colors from 'config/colors';
 
-import 'react-glidejs/dist/index.css';
+const StyledGlide = styled(Glide)`
+    & [data-glide-el='controls'] {
+        & > button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 35%;
+            cursor: pointer;
+            background-color: ${colors.white}CC;
+            border-radius: 100%;
+            padding: 8px;
 
-const Slider = ({ children }) => {
+            ${above.lg} {
+                top: 40%;
+                padding: 12px;
+            }
+
+            &:first-of-type {
+                left: 8px;
+            }
+
+            &:last-of-type {
+                right: 8px;
+            }
+
+            & > svg {
+                width: 28px;
+                height: 28px;
+
+                ${above.lg} {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                & > polyline {
+                    stroke: ${colors.blue};
+                }
+            }
+        }
+    }
+`;
+
+const Slider = ({ children, type, rewind, startAt }) => {
     const gliderRef = useRef(null);
 
     return (
-        <Glide
+        <StyledGlide
+            bound
             ref={gliderRef}
-            throttle={0}
-            type="carousel"
+            throttle={100}
+            type={type}
+            rewind={rewind}
             customSlideAnimation={{
                 timeout: 500,
                 classNames: 'fade',
@@ -51,17 +97,24 @@ const Slider = ({ children }) => {
                 },
             }}
             perView={3}
-            startAt={0}
-            slideClassName="slider__frame"
-            focusAt="center"
+            startAt={startAt}
         >
             {children}
-        </Glide>
+        </StyledGlide>
     );
 };
 
 Slider.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    rewind: PropTypes.bool,
+    startAt: PropTypes.number,
+    type: PropTypes.string,
+};
+
+Slider.defaultProps = {
+    rewind: false,
+    startAt: 1,
+    type: 'slider',
 };
 
 export default Slider;
