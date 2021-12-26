@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
-import { GatsbyImage, withArtDirection, getImage } from 'gatsby-plugin-image';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import colors from 'config/colors';
-import { hover } from 'util/mediaqueries';
+import { above, hover } from 'util/mediaqueries';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -17,29 +16,7 @@ const Wrapper = styled('div')`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 30%;
-    color: ${colors.white};
-`;
-
-const BackgroundImage = styled('div')`
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    clip-path: inset(0);
-`;
-
-const FakeBackgroundImage = styled(GatsbyImage)`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-
-    & > img {
-        object-fit: cover !important;
-        object-position: 0% 0% !important;
-        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
-    }
+    color: ${colors.black};
 `;
 
 const StyledLink = styled(Link)`
@@ -54,46 +31,34 @@ const StyledLink = styled(Link)`
     }
 `;
 
-const NotFoundPage = ({ data }) => {
-    const configs = data.sanityConfigs;
+const H1 = styled('h1')`
+    font-size: 32px;
+    line-height: 1.2em;
+    text-align: center;
 
-    const images = withArtDirection(getImage(configs.desktopImage.asset.gatsbyImageData), [
-        {
-            media: '(max-width: 1024px)',
-            image: getImage(configs.mobileImage.asset.gatsbyImageData),
-        },
-    ]);
+    ${above.md} {
+        font-size: 56px;
+    }
+`;
 
+const NotFoundPage = () => {
     return (
         <>
             <SEO title="404 - Sidan kunde inte hittas" />
             <Wrapper>
-                <BackgroundImage>
+                {/* <BackgroundImage>
                     <FakeBackgroundImage image={images} alt="Page hero" />
-                </BackgroundImage>
-                <h1>404 - Sidan kunde inte hittas</h1>
+                </BackgroundImage> */}
+                <H1>
+                    404
+                    <br />
+                    Sidan kunde inte hittas
+                </H1>
                 <StyledLink to="/">Gå till startsidan</StyledLink>
             </Wrapper>
         </>
     );
 };
-
-export const query = graphql`
-    query NotFoundQuery {
-        sanityConfigs {
-            desktopImage {
-                asset {
-                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
-                }
-            }
-            mobileImage {
-                asset {
-                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
-                }
-            }
-        }
-    }
-`;
 
 NotFoundPage.Layout = Layout;
 
