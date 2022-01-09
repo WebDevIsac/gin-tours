@@ -46,6 +46,18 @@ const StyledGlide = styled(Glide)`
             }
         }
     }
+
+    & .glide__slide {
+        max-width: 80%;
+
+        ${above.md} {
+            max-width: 40%;
+        }
+
+        ${above.lg} {
+            max-width: 30%;
+        }
+    }
 `;
 
 const Slider = ({ children, type, rewind, startAt }) => {
@@ -67,19 +79,12 @@ const Slider = ({ children, type, rewind, startAt }) => {
                 after: 200,
             }}
             breakpoints={{
-                600: {
+                768: {
                     peek: {
                         before: 60,
                         after: 60,
                     },
                     perView: 1,
-                },
-                768: {
-                    peek: {
-                        before: 50,
-                        after: 50,
-                    },
-                    perView: 1.5,
                 },
                 1024: {
                     peek: {
