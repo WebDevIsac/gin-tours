@@ -131,8 +131,10 @@ const Recipe = ({ data }) => {
                     <H2>Instruktioner</H2>
                     {instructions?.length && (
                         <InstructionsBox>
-                            {instructions.map(({ children }) =>
-                                children.map(({ text }, index) => <Instructions key={index}>{text}</Instructions>)
+                            {instructions.map(({ children }, index) =>
+                                children.map(({ text }, textIndex) => (
+                                    <Instructions key={`${index}_${textIndex}`}>{text}</Instructions>
+                                ))
                             )}
                         </InstructionsBox>
                     )}
