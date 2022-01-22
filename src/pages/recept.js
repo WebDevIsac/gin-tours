@@ -128,6 +128,7 @@ export const query = graphql`
                         }
                     }
                     ingredients
+                    ingredientsQuickLook
                     distillery {
                         id
                         title
