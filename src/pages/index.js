@@ -76,7 +76,7 @@ const H2 = styled('h2')`
     }
 `;
 
-const StyledLink = styled(Link)`
+const Underline = styled('span')`
     text-decoration: underline;
 
     ${hover} {
@@ -126,7 +126,7 @@ const StartPage = ({ data }) => {
                 <Newsletter />
                 {/* <Content>
                     <H2>Boka din ginresa idag!</H2>
-                    <Slider>
+                    <Slider rewind startAt={0}>
                         {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
                         ))}
@@ -134,9 +134,11 @@ const StartPage = ({ data }) => {
                 </Content> */}
                 <Content>
                     <H2>
-                        Kolla in alla magiska recept! <StyledLink to="/recept">Se alla</StyledLink>
+                        <Link to="/recept">
+                            Kolla in alla magiska recept <Underline>här!</Underline>
+                        </Link>
                     </H2>
-                    <Slider>
+                    <Slider rewind startAt={recipes.length / 2}>
                         {recipes.map(({ node }, index) => (
                             <RecipeCard key={index} {...node} />
                         ))}
@@ -156,7 +158,7 @@ export const query = graphql`
                     place
                     image {
                         asset {
-                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
                         }
                     }
                     slug {
@@ -218,6 +220,14 @@ StartPage.propTypes = {
                     node: PropTypes.object,
                 })
             ),
+        }),
+        sanityConfigs: PropTypes.shape({
+            desktopImage: PropTypes.shape({
+                asset: PropTypes.object,
+            }),
+            mobileImage: PropTypes.shape({
+                asset: PropTypes.object,
+            }),
         }),
     }).isRequired,
 };

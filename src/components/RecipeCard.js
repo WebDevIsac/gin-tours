@@ -41,13 +41,14 @@ const BadgeWrapper = styled('div')`
     position: absolute;
     top: 16px;
     left: 16px;
+    z-index: -1;
 `;
 
 const Title = styled('h3')`
     font-size: 24px;
     line-height: 24px;
     text-align: center;
-    margin: 0 16px;
+    margin: 0 16px 32px;
 `;
 
 const Span = styled('span')`
@@ -108,23 +109,34 @@ const List = styled('div')`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 64px 16px;
+    padding: 0 16px;
+    margin-bottom: 16px;
 `;
 
 const ListWithGradient = styled(List)`
     background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0.01),
+        rgba(0, 0, 0, 0.02),
         rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.35),
         rgba(0, 0, 0, 0.3),
-        rgba(0, 0, 0, 0.01)
+        rgba(0, 0, 0, 0.02)
     );
     position: absolute;
-    top: 32px;
+    top: 64px;
+    padding: 48px 0;
 
     ${below.sm} {
         display: none;
     }
+
+    ${above.lg} {
+        padding: 64px 0;
+    }
+`;
+
+const ScrollableList = styled(List)`
+    overflow: scroll;
 `;
 
 const FrontLink = styled('div')`
@@ -152,7 +164,7 @@ const BackLink = styled(FrontLink)`
     }
 `;
 
-const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }) => {
+const RecipeCard = ({ title, image, slug, ingredients, ingredientsQuickLook, isFlippable, distillery }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const handleNavigation = e => {
@@ -167,10 +179,7 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }
 
     return (
         <CardWrapper isFlippable={isFlippable} isFlipped={isFlipped} onClick={handleFlip}>
-            <FrontColumn
-                backgroundImage={image?.url?.asset.gatsbyImageData}
-                className={isFlippable && isFlipped ? 'hide' : ''}
-            >
+            <FrontColumn className={isFlippable && isFlipped ? 'hide' : ''}>
                 <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
 
                 {!isFlipped && (
@@ -197,11 +206,11 @@ const RecipeCard = ({ title, image, slug, ingredients, isFlippable, distillery }
             {isFlippable && (
                 <BackColumn className={isFlipped ? '' : 'hide'}>
                     <Title>{title}</Title>
-                    <List>
-                        {ingredients.map((ingredient, index) => (
+                    <ScrollableList>
+                        {(ingredientsQuickLook.length ? ingredientsQuickLook : ingredients).map((ingredient, index) => (
                             <Span key={index}>{ingredient}</Span>
                         ))}
-                    </List>
+                    </ScrollableList>
                     <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
                         <BackLink>Läs hela receptet</BackLink>
                     </Link>
@@ -215,7 +224,8 @@ RecipeCard.propTypes = {
     badge: PropTypes.string,
     distillery: PropTypes.object.isRequired,
     image: PropTypes.object.isRequired,
-    ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.string),
+    ingredientsQuickLook: PropTypes.arrayOf(PropTypes.string),
     isFlippable: PropTypes.bool,
     title: PropTypes.string.isRequired,
     slug: PropTypes.object.isRequired,
@@ -223,6 +233,8 @@ RecipeCard.propTypes = {
 
 RecipeCard.defaultProps = {
     badge: '',
+    ingredients: [],
+    ingredientsQuickLook: [],
     isFlippable: false,
 };
 

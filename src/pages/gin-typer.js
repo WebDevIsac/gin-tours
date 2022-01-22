@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { StaticQuery, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 import { above } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
@@ -10,6 +11,8 @@ const Wrapper = styled('div')`
     height: 100%;
     max-width: 1200px;
     padding: 0 16px;
+    display: flex;
+    flex-direction: column;
 
     ${above.md} {
         padding: 0 32px;
@@ -20,7 +23,29 @@ const H1 = styled('h1')`
     display: none;
 `;
 
-const Section = styled('section')``;
+const Section = styled('section')`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    &:nth-of-type(odd) {
+        align-items: end;
+    }
+
+    ${above.lg} {
+        padding-right: 35%;
+
+        &:not(:first-of-type) {
+            margin-top: -96px;
+        }
+
+        &:nth-of-type(odd) {
+            padding-right: 0;
+            padding-left: 35%;
+        }
+    }
+`;
 
 const H3 = styled('h3')`
     font-size: 32px;
@@ -32,44 +57,58 @@ const Text = styled('p')`
     line-height: 1em;
 `;
 
-const query = graphql`
+const GinTypes = ({ data }) => {
+    const title = 'Gin typer';
+
+    const types = data.allSanityTypes.edges;
+
+    return (
+        <>
+            <SEO title={title} />
+            <H1>{title}</H1>
+            <Wrapper>
+                {types.map(({ node: { title, text } }) => (
+                    <Section key={title}>
+                        <H3>{title}</H3>
+                        {text.map(({ children }, index) =>
+                            children.map(({ text }, textIndex) => <Text key={`${index}_${textIndex}`}>{text}</Text>)
+                        )}
+                    </Section>
+                ))}
+            </Wrapper>
+        </>
+    );
+};
+
+export const query = graphql`
     query {
-        allGinTypesJson {
+        allSanityTypes {
             edges {
                 node {
                     title
-                    content
+                    text {
+                        children {
+                            text
+                        }
+                    }
                 }
             }
         }
     }
 `;
 
-const About = () => {
-    const title = 'Gin typer';
-    return (
-        <>
-            <SEO title={title} />
-            <H1>{title}</H1>
-            <StaticQuery
-                query={query}
-                render={data => (
-                    <Wrapper>
-                        {data.allGinTypesJson.edges.map(({ node: { title, content } }) => (
-                            <Section key={title}>
-                                <H3>{title}</H3>
-                                {content.map((text, index) => (
-                                    <Text key={index}>{text}</Text>
-                                ))}
-                            </Section>
-                        ))}
-                    </Wrapper>
-                )}
-            />
-        </>
-    );
+GinTypes.propTypes = {
+    data: PropTypes.shape({
+        allSanityTypes: PropTypes.shape({
+            edges: PropTypes.arrayOf(
+                PropTypes.shape({
+                    node: PropTypes.object,
+                })
+            ),
+        }),
+    }).isRequired,
 };
 
-About.Layout = Layout;
+GinTypes.Layout = Layout;
 
-export default About;
+export default GinTypes;
