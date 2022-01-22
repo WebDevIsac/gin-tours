@@ -33,7 +33,7 @@ const Section = styled('section')`
         align-items: end;
     }
 
-    ${above.md} {
+    ${above.lg} {
         padding-right: 35%;
 
         &:not(:first-of-type) {
