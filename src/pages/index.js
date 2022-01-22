@@ -126,7 +126,7 @@ const StartPage = ({ data }) => {
                 <Newsletter />
                 <Content>
                     <H2>Boka din ginresa idag!</H2>
-                    <Slider rewind>
+                    <Slider rewind startAt={0}>
                         {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
                         ))}

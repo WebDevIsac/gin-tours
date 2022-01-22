@@ -70,9 +70,8 @@ const GinTypes = ({ data }) => {
                 {types.map(({ node: { title, text } }) => (
                     <Section key={title}>
                         <H3>{title}</H3>
-                        {(text || []).map(
-                            ({ children }, index) =>
-                                !!children?.[0]?.text && <Text key={index}>{children[0].text}</Text>
+                        {text.map(({ children }, index) =>
+                            children.map(({ text }, textIndex) => <Text key={`${index}_${textIndex}`}>{text}</Text>)
                         )}
                     </Section>
                 ))}
