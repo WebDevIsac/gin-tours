@@ -74,6 +74,14 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
     const [filteredRecipes, setFilteredRecipes] = useState(recipes);
 
     const handleFilter = id => {
+        if (window !== 'undefined') {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+            });
+        }
+
         if (typeof id !== 'string' || id === activeFilter) {
             setActiveFilter(null);
             setFilteredRecipes(recipes);
