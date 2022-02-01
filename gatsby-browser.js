@@ -5,3 +5,13 @@ export const wrapPageElement = ({ element }) => {
 
     return <Layout>{element}</Layout>;
 };
+
+export const shouldUpdateScroll = () => {
+    if (window.__preventScroll) {
+        delete window.__preventScroll;
+
+        return false;
+    }
+
+    return true;
+};
