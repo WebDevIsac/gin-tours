@@ -46,7 +46,7 @@ export const getParamResults = (allRecipes, search) => {
 
     let filteredRecipes = [];
     let index = 0;
-    let state;
+    let state = {};
 
     for (const key of paramKeys) {
         if (!config.includes(key)) {
