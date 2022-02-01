@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { graphql } from 'gatsby';
-import Layout from 'components/layouts/Layout';
-import SEO from 'components/SEO/SEO';
-import RecipeCard from 'components/RecipeCard';
+import { graphql, navigate } from 'gatsby';
+import { useLocation } from '@reach/router';
 import { above } from 'util/mediaqueries';
+import { decodeString, getParamResults } from 'util/filter';
 import colors from 'config/colors';
+import SEO from 'components/SEO/SEO';
+import Layout from 'components/layouts/Layout';
+import RecipeCard from 'components/RecipeCard';
 
 const FilterWrapper = styled('div')`
     position: sticky;
@@ -61,19 +63,46 @@ const CardsRow = styled('div')`
 `;
 
 const Recipes = ({ data: { allSanityRecipes } }) => {
-    const recipes = allSanityRecipes.edges.map(edge => edge.node);
-    const distilleries = recipes.reduce((distilleries, recipe) => {
-        if (distilleries.every(distillery => distillery.id !== recipe.distillery.id)) {
-            distilleries.push(recipe.distillery);
+    const [activeFilters, setActiveFilters] = useState(null);
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
+    const { search } = useLocation();
+
+    const allRecipes = allSanityRecipes.edges.map(edge => {
+        const distillery = edge.node?.distillery;
+        const decodedDistilleryTitle = decodeString(distillery?.title);
+
+        return {
+            ...edge.node,
+            distillery: decodedDistilleryTitle,
+            distilleryObj: { ...distillery, decodedDistilleryTitle },
+        };
+    });
+
+    const distilleries = allRecipes.reduce((distilleries, recipe) => {
+        if (distilleries.every(distillery => distillery.title !== recipe.distilleryObj.title)) {
+            distilleries.push(recipe.distilleryObj);
         }
 
         return distilleries;
     }, []);
 
-    const [activeFilter, setActiveFilter] = useState(null);
-    const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+    useEffect(() => {
+        const [result, state] = getParamResults(allRecipes, search);
 
-    const handleFilter = id => {
+        setFilteredRecipes(result);
+    }, []);
+
+    const setFilterParam = filter => {
+        if (!filter && new URLSearchParams(search).has('distillery')) {
+            window.__preventScroll = true;
+            navigate('/recept', { replace: true });
+        } else if (filter) {
+            window.__preventScroll = true;
+            navigate(`/recept?distillery=${filter}`, { replace: true });
+        }
+    };
+
+    const handleFilter = title => {
         if (window !== 'undefined') {
             window.scrollTo({
                 top: 0,
@@ -82,13 +111,17 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
             });
         }
 
-        if (typeof id !== 'string' || id === activeFilter) {
-            setActiveFilter(null);
-            setFilteredRecipes(recipes);
+        const decodedTitle = decodeString(title);
+
+        if (typeof decodedTitle !== 'string' || decodedTitle === activeFilters) {
+            setActiveFilters(null);
+            setFilteredRecipes(allRecipes);
+            setFilterParam(null);
         } else {
-            const filter = recipes.filter(recipe => recipe.distillery.id === id);
-            setActiveFilter(id);
+            const filter = allRecipes.filter(recipe => decodeString(recipe.distillery.title) === decodedTitle);
+            setActiveFilters(decodedTitle);
             setFilteredRecipes(filter);
+            setFilterParam(decodedTitle);
         }
     };
 
@@ -96,34 +129,35 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
         <>
             <SEO title="Recept" />
             <FilterWrapper>
-                {distilleries.map(({ id, title }) => (
+                {distilleries.map(({ title }) => (
                     <FilterButton
-                        key={id}
+                        key={title}
                         type="button"
-                        className={activeFilter === id ? 'active' : ''}
-                        onClick={() => handleFilter(id)}
+                        className={activeFilters === decodeString(title) ? 'active' : ''}
+                        onClick={() => handleFilter(title)}
                     >
                         {title}
                     </FilterButton>
                 ))}
-                {!!activeFilter && (
+                {!!activeFilters && (
                     <FilterButton type="button" onClick={handleFilter}>
                         X
                     </FilterButton>
                 )}
             </FilterWrapper>
             <CardsRow>
-                {filteredRecipes.map((recipe, index) => (
-                    <RecipeCard isFlippable key={index} {...recipe} />
-                ))}
+                {filteredRecipes.map((recipe, index) => {
+                    const { distilleryObj: distillery, ...rest } = recipe;
+                    return <RecipeCard isFlippable {...rest} key={index} distillery={distillery} />;
+                })}
             </CardsRow>
         </>
     );
 };
 
 export const query = graphql`
-    query {
-        allSanityRecipes {
+    query ($limit: Int) {
+        allSanityRecipes(sort: { fields: _createdAt, order: DESC }, limit: $limit) {
             edges {
                 node {
                     title
@@ -138,7 +172,6 @@ export const query = graphql`
                     ingredients
                     ingredientsQuickLook
                     distillery {
-                        id
                         title
                         badge {
                             asset {
