@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { graphql, navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
 import { above } from 'util/mediaqueries';
-import { decodeString, getParamResults } from 'util/filter';
+import { decodeString, getParamResults, setFilterParams } from 'util/filter';
 import colors from 'config/colors';
 import SEO from 'components/SEO/SEO';
 import Layout from 'components/layouts/Layout';
@@ -63,7 +63,7 @@ const CardsRow = styled('div')`
 `;
 
 const Recipes = ({ data: { allSanityRecipes } }) => {
-    const [activeFilters, setActiveFilters] = useState(null);
+    const [activeFilters, setActiveFilters] = useState({});
     const [filteredRecipes, setFilteredRecipes] = useState([]);
     const { search } = useLocation();
 
@@ -87,22 +87,13 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
     }, []);
 
     useEffect(() => {
-        const [result, state] = getParamResults(allRecipes, search);
+        const [result, filter] = getParamResults(allRecipes, search);
 
+        setActiveFilters(filter);
         setFilteredRecipes(result);
     }, []);
 
-    const setFilterParam = filter => {
-        if (!filter && new URLSearchParams(search).has('distillery')) {
-            window.__preventScroll = true;
-            navigate('/recept', { replace: true });
-        } else if (filter) {
-            window.__preventScroll = true;
-            navigate(`/recept?distillery=${filter}`, { replace: true });
-        }
-    };
-
-    const handleFilter = title => {
+    const handleFilter = (value, key) => {
         if (window !== 'undefined') {
             window.scrollTo({
                 top: 0,
@@ -111,19 +102,32 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
             });
         }
 
-        const decodedTitle = decodeString(title);
+        const [result, filter] = setFilterParams(value, key, allRecipes, activeFilters);
 
-        if (typeof decodedTitle !== 'string' || decodedTitle === activeFilters) {
-            setActiveFilters(null);
-            setFilteredRecipes(allRecipes);
-            setFilterParam(null);
-        } else {
-            const filter = allRecipes.filter(recipe => decodeString(recipe.distillery.title) === decodedTitle);
-            setActiveFilters(decodedTitle);
-            setFilteredRecipes(filter);
-            setFilterParam(decodedTitle);
-        }
+        setFilteredRecipes(result);
+        setActiveFilters(filter);
     };
+
+    const handleClear = () => {
+        if (window !== 'undefined') {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+            });
+        }
+
+        setFilteredRecipes(allRecipes);
+        setActiveFilters({});
+        navigate('/recept/', {
+            replace: true,
+            state: {
+                disableScrollUpdate: true,
+            },
+        });
+    };
+
+    const hasActiveFilter = Object.keys(activeFilters)?.length;
 
     return (
         <>
@@ -134,13 +138,13 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
                         key={title}
                         type="button"
                         className={activeFilters === decodeString(title) ? 'active' : ''}
-                        onClick={() => handleFilter(title)}
+                        onClick={() => handleFilter(title, 'distillery')}
                     >
                         {title}
                     </FilterButton>
                 ))}
-                {!!activeFilters && (
-                    <FilterButton type="button" onClick={handleFilter}>
+                {!!hasActiveFilter && (
+                    <FilterButton type="button" onClick={handleClear}>
                         X
                     </FilterButton>
                 )}
@@ -148,6 +152,7 @@ const Recipes = ({ data: { allSanityRecipes } }) => {
             <CardsRow>
                 {filteredRecipes.map((recipe, index) => {
                     const { distilleryObj: distillery, ...rest } = recipe;
+
                     return <RecipeCard isFlippable {...rest} key={index} distillery={distillery} />;
                 })}
             </CardsRow>

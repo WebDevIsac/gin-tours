@@ -1,3 +1,5 @@
+import { navigate } from 'gatsby';
+
 const config = ['distillery'];
 
 export const decodeString = string => {
@@ -37,8 +39,10 @@ export const decodeString = string => {
 };
 
 export const getParamResults = (allRecipes, search) => {
+    const filter = {};
+
     if (!search) {
-        return allRecipes;
+        return [allRecipes, filter];
     }
 
     const urlParams = new URLSearchParams(search);
@@ -46,27 +50,83 @@ export const getParamResults = (allRecipes, search) => {
 
     let filteredRecipes = [];
     let index = 0;
-    let state = {};
 
     for (const key of paramKeys) {
         if (!config.includes(key)) {
             continue;
         }
 
-        const values = urlParams.get(key).split(',');
-        let recipes = [];
+        const values = urlParams.get(key);
+        const valuesArray = values.split(',');
+        filter[key] = valuesArray;
 
-        values.forEach(value => {
-            const filteredByValue = (index === 0 ? allRecipes : filteredRecipes).filter(
-                recipe => recipe[key] === value
-            );
-
-            recipes = recipes.concat(filteredByValue);
-        });
+        const recipes = (index === 0 ? allRecipes : filteredRecipes).filter(recipe =>
+            valuesArray.includes(recipe[key])
+        );
 
         index++;
         filteredRecipes = recipes;
     }
 
-    return [filteredRecipes];
+    return [filteredRecipes, filter];
+};
+
+export const setFilterParams = (value, key, allRecipes, filter) => {
+    const decodedValue = decodeString(value);
+    const matchedFilter = filter[key];
+
+    if (matchedFilter) {
+        const valueIndex = matchedFilter.indexOf(decodedValue);
+        if (valueIndex !== -1) {
+            if (matchedFilter.length > 1) {
+                filter[key].splice(valueIndex, 1);
+            } else {
+                delete filter[key];
+            }
+        } else {
+            filter[key].push(decodedValue);
+        }
+    } else {
+        filter[key] = [decodedValue];
+    }
+
+    let index = 0;
+    let filteredRecipes = [];
+    const activeFilterKeys = Object.keys(filter);
+
+    if (!activeFilterKeys?.length) {
+        navigate('/recept/', {
+            replace: true,
+            state: {
+                disableScrollUpdate: true,
+            },
+        });
+
+        return [allRecipes, filter];
+    }
+
+    activeFilterKeys.forEach(filterKey => {
+        const valuesArray = filter[filterKey];
+        const recipes = (index === 0 ? allRecipes : filteredRecipes).filter(recipe =>
+            valuesArray.includes(recipe[filterKey])
+        );
+
+        index++;
+        filteredRecipes = recipes;
+    });
+
+    let params = '';
+    activeFilterKeys.forEach((filterKey, index) => {
+        const valueString = filter[filterKey].join(',');
+        params += `${index === 0 ? '?' : '&'}${filterKey}=${valueString}`;
+    });
+
+    navigate(`/recept/${params}`, {
+        replace: true,
+        state: {
+            disableScrollUpdate: true,
+        },
+    });
+
+    return [filteredRecipes, filter];
 };
