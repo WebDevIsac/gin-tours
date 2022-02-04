@@ -6,12 +6,21 @@ export const wrapPageElement = ({ element }) => {
     return <Layout>{element}</Layout>;
 };
 
-export const shouldUpdateScroll = () => {
-    if (window.__preventScroll) {
-        delete window.__preventScroll;
+export const shouldUpdateScroll = ({ routerProps }) => {
+    const { disableScrollUpdate } = routerProps.location.state || {};
 
-        return false;
-    }
-
-    return true;
+    return !disableScrollUpdate;
 };
+
+// Focus back on input field after navigation
+// export const onRouteUpdate = loc => {
+//     const { state } = loc.location;
+
+//     if (state && state.refocusId) {
+//         const el = document.getElementById(state.refocusId);
+
+//         if (el) {
+//             el.focus();
+//         }
+//     }
+// };
