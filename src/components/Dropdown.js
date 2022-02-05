@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { above, hover } from 'util/mediaqueries';
@@ -7,11 +7,26 @@ import Arrow from 'components/icons/Arrow';
 
 const Wrapper = styled('div')`
     position: relative;
-    width: 20%;
-    height: 46px;
+    width: calc(50% - 8px);
+    height: 30px;
+    margin-bottom: 8px;
 
     &:not(:last-of-type) {
-        margin-right: 12px;
+        margin-right: 8px;
+    }
+
+    ${above.md} {
+        height: 42px;
+        width: 30%;
+        margin-bottom: 0;
+
+        &:not(:last-of-type) {
+            margin-right: 16px;
+        }
+    }
+
+    ${above.lg} {
+        width: 20%;
     }
 `;
 
@@ -22,10 +37,14 @@ const InnerWrapper = styled('div')`
     flex-direction: column;
     align-items: center;
     transition: max-height 300ms ease;
-    max-height: 42px;
+    max-height: 30px;
     width: 100%;
     border-bottom: 1px solid ${colors.blue};
     background-color: ${colors.white};
+
+    ${above.md} {
+        max-height: 42px;
+    }
 
     &.open {
         max-height: 240px;
@@ -41,14 +60,19 @@ const Trigger = styled('button')`
     position: relative;
     width: 100%;
     text-align: center;
-    padding: 12px;
-    font-size: 20px;
+    padding: 6px;
+    font-size: 18px;
     color: ${colors.blue};
     background: ${colors.white};
     border: 1px solid ${colors.blue};
     user-select: none;
     cursor: pointer;
     text-transform: capitalize;
+
+    ${above.md} {
+        font-size: 20px;
+        padding: 12px;
+    }
 
     &.selected {
         color: ${colors.white};
@@ -71,15 +95,25 @@ const Select = styled(Trigger)`
     }
 `;
 
-const Label = styled('span')`
-    font-size: 20px;
-    line-height: 1em;
-`;
-
 const ArrowWrapper = styled('div')`
     position: absolute;
-    top: 10px;
-    right: 12px;
+    top: 7px;
+    right: 8px;
+
+    & > svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    ${above.md} {
+        top: 10px;
+        right: 12px;
+
+        & > svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
 `;
 
 const Dropdown = ({ data, selected, index, onSelect }) => {
@@ -95,20 +129,23 @@ const Dropdown = ({ data, selected, index, onSelect }) => {
     return (
         <Wrapper>
             <InnerWrapper className={isOpen ? 'open' : ''}>
-                <Trigger className={!isOpen && selectedLabel ? 'selected' : ''} onClick={() => setIsOpen(!isOpen)}>
-                    <Label>{(!isOpen && selectedLabel) || `Välj ${index}`}</Label>
+                <Trigger
+                    type="button"
+                    className={!isOpen && selectedLabel ? 'selected' : ''}
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    {(!isOpen && selectedLabel) || `Välj ${index}`}
                     <ArrowWrapper>
                         <Arrow
                             color={!isOpen && selectedLabel ? colors.white : colors.blue}
                             direction={isOpen ? 'up' : 'down'}
-                            width="20px"
-                            height="20px"
                         />
                     </ArrowWrapper>
                 </Trigger>
                 <InnerDropdown>
                     {data.map(({ label, value }) => (
                         <Select
+                            type="button"
                             key={value}
                             className={selected === value ? 'selected' : ''}
                             value={value}
@@ -121,6 +158,19 @@ const Dropdown = ({ data, selected, index, onSelect }) => {
             </InnerWrapper>
         </Wrapper>
     );
+};
+
+Dropdown.propTypes = {
+    data: PropTypes.array,
+    index: PropTypes.string,
+    onSelect: PropTypes.func.isRequired,
+    selected: PropTypes.string,
+};
+
+Dropdown.defaultProps = {
+    data: [],
+    index: '',
+    selected: '',
 };
 
 export default Dropdown;

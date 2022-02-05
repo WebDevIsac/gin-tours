@@ -5,7 +5,6 @@ import { graphql, navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
 import { above } from 'util/mediaqueries';
 import { getParamFilter, setFilterParams } from 'util/filter';
-import colors from 'config/colors';
 import SEO from 'components/SEO/SEO';
 import Layout from 'components/layouts/Layout';
 import RecipeCard from 'components/RecipeCard';
@@ -90,8 +89,7 @@ const Recipes = ({ data: { allSanityRecipes, allSanityDistilleries, allSanityTyp
             });
         }
 
-        const newFilter = setFilterParams(value, key, filters);
-        setFilters(newFilter);
+        setFilters(setFilterParams(value, key, filters));
     };
 
     const handleClear = () => {
