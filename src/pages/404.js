@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';

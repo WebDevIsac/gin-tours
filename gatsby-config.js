@@ -8,7 +8,8 @@ module.exports = {
     siteMetadata: {
         title: 'Gin Tours',
         titleTemplate: '%s · Gin Tours',
-        description: 'Boka din skräddarsydda ginresa idag',
+        description:
+            'Vi är ett nystartat företag som kommer erbjuda paketresor till olika gindestillerier i Sverige. Resorna kommer bland annat innehålla gin provningar, lärande om processen att framställa gin, mixa drinkar och diverse föreläsningar',
         url: 'https://gintours.se',
         image: '/',
         owner: 'Gin Tours',
