@@ -4,7 +4,7 @@ import { globalHistory } from '@reach/router';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
-import logo from 'images/logo.webp';
+import Logo from 'components/icons/Logo';
 
 const Navbar = styled('div')`
     position: fixed;
@@ -35,15 +35,18 @@ const Navbar = styled('div')`
     }
 `;
 
-const Logotype = styled('div')`
+const LogoLink = styled(Link)`
     font-size: 24px;
     line-height: 1em;
     height: 100%;
-`;
 
-const Image = styled('img')`
-    width: auto;
-    height: 100%;
+    .scrolled & svg {
+        fill: ${colors.white};
+
+        & > path:nth-of-type(-n + 2) {
+            stroke: ${colors.white};
+        }
+    }
 `;
 
 const Hamburger = styled('div')`
@@ -234,11 +237,9 @@ const Header = () => {
             query={query}
             render={data => (
                 <Navbar className={(isOpen ? 'is-open ' : '') + (isScrolled ? 'scrolled' : '')}>
-                    <Logotype>
-                        <Link to="/">
-                            <Image width="210px" height="84px" src={logo} alt="Gin tours logo" />
-                        </Link>
-                    </Logotype>
+                    <LogoLink to="/">
+                        <Logo />
+                    </LogoLink>
                     <Hamburger onClick={handleMenuState}>
                         <Line />
                         <Line />
