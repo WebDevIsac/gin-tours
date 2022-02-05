@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
-import { globalHistory } from '@reach/router';
+import { globalHistory, useLocation } from '@reach/router';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
@@ -172,8 +172,9 @@ const query = graphql`
 `;
 
 const Header = () => {
+    const { pathname } = useLocation();
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(pathname !== '/');
 
     const closeMenu = () => {
         setIsOpen(false);
@@ -200,11 +201,16 @@ const Header = () => {
     };
 
     const handleScrollEvent = () => {
-        if (window.location.pathname === '/') {
-            if (window.scrollY + 84 >= window.innerHeight) {
-                setIsScrolled(true);
-            } else {
+        const path = typeof window === 'undefined' ? pathname : window.location.pathname;
+        if (path === '/') {
+            if (typeof window === 'undefined') {
                 setIsScrolled(false);
+            } else {
+                if (window.scrollY + 84 >= window.innerHeight) {
+                    setIsScrolled(true);
+                } else {
+                    setIsScrolled(false);
+                }
             }
         } else {
             setIsScrolled(true);
@@ -216,7 +222,6 @@ const Header = () => {
         window.addEventListener('scroll', handleScrollEvent);
 
         handleResizeEvent();
-        handleScrollEvent();
 
         return () => {
             window.removeEventListener('resize', handleResizeEvent);
