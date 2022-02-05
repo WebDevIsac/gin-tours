@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { above, below, hover } from 'util/mediaqueries';
+import { above, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
 import Dropdown from 'components/Dropdown';
 
