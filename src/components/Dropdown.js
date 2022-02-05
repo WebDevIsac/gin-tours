@@ -26,7 +26,7 @@ const Wrapper = styled('div')`
     }
 
     ${above.lg} {
-        width: 20%;
+        width: calc(25% - 36px);
     }
 `;
 

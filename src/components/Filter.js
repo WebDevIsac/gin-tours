@@ -45,6 +45,10 @@ const DesktopClearButton = styled(ClearButton)`
         display: block;
     }
 
+    ${above.lg} {
+        left: calc(50% + 25% - 20px);
+    }
+
     ${hover} {
         transition: all 200ms ease;
         &:not(.selected):hover {
