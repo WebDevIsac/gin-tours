@@ -21,6 +21,7 @@ const Navbar = styled('div')`
     background-color: transparent;
     transition: background-color 300ms ease;
     color: ${colors.white};
+    font-family: 'LEMONMILK';
 
     &.scrolled {
         background-color: ${colors.greige};
@@ -110,7 +111,7 @@ const Menu = styled('div')`
 `;
 
 const Item = styled(Link)`
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1em;
     padding: 8px 0;
     margin-bottom: 32px;
@@ -120,7 +121,7 @@ const Item = styled(Link)`
     ${above.lg} {
         width: auto;
         padding: 8px 12px;
-        font-size: 18px;
+        font-size: 16px;
         margin-bottom: 0;
         transition: border-bottom 1s ease;
         border-bottom: 1px solid transparent;

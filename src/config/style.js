@@ -6,6 +6,11 @@ export const baseStyle = `
         height: 100%;
         color: #000;
     }
+    
+    h1,h2,h3,h4,h5 {
+        font-family: 'LEMONMILK';
+
+    }
 
     body {
         padding: 0;
