@@ -1,28 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
-import { above, below } from 'util/mediaqueries';
-import images from 'images/distilleries';
+import { above } from 'util/mediaqueries';
 
 const CardWrapper = styled('div')`
     position: relative;
     width: 100%;
-    border: 1px solid black;
-
-    &:after {
-        content: '';
-        display: block;
-        padding-bottom: 150%;
-    }
-
-    & > div {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
 `;
 
 const Column = styled('div')`
@@ -33,13 +18,27 @@ const Column = styled('div')`
     width: 100%;
 `;
 
-const Image = styled('img')`
+const ImageWrapper = styled('div')`
+    position: relative;
+    height: 100%;
     width: 100%;
-    height: 75%;
-    object-fit: cover;
 
-    ${below.sm} {
-        height: 70%;
+    &:after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    & > * {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
     }
 `;
 
@@ -47,19 +46,10 @@ const Box = styled('div')`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 25%;
+    height: 120px;
     color: black;
-    border-top: 1px solid black;
     flex: 1 0 auto;
     padding: 12px;
-
-    ${below.sm} {
-        height: 30%;
-    }
-
-    ${above.md} {
-        padding: 16px;
-    }
 `;
 
 const Span = styled('span')`
@@ -72,25 +62,27 @@ const Span = styled('span')`
 `;
 
 const H3 = styled('h3')`
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1em;
-    margin-top: 16px;
+    margin: 12px 0;
 
-    ${below.sm} {
-        margin: 12px 0;
+    ${above.sm} {
+        margin-top: 16px 0 12px;
     }
 
-    ${above.md} {
+    ${above.lg} {
         font-size: 30px;
     }
 `;
 
 const Card = ({ title, place, image, slug }) => {
     return (
-        <Link to={slug}>
+        <Link to={slug.current}>
             <CardWrapper>
                 <Column>
-                    <Image src={images[image]} />
+                    <ImageWrapper>
+                        <GatsbyImage image={image?.asset.gatsbyImageData} alt={title} />
+                    </ImageWrapper>
                     <Box>
                         <Span>{place}</Span>
                         <H3>{title}</H3>
@@ -102,10 +94,10 @@ const Card = ({ title, place, image, slug }) => {
 };
 
 Card.propTypes = {
-    image: PropTypes.string.isRequired,
+    image: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     place: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.object.isRequired,
 };
 
 export default Card;

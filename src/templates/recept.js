@@ -1,34 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import colors from 'config/colors';
-import { above } from 'util/mediaqueries';
+import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import images from 'images/recipes';
 
 const Wrapper = styled('div')`
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    ${above.md} {
+        align-items: flex-start;
+        flex-direction: row;
+    }
 `;
 
-const BackgroundImage = styled('div')`
+const FakeBackgroundImage = styled(GatsbyImage)`
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 80vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top center;
+    height: 100%;
+    z-index: -1;
+
+    & > img {
+        object-fit: cover !important;
+        object-position: 50% 25% !important;
+    }
+`;
+
+const ImageWrapper = styled('div')`
+    position: relative;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    width: 100%;
 
     ${above.md} {
+        height: 90vh;
+        width: 50%;
         justify-content: center;
-        background-position: center center;
+        background-position: 50% 25%;
     }
 `;
 
@@ -40,51 +58,92 @@ const H1 = styled('h1')`
 const Content = styled('div')`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 24px;
+    height: 100%;
+    width: 100%;
+
+    ${above.md} {
+        width: 50%;
+    }
 `;
 
 const IngredientsList = styled('ul')`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
 `;
 
 const Ingredient = styled('li')`
-    width: 80%;
+    font-size: 18px;
+    width: 100%;
     text-align: left;
     margin-bottom: 8px;
 `;
 
-const H3 = styled('h3')`
+const H2 = styled('h2')`
     font-size: 24px;
 `;
+
+const H3 = styled('h3')`
+    font-size: 18px;
+    line-height: 1.2em;
+`;
+
+const InstructionsBox = styled('div')``;
 
 const Instructions = styled('p')`
     font-size: 20px;
     line-height: 1.2em;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: underline;
+
+    ${hover} {
+        transition: opacity 200ms ease;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+`;
+
 const Recipe = ({ data }) => {
-    const { title, image, ingredients, instructions } = data.recipesJson;
+    const { title, image, distillery, ingredients, instructions, link } = data.sanityRecipes;
 
     return (
         <>
             <SEO title={title} />
             <Wrapper>
-                <BackgroundImage style={{ backgroundImage: `url(${images[image]})` }}>
+                <ImageWrapper>
+                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
                     <H1>{title}</H1>
-                </BackgroundImage>
+                </ImageWrapper>
                 <Content>
-                    <H3>Ingredienser</H3>
+                    <H2>Ingredienser</H2>
                     <IngredientsList>
                         {ingredients.map((ingredient, index) => (
                             <Ingredient key={index}>{ingredient}</Ingredient>
                         ))}
                     </IngredientsList>
-                    <H3>Instruktioner</H3>
-                    {instructions && <Instructions>{instructions}</Instructions>}
+                    <H2>Instruktioner</H2>
+                    {instructions?.length && (
+                        <InstructionsBox>
+                            {instructions.map(({ children }, index) =>
+                                children.map(({ text }, textIndex) => (
+                                    <Instructions key={`${index}_${textIndex}`}>{text}</Instructions>
+                                ))
+                            )}
+                        </InstructionsBox>
+                    )}
+                    <H3>
+                        Recept från&nbsp;
+                        <StyledLink to={link} target="_blank" rel="noopener nofollow">
+                            {distillery.title}
+                        </StyledLink>
+                    </H3>
                 </Content>
             </Wrapper>
         </>
@@ -93,22 +152,36 @@ const Recipe = ({ data }) => {
 
 export const query = graphql`
     query ($slug: String!) {
-        recipesJson(slug: { eq: $slug }) {
+        sanityRecipes(slug: { current: { eq: $slug } }) {
             title
-            image
+            image {
+                asset {
+                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                }
+            }
+            distillery {
+                title
+            }
             ingredients
-            instructions
+            instructions {
+                children {
+                    text
+                }
+            }
+            link
         }
     }
 `;
 
 Recipe.propTypes = {
     data: PropTypes.shape({
-        recipesJson: PropTypes.shape({
+        sanityRecipes: PropTypes.shape({
+            distillery: PropTypes.string,
             image: PropTypes.string,
-            title: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
             instructions: PropTypes.string,
+            link: PropTypes.string,
+            title: PropTypes.string,
         }),
     }).isRequired,
 };

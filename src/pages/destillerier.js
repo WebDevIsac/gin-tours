@@ -21,16 +21,19 @@ const CardsRow = styled('div')`
         grid-gap: 16px;
         padding: 16px 64px;
     }
+
+    ${above.xl} {
+        grid-template-columns: repeat(4, 1fr);
+    }
 `;
 
 const Distilleries = ({ data }) => {
-    const distilleries = data.allDistilleriesJson.edges;
+    const distilleries = data.allSanityDistilleries.edges;
     const title = 'Resor';
 
     return (
         <>
             <SEO title={title} />
-            <h1>{title}</h1>
             <CardsRow>
                 {distilleries.map(({ node }, index) => (
                     <Card key={index} {...node} />
@@ -42,13 +45,19 @@ const Distilleries = ({ data }) => {
 
 export const query = graphql`
     query {
-        allDistilleriesJson {
+        allSanityDistilleries {
             edges {
                 node {
                     title
                     place
-                    image
-                    slug
+                    image {
+                        asset {
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                        }
+                    }
+                    slug {
+                        current
+                    }
                 }
             }
         }
@@ -57,7 +66,7 @@ export const query = graphql`
 
 Distilleries.propTypes = {
     data: PropTypes.shape({
-        allDistilleriesJson: PropTypes.shape({
+        allSanityDistilleries: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,

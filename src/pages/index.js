@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
+import Helmet from 'react-helmet';
+import { GatsbyImage, withArtDirection, getImage } from 'gatsby-plugin-image';
 import Layout from 'components/layouts/Layout';
 import { above, hover } from 'util/mediaqueries';
 import SEO from 'components/SEO/SEO';
 import Slider from 'components/Slider';
 import Card from 'components/Card';
 import RecipeCard from 'components/RecipeCard';
-import desktopImage from 'images/desktop-image.jpg';
-import mobileImage from 'images/mobile-image.jpg';
-import { useWindowWidth } from 'util/useWindowWidth';
 import Newsletter from 'components/Newsletter';
 
 const Wrapper = styled('div')`
@@ -23,16 +22,22 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div')`
     width: 100%;
     height: 100vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top center;
+    position: relative;
+    clip-path: inset(0);
+`;
 
-    ${hover} {
-        background-attachment: fixed;
-    }
+const FakeBackgroundImage = styled(GatsbyImage)`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 
-    ${above.md} {
-        background-position: center center;
+    & > img {
+        object-fit: cover !important;
+        object-position: 0% 0% !important;
+        font-family: 'object-fit: cover !important; object-position: 0% 0% !important;';
     }
 `;
 
@@ -53,26 +58,57 @@ const Paragraph = styled('p')`
 `;
 
 const Content = styled('div')`
-    margin-top: 64px;
+    padding: 32px 0;
+
+    ${above.md} {
+        padding: 64px 0;
+    }
 `;
 
-const H3 = styled('h3')`
+const H2 = styled('h2')`
     text-align: center;
-    font-size: 32px;
     line-height: 1em;
+    margin: 0 8px 16px;
+    font-size: 24px;
+
+    ${above.md} {
+        font-size: 32px;
+    }
+`;
+
+const Underline = styled('span')`
+    text-decoration: underline;
+
+    ${hover} {
+        transition: opacity 200ms ease;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
 `;
 
 const StartPage = ({ data }) => {
-    const distilleries = data.allDistilleriesJson.edges;
-    const recipes = data.allRecipesJson.edges;
+    const distilleries = data.allSanityDistilleries.edges;
+    const recipes = data.allSanityRecipes.edges;
+    const configs = data.sanityConfigs;
 
-    const image = useWindowWidth() > 768 ? desktopImage : mobileImage;
+    const images = withArtDirection(getImage(configs.desktopImage.asset.gatsbyImageData), [
+        {
+            media: '(max-width: 1024px)',
+            image: getImage(configs.mobileImage.asset.gatsbyImageData),
+        },
+    ]);
 
     return (
         <>
+            <Helmet>
+                <meta name="facebook-domain-verification" content={process.env.GATSBY_FACEBOOK_DOMAIN_VERIFICATION} />
+            </Helmet>
             <SEO title="Start" />
             <Wrapper>
-                <BackgroundImage style={{ backgroundImage: `url(${image})` }} />
+                <BackgroundImage>
+                    <FakeBackgroundImage image={images} alt="Page hero" />
+                </BackgroundImage>
                 <TextWrapper>
                     <H1>Gin Tours</H1>
                     <Paragraph>
@@ -89,18 +125,20 @@ const StartPage = ({ data }) => {
                 </TextWrapper>
                 <Newsletter />
                 <Content>
-                    <H3>Boka din ginresa idag!</H3>
-                    <Slider>
+                    <H2>Boka din ginresa idag!</H2>
+                    <Slider rewind startAt={0}>
                         {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
                         ))}
                     </Slider>
                 </Content>
                 <Content>
-                    <H3>
-                        Kolla in våra magiska recept! <Link to="/recept">Se alla</Link>
-                    </H3>
-                    <Slider>
+                    <H2>
+                        <Link to="/recept">
+                            Kolla in alla magiska recept <Underline>här!</Underline>
+                        </Link>
+                    </H2>
+                    <Slider rewind startAt={recipes.length / 2}>
                         {recipes.map(({ node }, index) => (
                             <RecipeCard key={index} {...node} />
                         ))}
@@ -112,25 +150,55 @@ const StartPage = ({ data }) => {
 };
 
 export const query = graphql`
-    query MyQuery {
-        allDistilleriesJson {
+    query FrontPageQuery {
+        allSanityDistilleries {
             edges {
                 node {
                     title
                     place
-                    image
-                    slug
+                    image {
+                        asset {
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
+                        }
+                    }
+                    slug {
+                        current
+                    }
                 }
             }
         }
-        allRecipesJson {
+        allSanityRecipes {
             edges {
                 node {
                     title
-                    slug
-                    creator
-                    image
+                    slug {
+                        current
+                    }
+                    image {
+                        asset {
+                            gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                        }
+                    }
                     ingredients
+                    distillery {
+                        badge {
+                            asset {
+                                gatsbyImageData(width: 70, fit: FILLMAX, placeholder: BLURRED)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        sanityConfigs {
+            desktopImage {
+                asset {
+                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                }
+            }
+            mobileImage {
+                asset {
+                    gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
                 }
             }
         }
@@ -139,19 +207,27 @@ export const query = graphql`
 
 StartPage.propTypes = {
     data: PropTypes.shape({
-        allDistilleriesJson: PropTypes.shape({
+        allSanityDistilleries: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,
                 })
             ),
         }),
-        allRecipesJson: PropTypes.shape({
+        allSanityRecipes: PropTypes.shape({
             edges: PropTypes.arrayOf(
                 PropTypes.shape({
                     node: PropTypes.object,
                 })
             ),
+        }),
+        sanityConfigs: PropTypes.shape({
+            desktopImage: PropTypes.shape({
+                asset: PropTypes.object,
+            }),
+            mobileImage: PropTypes.shape({
+                asset: PropTypes.object,
+            }),
         }),
     }).isRequired,
 };

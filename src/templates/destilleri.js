@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
-import distilleryImages from 'images/distilleries';
-import BookingForm from 'components/BookingForm';
+import GoogleMaps from 'components/GoogleMaps';
+import Slider from 'components/Slider';
+import colors from 'config/colors';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -17,65 +18,105 @@ const Wrapper = styled('div')`
     padding: 16px;
 `;
 
-const Image = styled('img')`
-    width: 100%;
+const Scrollable = styled('div')`
+    margin-bottom: 32px;
+    display: flex;
+    width: 100vw;
+
+    & [data-glide-el='controls'] {
+        & > button {
+            background-color: transparent;
+
+            & > svg {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
 `;
 
-const Paragraph = styled('p')`
+const Box = styled('div')`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 400px;
+    min-width: 300px;
+    border: 1px solid grey;
+    cursor: pointer;
+
+    &.active {
+        border-width: 3px;
+        border-color: ${colors.blue};
+    }
+`;
+
+const H1 = styled('h1')``;
+
+const Button = styled('button')`
+    height: 56px;
+    width: 200px;
     font-size: 24px;
-    line-height: 1em;
+    border-radius: 20px;
+    margin-bottom: 32px;
+    color: ${colors.white};
+    background-color: ${colors.blue};
+    pointer-events: none;
+    opacity: 0.2;
+
+    &[data-item-custom1-value] {
+        opacity: 1;
+        pointer-events: initial;
+    }
 `;
-
-const OrderedList = styled('ol')``;
-
-const ListItem = styled('li')`
-    font-size: 20px;
-    line-height: 1em;
-`;
-
-const ScrollButton = styled('button')`
-    font-size: 18px;
-    line-height: 1em;
-    padding: 16px;
-    text-decoration: underline;
-`;
-
-const TransportInfo = styled('span')``;
 
 const Distillery = ({ data }) => {
-    const { title, information, accommodations, travelPlan, sendToSite, restaurants, transport, images } =
-        data.distilleriesJson;
-    const formRef = useRef();
-
-    const handleScroll = () => {
-        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    };
+    const [value, setValue] = useState(null);
+    const { title, image, geopoint, slug, place } = data.sanityDistilleries;
+    const { dates, price } = data.sanityProducts || {};
+    const allDatesString = dates?.join('|');
 
     return (
         <>
             <SEO title={title} />
             <Wrapper>
-                <h1>{title}</h1>
-                <Image src={distilleryImages[images.hero]} />
-                <ScrollButton onClick={handleScroll}>BOKA HÄR</ScrollButton>
-                {information?.map((info, index) => (
-                    <Paragraph key={index}>{info}</Paragraph>
-                ))}
-                <OrderedList>
-                    {travelPlan?.map((item, index) => (
-                        <ListItem key={index}>{item}</ListItem>
-                    ))}
-                </OrderedList>
-                <Image src={distilleryImages[images.plans]} />
-                {transport && <TransportInfo>{transport}</TransportInfo>}
-                <span>Antal platser kvar: 16 st</span>
-
-                <BookingForm
-                    ref={formRef}
-                    distillery={title}
-                    accommodations={accommodations}
-                    restaurants={restaurants}
-                />
+                <H1>{title}</H1>
+                {!!dates?.length && (
+                    <Scrollable>
+                        <Slider rewind startAt={0}>
+                            {dates.map(date => (
+                                <Box
+                                    className={value === date ? 'active' : ''}
+                                    key={date}
+                                    onClick={() => setValue(date)}
+                                >
+                                    <h3>{date}</h3>
+                                    <ul>
+                                        <li>Ginprovning</li>
+                                        <li>Hotellnatt</li>
+                                        <li>Middag</li>
+                                    </ul>
+                                </Box>
+                            ))}
+                        </Slider>
+                    </Scrollable>
+                )}
+                {!!price && (
+                    <Button
+                        className="snipcart-add-item"
+                        data-item-id={title.replace(' ', '-').toLowerCase()}
+                        data-item-price={price}
+                        data-item-url={slug.current}
+                        data-item-description={`Resa till ${title} destilleri i ${place}`}
+                        data-item-image={image.asset.url}
+                        data-item-name={title}
+                        data-item-custom1-name="Datum"
+                        data-item-custom1-options={allDatesString}
+                        data-item-custom1-value={value}
+                    >
+                        Boka resa
+                    </Button>
+                )}
+                <GoogleMaps geopoint={geopoint} />
             </Wrapper>
         </>
     );
@@ -83,41 +124,41 @@ const Distillery = ({ data }) => {
 
 export const query = graphql`
     query ($slug: String!) {
-        distilleriesJson(slug: { eq: $slug }) {
-            information
+        sanityDistilleries(slug: { current: { eq: $slug } }) {
             title
-            # accommodations
-            travelPlan
-            transport
-            images {
-                plans
-                hero
-            }
-            sendToSite {
-                text
-                link {
-                    text
+            place
+            image {
+                asset {
                     url
                 }
             }
-            # restaurants
+            geopoint {
+                lat
+                lng
+            }
+            slug {
+                current
+            }
+        }
+
+        sanityProducts(distillery: { slug: { current: { eq: $slug } } }) {
+            dates
+            price
         }
     }
 `;
 
 Distillery.propTypes = {
     data: PropTypes.shape({
-        distilleriesJson: PropTypes.shape({
-            accommodations: PropTypes.arrayOf(PropTypes.string),
-            bookingInformation: PropTypes.arrayOf(PropTypes.string),
-            images: PropTypes.object,
-            information: PropTypes.arrayOf(PropTypes.string),
+        sanityDistilleries: PropTypes.shape({
             title: PropTypes.string,
-            prices: PropTypes.array,
-            restaurants: PropTypes.arrayOf(PropTypes.string),
-            travelPlan: PropTypes.array,
-            sendToSite: PropTypes.object,
-            transport: PropTypes.string,
+            image: PropTypes.object,
+            geopoint: PropTypes.object,
+            slug: PropTypes.object,
+            place: PropTypes.string,
+        }),
+        sanityProducts: PropTypes.shape({
+            dates: PropTypes.array,
         }),
     }).isRequired,
 };

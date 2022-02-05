@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
-import { globalHistory } from '@reach/router';
+import { globalHistory, useLocation } from '@reach/router';
 import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
-import logo from 'images/logo.png';
+import Logo from 'components/icons/Logo';
 
 const Navbar = styled('div')`
     position: fixed;
@@ -21,6 +21,7 @@ const Navbar = styled('div')`
     background-color: transparent;
     transition: background-color 300ms ease;
     color: ${colors.white};
+    font-family: 'LEMONMILK';
 
     &.scrolled {
         background-color: ${colors.greige};
@@ -34,15 +35,18 @@ const Navbar = styled('div')`
     }
 `;
 
-const Logotype = styled('div')`
+const LogoLink = styled(Link)`
     font-size: 24px;
     line-height: 1em;
     height: 100%;
-`;
 
-const Image = styled('img')`
-    width: auto;
-    height: 100%;
+    .scrolled & svg {
+        fill: ${colors.white};
+
+        & > path:nth-of-type(-n + 2) {
+            stroke: ${colors.white};
+        }
+    }
 `;
 
 const Hamburger = styled('div')`
@@ -101,7 +105,7 @@ const Menu = styled('div')`
         transition: transform 300ms ease;
         transform: translateX(100%);
         background-color: ${colors.greige};
-        padding-top: 32px;
+        padding-top: 64px;
 
         .is-open > & {
             transform: translateX(0);
@@ -110,7 +114,7 @@ const Menu = styled('div')`
 `;
 
 const Item = styled(Link)`
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1em;
     padding: 8px 0;
     margin-bottom: 32px;
@@ -120,7 +124,7 @@ const Item = styled(Link)`
     ${above.lg} {
         width: auto;
         padding: 8px 12px;
-        font-size: 18px;
+        font-size: 16px;
         margin-bottom: 0;
         transition: border-bottom 1s ease;
         border-bottom: 1px solid transparent;
@@ -168,8 +172,9 @@ const query = graphql`
 `;
 
 const Header = () => {
+    const { pathname } = useLocation();
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(pathname !== '/');
 
     const closeMenu = () => {
         setIsOpen(false);
@@ -196,11 +201,16 @@ const Header = () => {
     };
 
     const handleScrollEvent = () => {
-        if (window.location.pathname === '/') {
-            if (window.scrollY + 84 >= window.innerHeight) {
-                setIsScrolled(true);
-            } else {
+        const path = typeof window === 'undefined' ? pathname : window.location.pathname;
+        if (path === '/') {
+            if (typeof window === 'undefined') {
                 setIsScrolled(false);
+            } else {
+                if (window.scrollY + 84 >= window.innerHeight) {
+                    setIsScrolled(true);
+                } else {
+                    setIsScrolled(false);
+                }
             }
         } else {
             setIsScrolled(true);
@@ -212,7 +222,6 @@ const Header = () => {
         window.addEventListener('scroll', handleScrollEvent);
 
         handleResizeEvent();
-        handleScrollEvent();
 
         return () => {
             window.removeEventListener('resize', handleResizeEvent);
@@ -233,11 +242,9 @@ const Header = () => {
             query={query}
             render={data => (
                 <Navbar className={(isOpen ? 'is-open ' : '') + (isScrolled ? 'scrolled' : '')}>
-                    <Logotype>
-                        <Link to="/">
-                            <Image src={logo} />
-                        </Link>
-                    </Logotype>
+                    <LogoLink to="/">
+                        <Logo />
+                    </LogoLink>
                     <Hamburger onClick={handleMenuState}>
                         <Line />
                         <Line />
@@ -249,6 +256,11 @@ const Header = () => {
                                 {title}
                             </Item>
                         ))}
+                        <Item to="#" className="snipcart-checkout">
+                            <span>
+                                Varukorg (<span className="snipcart-items-count">0</span>)
+                            </span>
+                        </Item>
                     </Menu>
                     <BackgroundWrapper onClick={e => handleMenuState(e, true)} />
                 </Navbar>
