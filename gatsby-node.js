@@ -35,11 +35,11 @@ exports.createPages = async ({ actions, graphql }) => {
     data.allSanityDistilleries.edges.forEach(({ node }) => {
         const slug = node.slug.current;
 
-        actions.createPage({
-            path: slug,
-            component: require.resolve('./src/templates/destilleri.js'),
-            context: { slug },
-        });
+        // actions.createPage({
+        //     path: slug,
+        //     component: require.resolve('./src/templates/destilleri.js'),
+        //     context: { slug },
+        // });
 
         // Create recipe filter pages
         const distilleryTitle = node.title;
