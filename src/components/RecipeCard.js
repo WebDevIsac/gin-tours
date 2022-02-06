@@ -6,10 +6,12 @@ import { above, below } from 'util/mediaqueries';
 import colors from 'config/colors';
 import { Link } from 'gatsby';
 
-const CardWrapper = styled('div')`
+const Wrapper = styled('div')`
     position: relative;
     width: 100%;
     border: 1px solid black;
+    background-color: ${colors.darkBlue}BB;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
     &:after {
         content: '';
@@ -26,15 +28,75 @@ const CardWrapper = styled('div')`
         left: 0;
     }
 
-    position: relative;
-    transition: transform ease-out 400ms;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    &.flippable {
+        cursor: pointer;
+    }
+`;
 
-    ${({ isFlippable, isFlipped }) => `
-        ${isFlippable && 'cursor: pointer;'}
-        ${isFlipped && 'transform: rotateY(180deg);'}
-    `}
+const Column = styled('div')`
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    color: ${colors.white};
+
+    -webkit-perspective: 1300px;
+    -ms-perspective: 1300px;
+    -o-perspective: 1300px;
+    perspective: 1300px;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+
+    visibility: visible;
+    transition: all 500ms ease;
+    opacity: 1;
+
+    &.hide {
+        visibility: hidden;
+        opacity: 0;
+    }
+`;
+
+const InnerColumn = styled('div')`
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+
+    visibility: visible;
+    -webkit-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    -webkit-transition: transform 500ms;
+    -o-transition: transform 500ms;
+    transition: transform 500ms;
+
+    .hide > & {
+        visibility: hidden;
+        -webkit-transform: rotateY(-180deg);
+        -ms-transform: rotateY(-180deg);
+        -o-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+    }
+`;
+
+const BackColumn = styled(Column)`
+    background-color: ${colors.darkBlue};
 `;
 
 const BadgeWrapper = styled('div')`
@@ -65,24 +127,6 @@ const Span = styled('span')`
     }
 `;
 
-const Column = styled('div')`
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    padding: 16px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    color: ${colors.white};
-
-    &.hide {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
-`;
-
 const FakeBackgroundImage = styled(GatsbyImage)`
     position: absolute;
     top: 0;
@@ -95,13 +139,6 @@ const FakeBackgroundImage = styled(GatsbyImage)`
         object-fit: cover !important;
         object-position: 50% 0% !important;
     }
-`;
-
-const FrontColumn = styled(Column)``;
-
-const BackColumn = styled(Column)`
-    background-color: ${colors.darkBlue};
-    transform: rotateY(180deg);
 `;
 
 const List = styled('div')`
@@ -178,33 +215,35 @@ const RecipeCard = ({ title, image, slug, ingredients, ingredientsQuickLook, isF
     };
 
     return (
-        <CardWrapper isFlippable={isFlippable} isFlipped={isFlipped} onClick={handleFlip}>
-            <FrontColumn className={isFlippable && isFlipped ? 'hide' : ''}>
-                <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
+        <Wrapper className={isFlippable ? 'flippable' : ''} onClick={handleFlip}>
+            <Column className={isFlipped ? 'hide' : ''}>
+                <InnerColumn>
+                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
 
-                {!isFlipped && (
-                    <BadgeWrapper>
-                        <GatsbyImage image={distillery.badge.asset.gatsbyImageData} alt={`${title}-badge`} />
-                    </BadgeWrapper>
-                )}
-                <Title>{title}</Title>
-                {!isFlippable && (
-                    <ListWithGradient>
-                        {ingredients.map((ingredient, index) => (
-                            <Span key={index}>{ingredient}</Span>
-                        ))}
-                    </ListWithGradient>
-                )}
-                {isFlippable ? (
-                    <FrontLink>Se ingredienser</FrontLink>
-                ) : (
-                    <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
-                        <FrontLink>Läs hela receptet</FrontLink>
-                    </Link>
-                )}
-            </FrontColumn>
-            {isFlippable && (
-                <BackColumn className={isFlipped ? '' : 'hide'}>
+                    {!isFlipped && (
+                        <BadgeWrapper>
+                            <GatsbyImage image={distillery.badge.asset.gatsbyImageData} alt={`${title}-badge`} />
+                        </BadgeWrapper>
+                    )}
+                    <Title>{title}</Title>
+                    {!isFlippable && (
+                        <ListWithGradient>
+                            {ingredients.map((ingredient, index) => (
+                                <Span key={index}>{ingredient}</Span>
+                            ))}
+                        </ListWithGradient>
+                    )}
+                    {isFlippable ? (
+                        <FrontLink>Se ingredienser</FrontLink>
+                    ) : (
+                        <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
+                            <FrontLink>Läs hela receptet</FrontLink>
+                        </Link>
+                    )}
+                </InnerColumn>
+            </Column>
+            <BackColumn className={!isFlipped && 'hide'}>
+                <InnerColumn>
                     <Title>{title}</Title>
                     <ScrollableList>
                         {(ingredientsQuickLook.length ? ingredientsQuickLook : ingredients).map((ingredient, index) => (
@@ -214,9 +253,9 @@ const RecipeCard = ({ title, image, slug, ingredients, ingredientsQuickLook, isF
                     <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
                         <BackLink>Läs hela receptet</BackLink>
                     </Link>
-                </BackColumn>
-            )}
-        </CardWrapper>
+                </InnerColumn>
+            </BackColumn>
+        </Wrapper>
     );
 };
 
