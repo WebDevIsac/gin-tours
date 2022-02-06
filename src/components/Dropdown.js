@@ -8,7 +8,7 @@ import Arrow from 'components/icons/Arrow';
 const Wrapper = styled('div')`
     position: relative;
     width: calc(50% - 8px);
-    height: 30px;
+    height: 38px;
     margin-bottom: 8px;
 
     &:not(:last-of-type) {
@@ -37,7 +37,7 @@ const InnerWrapper = styled('div')`
     flex-direction: column;
     align-items: center;
     transition: max-height 300ms ease;
-    max-height: 30px;
+    max-height: 38px;
     width: 100%;
     border-bottom: 1px solid ${colors.blue};
     background-color: ${colors.white};
@@ -60,17 +60,25 @@ const Trigger = styled('button')`
     position: relative;
     width: 100%;
     text-align: center;
-    padding: 6px;
+    padding: 10px;
     font-size: 18px;
+    line-height: 1em;
     color: ${colors.blue};
     background: ${colors.white};
     border: 1px solid ${colors.blue};
     user-select: none;
     cursor: pointer;
     text-transform: capitalize;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
 
     ${above.md} {
         font-size: 20px;
+        line-height: 1em;
         padding: 12px;
     }
 
@@ -81,6 +89,7 @@ const Trigger = styled('button')`
 `;
 
 const Select = styled(Trigger)`
+    display: block;
     border-bottom: none;
     &:first-of-type {
         border-top: none;
@@ -95,20 +104,20 @@ const Select = styled(Trigger)`
     }
 `;
 
-const ArrowWrapper = styled('div')`
-    position: absolute;
-    top: 7px;
-    right: 8px;
+const Span = styled('label')`
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+`;
 
+const ArrowWrapper = styled('div')`
+    height: 20px;
     & > svg {
         width: 16px;
         height: 16px;
     }
 
     ${above.md} {
-        top: 10px;
-        right: 12px;
-
         & > svg {
             width: 20px;
             height: 20px;
@@ -134,7 +143,7 @@ const Dropdown = ({ data, selected, index, onSelect }) => {
                     className={!isOpen && selectedLabel ? 'selected' : ''}
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    {(!isOpen && selectedLabel) || `Välj ${index}`}
+                    <Span>{(!isOpen && selectedLabel) || `Välj ${index}`}</Span>
                     <ArrowWrapper>
                         <Arrow
                             color={!isOpen && selectedLabel ? colors.white : colors.blue}
@@ -151,7 +160,7 @@ const Dropdown = ({ data, selected, index, onSelect }) => {
                             value={value}
                             onClick={handleSelect}
                         >
-                            {label}
+                            <Span>{label}</Span>
                         </Select>
                     ))}
                 </InnerDropdown>

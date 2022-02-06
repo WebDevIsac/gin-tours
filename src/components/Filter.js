@@ -10,7 +10,7 @@ const Wrapper = styled('div')`
     top: 92px;
     width: 100%;
     padding: 0 16px;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +25,7 @@ const ClearButton = styled('button')`
 `;
 
 const MobileClearButton = styled(ClearButton)`
-    padding: 6px 12px;
+    padding: 10px 12px;
     width: 50%;
     font-size: 18px;
     margin-bottom: 8px;
