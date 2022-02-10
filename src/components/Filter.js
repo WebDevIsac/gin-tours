@@ -25,10 +25,11 @@ const ClearButton = styled('button')`
 `;
 
 const MobileClearButton = styled(ClearButton)`
-    padding: 6px 12px;
+    padding: 10px 12px;
     width: 50%;
     font-size: 18px;
     margin-bottom: 8px;
+
     ${above.md} {
         display: none;
     }
@@ -37,7 +38,7 @@ const MobileClearButton = styled(ClearButton)`
 const DesktopClearButton = styled(ClearButton)`
     display: none;
     font-size: 20px;
-    padding: 12px;
+    padding: 14px;
     position: absolute;
     left: calc(50% + 30% + 15px);
 
