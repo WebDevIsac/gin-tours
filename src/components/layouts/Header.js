@@ -21,7 +21,8 @@ const Navbar = styled('div')`
     background-color: transparent;
     transition: background-color 300ms ease;
     color: ${colors.white};
-    font-family: 'LEMONMILK';
+    font-family: 'Lato';
+    text-transform: uppercase;
 
     &.scrolled {
         background-color: ${colors.greige};
