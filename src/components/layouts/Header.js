@@ -30,7 +30,7 @@ const Navbar = styled('div')`
     }
 
     ${above.md} {
-        color: ${colors.black};
+        color: ${colors.white};
         justify-content: space-between;
         padding: 0 32px;
     }
@@ -72,7 +72,7 @@ const Line = styled('span')`
     transform-origin: 100% 100%;
     transition: transform 300ms ease;
     opacity: 1;
-    background-color: ${colors.black};
+    background-color: ${colors.white};
 
     .scrolled & {
         background-color: ${colors.white};
@@ -133,7 +133,7 @@ const Item = styled(Link)`
 
     ${hover} {
         &:hover {
-            border-bottom-color: ${colors.black};
+            border-bottom-color: ${colors.white};
         }
 
         .scrolled &:hover {
