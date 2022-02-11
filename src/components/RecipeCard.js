@@ -34,7 +34,13 @@ const CardWrapper = styled('div')`
     ${({ isFlippable, isFlipped }) => `
         ${isFlippable && 'cursor: pointer;'}
         ${isFlipped && 'transform: rotateY(180deg);'}
-    `}
+        `};
+    @media not all and (min-resolution: 0.001dpcm) {
+        @supports (-webkit-appearance: none) {
+            /* Safari Only CSS here */
+            transition: none;
+        }
+    }
 `;
 
 const BadgeWrapper = styled('div')`
