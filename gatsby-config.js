@@ -120,22 +120,5 @@ module.exports = {
                   </billing>`,
             },
         },
-        {
-            resolve: 'gatsby-plugin-htaccess',
-            options: {
-                RewriteBase: '/custom/',
-                https: true,
-                www: false,
-                SymLinksIfOwnerMatch: true,
-                host: 'gintours.se', // if 'www' is set to 'false', be sure to also remove it here!
-                redirect: [
-                    'RewriteRule ^not-existing-url/?$ /existing-url [R=301,L,NE]',
-                    {
-                        from: 'gintours.se',
-                        to: 'https://gintours.se',
-                    },
-                ],
-            },
-        },
     ],
 };
