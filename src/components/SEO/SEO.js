@@ -19,13 +19,21 @@ const query = graphql`
                 facebookAppID
             }
         }
+        sanityConfigs {
+            desktopImage {
+                asset {
+                    gatsbyImageData
+                }
+            }
+        }
     }
 `;
 
-const SEO = ({ title, description, image }) => {
+const SEO = ({ title, description }) => {
     const { pathname } = useLocation();
 
-    const { site } = useStaticQuery(query);
+    const { site, sanityConfigs } = useStaticQuery(query);
+    const image = sanityConfigs?.desktopImage?.asset?.gatsbyImageData?.images?.fallback?.src;
 
     const { defaultTitle, titleTemplate, defaultDescription, siteUrl, defaultImage, twitterUsername, facebookAppID } =
         site.siteMetadata;
