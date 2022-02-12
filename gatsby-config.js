@@ -9,7 +9,7 @@ module.exports = {
         title: 'Gin Tours',
         titleTemplate: '%s · Gin Tours',
         description:
-            'Vi är ett nystartat företag som kommer erbjuda paketresor till olika gindestillerier i Sverige. Resorna kommer bland annat innehålla gin provningar, lärande om processen att framställa gin, mixa drinkar och diverse föreläsningar',
+            'Vi erbjuder paketresor till gindestillerier i Sverige. Resorna kommer innehålla gin provningar, lärande om processen att framställa gin och mycket annat',
         url: 'https://gintours.se',
         image: '/',
         owner: 'Gin Tours',
@@ -118,6 +118,23 @@ module.exports = {
                   <billing section="bottom">
                       <!-- Customization goes here -->
                   </billing>`,
+            },
+        },
+        {
+            resolve: 'gatsby-plugin-htaccess',
+            options: {
+                RewriteBase: '/custom/',
+                https: true,
+                www: false,
+                SymLinksIfOwnerMatch: true,
+                host: 'gintours.se', // if 'www' is set to 'false', be sure to also remove it here!
+                redirect: [
+                    'RewriteRule ^not-existing-url/?$ /existing-url [R=301,L,NE]',
+                    {
+                        from: 'gintours.se',
+                        to: 'https://gintours.se',
+                    },
+                ],
             },
         },
     ],

@@ -5847,6 +5847,14 @@ gatsby-plugin-google-tagmanager@^3.14.0:
     "@babel/runtime" "^7.15.4"
     web-vitals "^1.1.2"
 
+gatsby-plugin-htaccess@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-htaccess/-/gatsby-plugin-htaccess-1.4.0.tgz#e7629cfca0e6cf12e714c6ad29162a12b0c60e89"
+  integrity sha512-CaUQ3SPkV8khTk2MvY58KJAGAQFLxrlSb9ysxB+BeOgdruI2F0hWsQQI5/A94VtZsdB/5CbJcZVNmCyDJ+SJqg==
+  dependencies:
+    fs-extra "^8.1.0"
+    lodash "^4.17.15"
+
 gatsby-plugin-image@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-image/-/gatsby-plugin-image-2.2.0.tgz#149e22a94d874b999aa2b2fd17f279f0eb00e81a"
