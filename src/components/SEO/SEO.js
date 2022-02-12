@@ -35,13 +35,13 @@ const SEO = ({ title, description }) => {
     const { site, sanityConfigs } = useStaticQuery(query);
     const image = sanityConfigs?.desktopImage?.asset?.gatsbyImageData?.images?.fallback?.src;
 
-    const { defaultTitle, titleTemplate, defaultDescription, siteUrl, defaultImage, twitterUsername, facebookAppID } =
+    const { defaultTitle, titleTemplate, defaultDescription, siteUrl, twitterUsername, facebookAppID } =
         site.siteMetadata;
 
     const seo = {
         title: title || defaultTitle,
         description: description || defaultDescription,
-        image: `${siteUrl}${image || defaultImage}`,
+        image,
         url: `${siteUrl}${pathname || '/'}`,
     };
 
@@ -49,15 +49,12 @@ const SEO = ({ title, description }) => {
         <Helmet title={seo.title} titleTemplate={titleTemplate}>
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
+            <meta property="og:url" content={seo.url} />
+            <meta property="og:type" content={null} />
+            <meta property="og:title" content={title} />
+            <meta property="og:description" content={description} />
+            <meta property="og:image" content={image} />
 
-            <Facebook
-                pageUrl={seo.url}
-                type={null}
-                title={seo.title}
-                description={seo.description}
-                image={seo.image}
-                appID={facebookAppID}
-            />
             <Twitter username={twitterUsername} title={seo.title} description={seo.description} image={seo.image} />
         </Helmet>
     );
@@ -65,13 +62,11 @@ const SEO = ({ title, description }) => {
 
 SEO.propTypes = {
     description: PropTypes.string,
-    image: PropTypes.string,
     title: PropTypes.string,
 };
 
 SEO.defaultProps = {
     description: null,
-    image: null,
     title: null,
 };
 
