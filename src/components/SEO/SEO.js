@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { useLocation } from '@reach/router';
 import { useStaticQuery, graphql } from 'gatsby';
-import Facebook from './Facebook';
 import Twitter from './Twitter';
 
 const query = graphql`
@@ -38,24 +37,18 @@ const SEO = ({ title, description }) => {
     const { defaultTitle, titleTemplate, defaultDescription, siteUrl, twitterUsername, facebookAppID } =
         site.siteMetadata;
 
-    const seo = {
-        title: title || defaultTitle,
-        description: description || defaultDescription,
-        image,
-        url: `${siteUrl}${pathname || '/'}`,
-    };
-
     return (
-        <Helmet title={seo.title} titleTemplate={titleTemplate}>
-            <meta name="description" content={seo.description} />
-            <meta name="image" content={seo.image} />
-            <meta property="og:url" content={seo.url} />
+        <Helmet title={title || defaultTitle} titleTemplate={titleTemplate}>
+            <meta name="description" content={description || defaultDescription} />
+            <meta name="image" content={image} />
+            <meta property="og:url" content={`${siteUrl}${pathname || '/'}`} />
             <meta property="og:type" content={null} />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={image} />
+            <meta property="fb:app_id" content={facebookAppID} />
 
-            <Twitter username={twitterUsername} title={seo.title} description={seo.description} image={seo.image} />
+            <Twitter username={twitterUsername} title={title} description={description} image={image} />
         </Helmet>
     );
 };
