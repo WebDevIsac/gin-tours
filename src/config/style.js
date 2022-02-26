@@ -6,10 +6,9 @@ export const baseStyle = `
         height: 100%;
         color: #000;
     }
-    
+
     h1,h2,h3,h4,h5 {
         font-family: 'Lato';
-
     }
 
     body {
@@ -21,16 +20,6 @@ export const baseStyle = `
         font-weight: 400;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        overflow-x: hidden;
-
-        &.prevent-scroll {
-            overflow: hidden;
-
-            @supports (-webkit-overflow-scrolling: touch) {
-                position: fixed;
-                width: 100%;
-            }
-        }
     }
 
     #root {

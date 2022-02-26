@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { above, below, hover } from 'util/mediaqueries';
 import colors from 'config/colors';
 import Logo from 'components/icons/Logo';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 const Navbar = styled('div')`
     position: fixed;
@@ -179,12 +180,12 @@ const Header = () => {
 
     const closeMenu = () => {
         setIsOpen(false);
-        document.querySelector('body').classList.remove('prevent-scroll');
+        enableBodyScroll(document);
     };
 
     const openMenu = () => {
         setIsOpen(true);
-        document.querySelector('body').classList.add('prevent-scroll');
+        disableBodyScroll(document);
     };
 
     const handleMenuState = (e, justClose = false) => {
