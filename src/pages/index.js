@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
@@ -19,20 +19,32 @@ const Wrapper = styled('div')`
     margin-top: -84px;
 `;
 
-const BackgroundImage = styled('div')`
+const BackgroundImage = styled('div', {
+    shouldForwardProp: prop => prop !== 'height',
+})`
     width: 100%;
-    height: 100vh;
     position: relative;
     clip-path: inset(0);
+    height: 100vh;
+
+    @supports (-webkit-overflow-scrolling: touch) {
+        height: ${({ height }) => height};
+    }
 `;
 
-const FakeBackgroundImage = styled(GatsbyImage)`
+const FakeBackgroundImage = styled(GatsbyImage, {
+    shouldForwardProp: prop => prop !== 'height',
+})`
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     z-index: -1;
+    height: 100%;
+
+    @supports (-webkit-overflow-scrolling: touch) {
+        height: ${({ height }) => height};
+    }
 
     & > img {
         object-fit: cover !important;
@@ -88,6 +100,15 @@ const Underline = styled('span')`
 `;
 
 const StartPage = ({ data }) => {
+    const [heroHeight, setHeroHeight] = useState('100vh');
+
+    useEffect(() => {
+        if (window !== undefined) {
+            const windowHeight = window.innerHeight;
+            setHeroHeight(`${windowHeight}px`);
+        }
+    }, []);
+
     const distilleries = data.allSanityDistilleries.edges;
     const recipes = data.allSanityRecipes.edges;
     const configs = data.sanityConfigs;
@@ -106,8 +127,8 @@ const StartPage = ({ data }) => {
             </Helmet>
             <SEO title="Start" />
             <Wrapper>
-                <BackgroundImage>
-                    <FakeBackgroundImage image={images} alt="Page hero" />
+                <BackgroundImage height={heroHeight}>
+                    <FakeBackgroundImage height={heroHeight} image={images} alt="Page hero" />
                 </BackgroundImage>
                 <TextWrapper>
                     <H1>Gin Tours</H1>
