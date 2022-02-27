@@ -19,7 +19,9 @@
     "dependencies": {
         "@emotion/react": "^11.4.0",
         "@emotion/styled": "^11.3.0",
+        "@sanity/block-content-to-react": "^3.0.0",
         "babel-eslint": "^10.1.0",
+        "body-scroll-lock": "^3.1.5",
         "eslint-plugin-react": "^7.24.0",
         "gatsby": "^3.6.2",
         "gatsby-plugin-emotion": "^6.7.1",
@@ -31,7 +33,7 @@
         "gatsby-plugin-sharp": "^4.2.0",
         "gatsby-plugin-snipcart-advanced": "^1.0.3",
         "gatsby-source-filesystem": "^4.2.0",
-        "gatsby-source-sanity": "^7.2.0",
+        "gatsby-source-sanity": "^7.3.2",
         "gatsby-transformer-json": "^3.9.0",
         "gatsby-transformer-sharp": "^4.2.0",
         "google-map-react": "^2.1.10",

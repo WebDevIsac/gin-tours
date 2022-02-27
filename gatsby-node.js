@@ -74,7 +74,7 @@ exports.createPages = async ({ actions, graphql }) => {
         const slug = node.slug.current;
 
         actions.createPage({
-            path: `/recept${slug}`,
+            path: `/recept/${slug}`,
             component: require.resolve('./src/templates/recept.js'),
             context: { slug },
         });
