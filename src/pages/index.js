@@ -80,7 +80,7 @@ const Underline = styled('span')`
     text-decoration: underline;
 
     ${hover} {
-        transition: opacity 200ms ease;
+        transition: opacity 300ms ease;
         &:hover {
             opacity: 0.6;
         }
