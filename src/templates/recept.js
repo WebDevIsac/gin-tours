@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import { GatsbyImage } from 'gatsby-plugin-image';
-import colors from 'config/colors';
 import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
@@ -125,6 +124,7 @@ const Recipe = ({ data }) => {
         distillery,
         ingredients,
         link,
+        showMoreInfo,
         _rawMoreInfo: moreInfo,
         _rawInstructions: instructions,
     } = data.sanityRecipes;
@@ -138,7 +138,7 @@ const Recipe = ({ data }) => {
                 </ImageWrapper>
                 <Content>
                     <H1>{fullName || title}</H1>
-                    {!!moreInfo && (
+                    {!!moreInfo && showMoreInfo && (
                         <InfoWrapper>
                             <SanityBlockContent blocks={moreInfo} />
                         </InfoWrapper>
@@ -184,6 +184,7 @@ export const query = graphql`
             }
             ingredients
             link
+            showMoreInfo
             _rawInstructions
             _rawMoreInfo
         }
@@ -201,6 +202,7 @@ Recipe.propTypes = {
             ingredients: PropTypes.arrayOf(PropTypes.string),
             link: PropTypes.string,
             title: PropTypes.string,
+            showMoreInfo: PropTypes.bool,
         }),
     }).isRequired,
 };
