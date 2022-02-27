@@ -24,9 +24,9 @@ const StyledLink = styled(Link)`
     text-decoration: underline;
 
     ${hover} {
-        transition: opacity 200ms ease;
+        transition: opacity 300ms ease;
         &:hover {
-            opacity: 0.8;
+            opacity: 0.6;
         }
     }
 `;

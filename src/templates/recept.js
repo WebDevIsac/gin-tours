@@ -7,6 +7,7 @@ import colors from 'config/colors';
 import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
+import SanityBlockContent from 'components/SanityBlockContent';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -93,16 +94,11 @@ const H3 = styled('h3')`
 
 const InstructionsBox = styled('div')``;
 
-const Instructions = styled('p')`
-    font-size: 20px;
-    line-height: 1.2em;
-`;
-
 const StyledLink = styled(Link)`
     text-decoration: underline;
 
     ${hover} {
-        transition: opacity 200ms ease;
+        transition: opacity 300ms ease;
 
         &:hover {
             opacity: 0.6;
@@ -111,7 +107,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Recipe = ({ data }) => {
-    const { title, image, distillery, ingredients, instructions, link } = data.sanityRecipes;
+    const { title, image, distillery, ingredients, _rawInstructions: instructions, link } = data.sanityRecipes;
 
     return (
         <>
@@ -129,13 +125,9 @@ const Recipe = ({ data }) => {
                         ))}
                     </IngredientsList>
                     <H2>Instruktioner</H2>
-                    {instructions?.length && (
+                    {!!instructions && (
                         <InstructionsBox>
-                            {instructions.map(({ children }, index) =>
-                                children.map(({ text }, textIndex) => (
-                                    <Instructions key={`${index}_${textIndex}`}>{text}</Instructions>
-                                ))
-                            )}
+                            <SanityBlockContent blocks={instructions} />
                         </InstructionsBox>
                     )}
                     <H3>
@@ -163,11 +155,7 @@ export const query = graphql`
                 title
             }
             ingredients
-            instructions {
-                children {
-                    text
-                }
-            }
+            _rawInstructions
             link
         }
     }
@@ -179,7 +167,7 @@ Recipe.propTypes = {
             distillery: PropTypes.string,
             image: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
-            instructions: PropTypes.string,
+            _rawInstructions: PropTypes.object,
             link: PropTypes.string,
             title: PropTypes.string,
         }),

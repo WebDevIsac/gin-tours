@@ -14,7 +14,7 @@ module.exports = {
         image: '/',
         owner: 'Gin Tours',
         twitterUsername: '@gin_tours',
-        facebookAppID: 628282408432896,
+        facebookAppID: process.env.GATSBY_FACEBOOK_APP_ID,
     },
     plugins: [
         'gatsby-plugin-emotion',
