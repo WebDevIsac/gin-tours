@@ -98,7 +98,7 @@ const Filter = ({ allDistilleries, allTypes, availableFilters, filters, handleFi
 Filter.propTypes = {
     allDistilleries: PropTypes.array,
     allTypes: PropTypes.array,
-    availableFilters: PropTypes.arrayOf(PropTypes.string),
+    availableFilters: PropTypes.object,
     filters: PropTypes.object,
     handleClear: PropTypes.func,
     handleFilter: PropTypes.func,
@@ -107,7 +107,7 @@ Filter.propTypes = {
 Filter.defaultProps = {
     allDistilleries: [],
     allTypes: [],
-    availableFilters: [],
+    availableFilters: {},
     filters: {},
     handleClear: () => null,
     handleFilter: () => null,

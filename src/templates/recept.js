@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import { GatsbyImage } from 'gatsby-plugin-image';
-import colors from 'config/colors';
 import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import SanityBlockContent from 'components/SanityBlockContent';
+
+const Div = styled('div')``;
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -42,18 +43,25 @@ const ImageWrapper = styled('div')`
     flex-direction: column;
     justify-content: flex-end;
     width: 100%;
+    padding: 16px;
 
     ${above.md} {
-        height: 90vh;
+        position: sticky;
+        top: 84px;
+        height: calc(100vh - 84px);
         width: 50%;
         justify-content: center;
         background-position: 50% 25%;
     }
+
+    ${above.lg} {
+        padding: 32px;
+    }
 `;
 
 const H1 = styled('h1')`
-    color: ${colors.white};
     text-align: center;
+    line-height: 1.2em;
 `;
 
 const Content = styled('div')`
@@ -68,6 +76,10 @@ const Content = styled('div')`
     ${above.md} {
         width: 50%;
     }
+`;
+
+const InfoWrapper = styled('div')`
+    text-align: center;
 `;
 
 const IngredientsList = styled('ul')`
@@ -92,8 +104,6 @@ const H3 = styled('h3')`
     line-height: 1.2em;
 `;
 
-const InstructionsBox = styled('div')``;
-
 const StyledLink = styled(Link)`
     text-decoration: underline;
 
@@ -107,17 +117,32 @@ const StyledLink = styled(Link)`
 `;
 
 const Recipe = ({ data }) => {
-    const { title, image, distillery, ingredients, _rawInstructions: instructions, link } = data.sanityRecipes;
+    const {
+        title,
+        fullName,
+        image,
+        distillery,
+        ingredients,
+        link,
+        showMoreInfo,
+        _rawMoreInfo: moreInfo,
+        _rawInstructions: instructions,
+    } = data.sanityRecipes;
 
     return (
         <>
-            <SEO title={title} />
+            <SEO title={fullName || title} />
             <Wrapper>
                 <ImageWrapper>
-                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
-                    <H1>{title}</H1>
+                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={fullName || title} />
                 </ImageWrapper>
                 <Content>
+                    <H1>{fullName || title}</H1>
+                    {!!moreInfo && showMoreInfo && (
+                        <InfoWrapper>
+                            <SanityBlockContent blocks={moreInfo} />
+                        </InfoWrapper>
+                    )}
                     <H2>Ingredienser</H2>
                     <IngredientsList>
                         {ingredients.map((ingredient, index) => (
@@ -126,16 +151,18 @@ const Recipe = ({ data }) => {
                     </IngredientsList>
                     <H2>Instruktioner</H2>
                     {!!instructions && (
-                        <InstructionsBox>
+                        <Div>
                             <SanityBlockContent blocks={instructions} />
-                        </InstructionsBox>
+                        </Div>
                     )}
-                    <H3>
-                        Recept från&nbsp;
-                        <StyledLink to={link} target="_blank" rel="noopener nofollow">
-                            {distillery.title}
-                        </StyledLink>
-                    </H3>
+                    {distillery?.title && (
+                        <H3>
+                            Recept från&nbsp;
+                            <StyledLink to={link} target="_blank" rel="noopener nofollow">
+                                {distillery.title}
+                            </StyledLink>
+                        </H3>
+                    )}
                 </Content>
             </Wrapper>
         </>
@@ -146,6 +173,7 @@ export const query = graphql`
     query ($slug: String!) {
         sanityRecipes(slug: { current: { eq: $slug } }) {
             title
+            fullName
             image {
                 asset {
                     gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
@@ -155,8 +183,10 @@ export const query = graphql`
                 title
             }
             ingredients
-            _rawInstructions
             link
+            showMoreInfo
+            _rawInstructions
+            _rawMoreInfo
         }
     }
 `;
@@ -164,12 +194,15 @@ export const query = graphql`
 Recipe.propTypes = {
     data: PropTypes.shape({
         sanityRecipes: PropTypes.shape({
+            _rawInstructions: PropTypes.object,
+            _rawMoreInfo: PropTypes.object,
             distillery: PropTypes.string,
+            fullName: PropTypes.string,
             image: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
-            _rawInstructions: PropTypes.object,
             link: PropTypes.string,
             title: PropTypes.string,
+            showMoreInfo: PropTypes.bool,
         }),
     }).isRequired,
 };
