@@ -5,6 +5,7 @@ import { graphql } from 'gatsby';
 import { above } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
+import SanityBlockContent from 'components/SanityBlockContent';
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -52,11 +53,6 @@ const H3 = styled('h3')`
     line-height: 1em;
 `;
 
-const Text = styled('p')`
-    font-size: 20px;
-    line-height: 1em;
-`;
-
 const GinTypes = ({ data }) => {
     const title = 'Gin typer';
 
@@ -67,12 +63,10 @@ const GinTypes = ({ data }) => {
             <SEO title={title} />
             <H1>{title}</H1>
             <Wrapper>
-                {types.map(({ node: { title, text } }) => (
+                {types.map(({ node: { title, _rawText: text } }) => (
                     <Section key={title}>
                         <H3>{title}</H3>
-                        {text.map(({ children }, index) =>
-                            children.map(({ text }, textIndex) => <Text key={`${index}_${textIndex}`}>{text}</Text>)
-                        )}
+                        <SanityBlockContent blocks={text} />
                     </Section>
                 ))}
             </Wrapper>
@@ -86,11 +80,7 @@ export const query = graphql`
             edges {
                 node {
                     title
-                    text {
-                        children {
-                            text
-                        }
-                    }
+                    _rawText
                 }
             }
         }
