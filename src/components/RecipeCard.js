@@ -204,7 +204,7 @@ const RecipeCard = ({ title, image, slug, ingredients, ingredientsQuickLook, isF
                 {isFlippable ? (
                     <FrontLink>Se ingredienser</FrontLink>
                 ) : (
-                    <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
+                    <Link to={`/recept/${slug.current}`} onClick={handleNavigation}>
                         <FrontLink>Läs hela receptet</FrontLink>
                     </Link>
                 )}
@@ -217,7 +217,7 @@ const RecipeCard = ({ title, image, slug, ingredients, ingredientsQuickLook, isF
                             <Span key={index}>{ingredient}</Span>
                         ))}
                     </ScrollableList>
-                    <Link to={`/recept${slug.current}`} onClick={handleNavigation}>
+                    <Link to={`/recept/${slug.current}`} onClick={handleNavigation}>
                         <BackLink>Läs hela receptet</BackLink>
                     </Link>
                 </BackColumn>
