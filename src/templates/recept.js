@@ -44,17 +44,23 @@ const ImageWrapper = styled('div')`
     flex-direction: column;
     justify-content: flex-end;
     width: 100%;
+    padding: 16px;
 
     ${above.md} {
-        height: 90vh;
+        position: sticky;
+        top: 84px;
+        height: calc(100vh - 84px);
         width: 50%;
         justify-content: center;
         background-position: 50% 25%;
     }
+
+    ${above.lg} {
+        padding: 32px;
+    }
 `;
 
 const H1 = styled('h1')`
-    color: ${colors.white};
     text-align: center;
     line-height: 1.2em;
 `;
@@ -71,6 +77,10 @@ const Content = styled('div')`
     ${above.md} {
         width: 50%;
     }
+`;
+
+const InfoWrapper = styled('div')`
+    text-align: center;
 `;
 
 const IngredientsList = styled('ul')`
@@ -125,9 +135,14 @@ const Recipe = ({ data }) => {
             <Wrapper>
                 <ImageWrapper>
                     <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={fullName || title} />
-                    <H1>{fullName || title}</H1>
                 </ImageWrapper>
                 <Content>
+                    <H1>{fullName || title}</H1>
+                    {!!moreInfo && (
+                        <InfoWrapper>
+                            <SanityBlockContent blocks={moreInfo} />
+                        </InfoWrapper>
+                    )}
                     <H2>Ingredienser</H2>
                     <IngredientsList>
                         {ingredients.map((ingredient, index) => (
@@ -140,16 +155,13 @@ const Recipe = ({ data }) => {
                             <SanityBlockContent blocks={instructions} />
                         </Div>
                     )}
-                    <H3>
-                        Recept från&nbsp;
-                        <StyledLink to={link} target="_blank" rel="noopener nofollow">
-                            {distillery.title}
-                        </StyledLink>
-                    </H3>
-                    {!!moreInfo && (
-                        <Div>
-                            <SanityBlockContent blocks={moreInfo} />
-                        </Div>
+                    {distillery?.title && (
+                        <H3>
+                            Recept från&nbsp;
+                            <StyledLink to={link} target="_blank" rel="noopener nofollow">
+                                {distillery.title}
+                            </StyledLink>
+                        </H3>
                     )}
                 </Content>
             </Wrapper>
