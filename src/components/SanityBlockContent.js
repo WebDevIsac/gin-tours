@@ -5,9 +5,9 @@ import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import BlockContent from '@sanity/block-content-to-react';
 
-const StyledBlockedContent = styled(BlockContent)`
+const Wrapper = styled('div')`
     font-size: 20px;
-    line-height: 1.2em;
+    line-height: 1.4em;
 
     a {
         text-decoration: underline;
@@ -25,7 +25,7 @@ const SanityBlockContent = ({ blocks }) => {
             internalLink: ({ mark, children }) => {
                 const { slug = {} } = mark;
                 const href = `/${slug.current}`;
-                return <Link href={href}>{children}</Link>;
+                return <Link to={href}>{children}</Link>;
             },
             link: ({ mark, children }) => {
                 const { blank, href } = mark;
@@ -40,7 +40,11 @@ const SanityBlockContent = ({ blocks }) => {
         },
     };
 
-    return <StyledBlockedContent blocks={blocks} serializers={serializers} />;
+    return (
+        <Wrapper>
+            <BlockContent blocks={blocks} serializers={serializers} />
+        </Wrapper>
+    );
 };
 
 SanityBlockContent.propTypes = {
