@@ -9,6 +9,8 @@ import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import SanityBlockContent from 'components/SanityBlockContent';
 
+const Div = styled('div')``;
+
 const Wrapper = styled('div')`
     width: 100%;
     display: flex;
@@ -54,6 +56,7 @@ const ImageWrapper = styled('div')`
 const H1 = styled('h1')`
     color: ${colors.white};
     text-align: center;
+    line-height: 1.2em;
 `;
 
 const Content = styled('div')`
@@ -92,8 +95,6 @@ const H3 = styled('h3')`
     line-height: 1.2em;
 `;
 
-const InstructionsBox = styled('div')``;
-
 const StyledLink = styled(Link)`
     text-decoration: underline;
 
@@ -107,15 +108,24 @@ const StyledLink = styled(Link)`
 `;
 
 const Recipe = ({ data }) => {
-    const { title, image, distillery, ingredients, _rawInstructions: instructions, link } = data.sanityRecipes;
+    const {
+        title,
+        fullName,
+        image,
+        distillery,
+        ingredients,
+        link,
+        _rawMoreInfo: moreInfo,
+        _rawInstructions: instructions,
+    } = data.sanityRecipes;
 
     return (
         <>
-            <SEO title={title} />
+            <SEO title={fullName || title} />
             <Wrapper>
                 <ImageWrapper>
-                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={title} />
-                    <H1>{title}</H1>
+                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={fullName || title} />
+                    <H1>{fullName || title}</H1>
                 </ImageWrapper>
                 <Content>
                     <H2>Ingredienser</H2>
@@ -126,9 +136,9 @@ const Recipe = ({ data }) => {
                     </IngredientsList>
                     <H2>Instruktioner</H2>
                     {!!instructions && (
-                        <InstructionsBox>
+                        <Div>
                             <SanityBlockContent blocks={instructions} />
-                        </InstructionsBox>
+                        </Div>
                     )}
                     <H3>
                         Recept från&nbsp;
@@ -136,6 +146,11 @@ const Recipe = ({ data }) => {
                             {distillery.title}
                         </StyledLink>
                     </H3>
+                    {!!moreInfo && (
+                        <Div>
+                            <SanityBlockContent blocks={moreInfo} />
+                        </Div>
+                    )}
                 </Content>
             </Wrapper>
         </>
@@ -146,6 +161,7 @@ export const query = graphql`
     query ($slug: String!) {
         sanityRecipes(slug: { current: { eq: $slug } }) {
             title
+            fullName
             image {
                 asset {
                     gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
@@ -155,8 +171,9 @@ export const query = graphql`
                 title
             }
             ingredients
-            _rawInstructions
             link
+            _rawInstructions
+            _rawMoreInfo
         }
     }
 `;
@@ -164,10 +181,12 @@ export const query = graphql`
 Recipe.propTypes = {
     data: PropTypes.shape({
         sanityRecipes: PropTypes.shape({
+            _rawInstructions: PropTypes.object,
+            _rawMoreInfo: PropTypes.object,
             distillery: PropTypes.string,
+            fullName: PropTypes.string,
             image: PropTypes.string,
             ingredients: PropTypes.arrayOf(PropTypes.string),
-            _rawInstructions: PropTypes.object,
             link: PropTypes.string,
             title: PropTypes.string,
         }),
