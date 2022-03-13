@@ -77,7 +77,7 @@ const H3 = styled('h3')`
 
 const Card = ({ title, place, image, slug }) => {
     return (
-        <Link to={slug.current}>
+        <Link to={`/${slug.current}`}>
             <CardWrapper>
                 <Column>
                     <ImageWrapper>
