@@ -258,11 +258,6 @@ const Header = () => {
                                 {title}
                             </Item>
                         ))}
-                        <Item to="#" className="snipcart-checkout">
-                            <span>
-                                Varukorg (<span className="snipcart-items-count">0</span>)
-                            </span>
-                        </Item>
                     </Menu>
                     <BackgroundWrapper onClick={e => handleMenuState(e, true)} />
                 </Navbar>

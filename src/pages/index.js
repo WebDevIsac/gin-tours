@@ -145,14 +145,14 @@ const StartPage = ({ data }) => {
                     </Paragraph>
                 </TextWrapper>
                 <Newsletter />
-                <Content>
+                {/* <Content>
                     <H2>Boka din ginresa idag!</H2>
                     <Slider rewind startAt={0}>
                         {distilleries.map(({ node }, index) => (
                             <Card key={index} {...node} />
                         ))}
                     </Slider>
-                </Content>
+                </Content> */}
                 <Content>
                     <H2>
                         <Link to="/recept">
