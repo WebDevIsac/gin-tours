@@ -62,6 +62,11 @@ const StyledGlide = styled(Glide)`
 
 const Slider = ({ children, type, rewind, startAt }) => {
     const gliderRef = useRef(null);
+    const startAtRef = useRef(startAt);
+
+    const setStartAtIndex = () => {
+        startAtRef.current = gliderRef.current._i;
+    };
 
     return (
         <StyledGlide
@@ -102,7 +107,8 @@ const Slider = ({ children, type, rewind, startAt }) => {
                 },
             }}
             perView={3}
-            startAt={startAt}
+            startAt={startAtRef.current}
+            onRun={setStartAtIndex}
         >
             {children}
         </StyledGlide>
