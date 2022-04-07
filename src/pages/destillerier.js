@@ -35,9 +35,7 @@ const Distilleries = ({ data }) => {
         <>
             <SEO title={title} />
             <CardsRow>
-                {distilleries.map(({ node }, index) => (
-                    <Card key={index} {...node} />
-                ))}
+                {distilleries.map(({ node }, index) => (node.isBookable ? <Card key={index} {...node} /> : null))}
             </CardsRow>
         </>
     );
@@ -50,6 +48,7 @@ export const query = graphql`
                 node {
                     title
                     place
+                    isBookable
                     image {
                         asset {
                             gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)

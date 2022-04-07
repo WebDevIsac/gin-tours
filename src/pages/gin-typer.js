@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { graphql } from 'gatsby';
-import { above } from 'util/mediaqueries';
+import { Link, graphql } from 'gatsby';
+import { above, hover } from 'util/mediaqueries';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import SanityBlockContent from 'components/SanityBlockContent';
@@ -11,12 +11,12 @@ const Wrapper = styled('div')`
     width: 100%;
     height: 100%;
     max-width: 1200px;
-    padding: 0 16px;
+    padding: 0 16px 32px;
     display: flex;
     flex-direction: column;
 
     ${above.md} {
-        padding: 0 32px;
+        padding: 0 32px 32px;
     }
 `;
 
@@ -53,6 +53,20 @@ const H3 = styled('h3')`
     line-height: 1em;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: underline;
+    z-index: 1;
+    font-size: 18px;
+
+    ${hover} {
+        transition: opacity 300ms ease;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+`;
+
 const GinTypes = ({ data }) => {
     const title = 'Gin typer';
 
@@ -63,12 +77,16 @@ const GinTypes = ({ data }) => {
             <SEO title={title} />
             <H1>{title}</H1>
             <Wrapper>
-                {types.map(({ node: { title, _rawText: text } }) => (
-                    <Section key={title}>
-                        <H3>{title}</H3>
-                        <SanityBlockContent blocks={text} />
-                    </Section>
-                ))}
+                {types.map(({ node: { title, _rawText: text } }) => {
+                    const slug = title.toLowerCase().replace(/ /g, '-');
+                    return (
+                        <Section key={title}>
+                            <H3>{title}</H3>
+                            <SanityBlockContent blocks={text} />
+                            <StyledLink to={`/recept/gin-typ/:${slug}`}>Se recept med {title}</StyledLink>
+                        </Section>
+                    );
+                })}
             </Wrapper>
         </>
     );

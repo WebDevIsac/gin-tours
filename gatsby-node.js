@@ -5,6 +5,7 @@ exports.createPages = async ({ actions, graphql }) => {
                 edges {
                     node {
                         title
+                        isBookable
                         slug {
                             current
                         }
@@ -33,13 +34,18 @@ exports.createPages = async ({ actions, graphql }) => {
     `);
 
     data.allSanityDistilleries.edges.forEach(({ node }) => {
-        const slug = node.slug.current;
+        const {
+            isBookable,
+            slug: { current: slug },
+        } = node;
 
-        // actions.createPage({
-        //     path: slug,
-        //     component: require.resolve('./src/templates/destilleri.js'),
-        //     context: { slug },
-        // });
+        // if (isBookable) {
+        //     actions.createPage({
+        //         path: slug,
+        //         component: require.resolve('./src/templates/destilleri.js'),
+        //         context: { slug },
+        //     });
+        // }
 
         // Create recipe filter pages
         const distilleryTitle = node.title;
