@@ -77,6 +77,27 @@ const Content = styled('div')`
     }
 `;
 
+const DistilleriesWrapper = styled('div')`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > div {
+        width: 100%;
+    }
+
+    ${above.md} {
+        flex-direction: row;
+        justify-content: center;
+
+        & > div {
+            width: calc(100% / 3);
+        }
+    }
+`;
+
+const CardWrapper = styled('div')``;
+
 const H2 = styled('h2')`
     text-align: center;
     line-height: 1em;
@@ -109,7 +130,7 @@ const StartPage = ({ data }) => {
         }
     }, []);
 
-    const distilleries = data.allSanityDistilleries.edges;
+    const distilleries = data.allSanityDistilleries.edges.filter(({ node }) => node.isBookable);
     const recipes = data.allSanityRecipes.edges;
     const configs = data.sanityConfigs;
 
@@ -145,14 +166,26 @@ const StartPage = ({ data }) => {
                     </Paragraph>
                 </TextWrapper>
                 <Newsletter />
-                <Content>
-                    <H2>Boka din ginresa idag!</H2>
-                    <Slider rewind startAt={0}>
-                        {distilleries.map(({ node }, index) => (
-                            <Card key={index} {...node} />
-                        ))}
-                    </Slider>
-                </Content>
+                {!!distilleries.length && (
+                    <Content>
+                        <H2>Boka din ginresa idag!</H2>
+                        {distilleries.length > 3 ? (
+                            <Slider rewind startAt={0}>
+                                {distilleries.map(({ node }, index) => (
+                                    <Card key={index} {...node} />
+                                ))}
+                            </Slider>
+                        ) : (
+                            <DistilleriesWrapper>
+                                {distilleries.map(({ node }, index) => (
+                                    <CardWrapper key={index}>
+                                        <Card {...node} />
+                                    </CardWrapper>
+                                ))}
+                            </DistilleriesWrapper>
+                        )}
+                    </Content>
+                )}
                 <Content>
                     <H2>
                         <Link to="/recept">
@@ -177,6 +210,7 @@ export const query = graphql`
                 node {
                     title
                     place
+                    isBookable
                     image {
                         asset {
                             gatsbyImageData(fit: FILLMAX, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
