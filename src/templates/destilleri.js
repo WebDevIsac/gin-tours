@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import styled from '@emotion/styled';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
@@ -18,7 +19,7 @@ const Wrapper = styled('div')`
     padding: 16px;
 `;
 
-const Scrollable = styled('div')`
+const SliderWrapper = styled('div')`
     margin-bottom: 32px;
     display: flex;
     width: 100vw;
@@ -36,25 +37,68 @@ const Scrollable = styled('div')`
 `;
 
 const Box = styled('div')`
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     height: 400px;
     min-width: 300px;
-    border: 1px solid grey;
+    border: 3px solid transparent;
     cursor: pointer;
+    padding: 30px;
+    transition: border-color 500ms ease;
+    color: ${colors.lightGreen};
 
     &.active {
-        border-width: 3px;
         border-color: ${colors.blue};
+    }
+`;
+
+const FakeBackgroundImage = styled(GatsbyImage)`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    @keyframes filter {
+        0% {
+            filter: grayscale(100%);
+        }
+        100% {
+            filter: grayscale(0);
+        }
+    }
+
+    & > img {
+        object-fit: cover !important;
+        object-position: 50% 0% !important;
+        filter: grayscale(100%);
+    }
+
+    .active > & > img {
+        animation: filter 700ms ease forwards;
     }
 `;
 
 const H1 = styled('h1')``;
 
+const DateText = styled('h3')`
+    width: fit-content;
+    font-size: 32px;
+    line-height: 1.2em;
+    text-decoration: underline;
+`;
+
+const SelectedSpan = styled('p')`
+    font-size: 20px;
+`;
+
 const Button = styled('button')`
     height: 56px;
-    width: 200px;
+    width: auto;
+    padding: 0 20px;
     font-size: 24px;
     border-radius: 20px;
     margin-bottom: 32px;
@@ -70,10 +114,12 @@ const Button = styled('button')`
 `;
 
 const Distillery = ({ data }) => {
-    const [value, setValue] = useState(null);
     const { title, image, geopoint, slug, place } = data.sanityDistilleries;
-    const { dates, price } = data.sanityProducts || {};
-    const allDatesString = dates?.join('|');
+    const { dates = [], price } = data.sanityProducts || {};
+    const deepCloneDate = JSON.parse(JSON.stringify(dates));
+    const sortedDates = deepCloneDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const allDatesString = sortedDates.map(({ date }) => date)?.join('|');
+    const [value, setValue] = useState(sortedDates[0]?.date);
 
     return (
         <>
@@ -81,40 +127,39 @@ const Distillery = ({ data }) => {
             <Wrapper>
                 <H1>{title}</H1>
                 {!!dates?.length && (
-                    <Scrollable>
+                    <SliderWrapper>
                         <Slider rewind startAt={0}>
-                            {dates.map(date => (
+                            {sortedDates.map(({ date, image }) => (
                                 <Box
                                     className={value === date ? 'active' : ''}
                                     key={date}
                                     onClick={() => setValue(date)}
                                 >
-                                    <h3>{date}</h3>
-                                    <ul>
-                                        <li>Ginprovning</li>
-                                        <li>Hotellnatt</li>
-                                        <li>Middag</li>
-                                    </ul>
+                                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={date} />
+                                    <DateText>{date}</DateText>
                                 </Box>
                             ))}
                         </Slider>
-                    </Scrollable>
+                    </SliderWrapper>
                 )}
                 {!!price && (
-                    <Button
-                        className="snipcart-add-item"
-                        data-item-id={title.replace(' ', '-').toLowerCase()}
-                        data-item-price={price}
-                        data-item-url={slug.current}
-                        data-item-description={`Resa till ${title} destilleri i ${place}`}
-                        data-item-image={image.asset.url}
-                        data-item-name={title}
-                        data-item-custom1-name="Datum"
-                        data-item-custom1-options={allDatesString}
-                        data-item-custom1-value={value}
-                    >
-                        Boka resa
-                    </Button>
+                    <>
+                        {value && <SelectedSpan>Valt datum: {value}</SelectedSpan>}
+                        <Button
+                            className="snipcart-add-item"
+                            data-item-id={title.replace(' ', '-').toLowerCase()}
+                            data-item-price={price}
+                            data-item-url={slug.current}
+                            data-item-description={`Resa till ${title} destilleri i ${place}`}
+                            data-item-image={image.asset.url}
+                            data-item-name={title}
+                            data-item-custom1-name="Datum"
+                            data-item-custom1-options={allDatesString}
+                            data-item-custom1-value={value}
+                        >
+                            Boka resa - {price}:-
+                        </Button>
+                    </>
                 )}
                 <GoogleMaps geopoint={geopoint} />
             </Wrapper>
@@ -142,7 +187,14 @@ export const query = graphql`
         }
 
         sanityProducts(distillery: { slug: { current: { eq: $slug } } }) {
-            dates
+            dates {
+                date
+                image {
+                    asset {
+                        gatsbyImageData(fit: FILLMAX, placeholder: BLURRED)
+                    }
+                }
+            }
             price
         }
     }
