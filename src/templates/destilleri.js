@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import styled from '@emotion/styled';
+import { format } from 'date-fns';
+import { sv } from 'date-fns/locale';
 import Layout from 'components/layouts/Layout';
 import SEO from 'components/SEO/SEO';
 import GoogleMaps from 'components/GoogleMaps';
@@ -117,7 +119,18 @@ const Distillery = ({ data }) => {
     const { title, image, geopoint, slug, place } = data.sanityDistilleries;
     const { dates = [], price } = data.sanityProducts || {};
     const deepCloneDate = JSON.parse(JSON.stringify(dates));
-    const sortedDates = deepCloneDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const localizedDates = deepCloneDate.map(item => {
+        const dateAsTimestamp = new Date(item.date).getTime();
+        const localizedDate = format(dateAsTimestamp, 'dd MMMM yyyy', { locale: sv });
+
+        return {
+            timestamp: dateAsTimestamp,
+            date: localizedDate,
+            image: item.image.asset.gatsbyImageData,
+        };
+    });
+
+    const sortedDates = localizedDates.sort((a, b) => a.timestamp - b.timestamp);
     const allDatesString = sortedDates.map(({ date }) => date)?.join('|');
     const [value, setValue] = useState(sortedDates[0]?.date);
 
@@ -135,7 +148,7 @@ const Distillery = ({ data }) => {
                                     key={date}
                                     onClick={() => setValue(date)}
                                 >
-                                    <FakeBackgroundImage image={image.asset.gatsbyImageData} alt={date} />
+                                    <FakeBackgroundImage image={image} alt={date} />
                                     <DateText>{date}</DateText>
                                 </Box>
                             ))}
